@@ -6,7 +6,7 @@
 
 namespace Packet
 {
-    enum class PacketID/ 
+    enum class PacketID
     {
         INVALID                         = 0     // 0x00 - SPECIAL
         STATUS_ENQUIRY                  = 1     // 0x01 - MPIM
