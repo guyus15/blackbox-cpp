@@ -5,6 +5,7 @@
  */
 
 #include "packet/content.h"
+#include "exceptions/invalid_key_exception.h"
 
 #include <cstdio>
 #include <cstdlib>
@@ -43,12 +44,12 @@ namespace Packet
         return _bytes;
     } 
 
-    void Content::set_parameter(std::string& key, unsigned char& value)
+    void Content::set_parameter(std::string& key, unsigned char value)
     {
         if (!check_exists(key))
         {
             fprintf(stderr, "'%s' can not be found in the content parameters.\n", key.c_str());
-            exit(EXIT_FAILURE);
+            throw InvalidKeyException();
         }
 
         for (int i = 0; i < _params.size(); i++)
@@ -66,7 +67,7 @@ namespace Packet
         if (!check_exists(key))
         {
             fprintf(stderr, "'%s' can not be found in the content parameters.\n", key.c_str());
-            exit(EXIT_FAILURE);
+            throw InvalidKeyException();
         }
 
         unsigned char param = 0;
@@ -90,8 +91,6 @@ namespace Packet
 
     std::ostream& operator<<(std::ostream& os, Content const& content)
     {
-        os << "Packet contents:" << std::endl;
-
         for (const auto& pair : content._params)
         {
             os << pair.first << ": " << std::hex << (int)pair.second << std::endl;
