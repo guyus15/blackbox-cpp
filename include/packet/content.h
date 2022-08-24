@@ -28,7 +28,7 @@ namespace Packet
 
             friend std::ostream& operator<<(std::ostream& os, Content const& v);
 
-        private:
+        protected:
             std::vector<std::pair<std::string, unsigned char>> _params;
             std::vector<unsigned char> _bytes;
     };
