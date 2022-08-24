@@ -10,7 +10,7 @@
 #include <cstdio>
 #include <cstdlib>
 
-namespace Packet
+namespace Packets
 {
     Content::Content(std::vector<std::pair<std::string, unsigned char>>& params)
     : _params{params}

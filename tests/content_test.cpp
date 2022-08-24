@@ -26,7 +26,7 @@ CLOVE_TEST(test_check_exists_when_exists)
         {"some string3", '\x30'},
     };
 
-    Packet::Content test_content{test_vector}; 
+    Packets::Content test_content{test_vector}; 
 
     CLOVE_INT_EQ(test_content.check_exists("some string1"), 1);
 }
@@ -44,7 +44,7 @@ CLOVE_TEST(test_check_when_no_exist)
         {"some string3", '\x30'},
     };
 
-    Packet::Content test_content{test_vector};
+    Packets::Content test_content{test_vector};
 
     CLOVE_INT_EQ(test_content.check_exists("some non-existent value"), 0);
 }
@@ -62,7 +62,7 @@ CLOVE_TEST(test_get_byte_array)
         {"some string3", '\x30'},
     };
 
-    Packet::Content test_content{test_vector};
+    Packets::Content test_content{test_vector};
 
     std::vector<unsigned char> expected_values{'\x10', '\x20', '\x30'};
     std::vector<unsigned char> actual_value = test_content.get_byte_array();
@@ -86,7 +86,7 @@ CLOVE_TEST(test_get_parameter_valid_key)
         {"some string3", '\x30'},
     };
 
-    Packet::Content test_content{test_vector};
+    Packets::Content test_content{test_vector};
 
     std::string parameter = "some string1";
 
@@ -106,7 +106,7 @@ CLOVE_TEST(test_get_parameter_invalid_key)
         {"some string3", '\x30'},
     };
 
-    Packet::Content test_content{test_vector};
+    Packets::Content test_content{test_vector};
 
     std::string parameter = "non-existent parameter";
 
@@ -136,7 +136,7 @@ CLOVE_TEST(test_set_parameter_valid_key)
         {"some string3", '\x30'},
     };
 
-    Packet::Content test_content{test_vector};
+    Packets::Content test_content{test_vector};
 
     std::string parameter = "some string1";
 
@@ -158,7 +158,7 @@ CLOVE_TEST(test_set_parameter_invalid_key)
         {"some string3", '\x30'},
     };
 
-    Packet::Content test_content{test_vector};
+    Packets::Content test_content{test_vector};
 
     std::string parameter = "non-existent parameter";
 
@@ -188,7 +188,7 @@ CLOVE_TEST(test_get_parameters)
         {"some string3", '\x30'},
     };
 
-    Packet::Content test_content{test_vector};
+    Packets::Content test_content{test_vector};
 
     auto parameters = test_content.get_parameters();
 

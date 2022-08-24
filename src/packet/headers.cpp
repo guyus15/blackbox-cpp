@@ -6,10 +6,15 @@
 
 #include "packet/headers.h"
 
-namespace Packet
+namespace Packets
 {
-    LocalHeaderMX5::LocalHeaderMX5(PacketID packet_id, std::vector<std::pair<std::string, unsigned char>> p)
+    BaseHeader::BaseHeader(PacketID packet_id, std::vector<std::pair<std::string, unsigned char>> p)
     : Content{p}
+    {
+    }
+
+    LocalHeaderMX5::LocalHeaderMX5(PacketID packet_id, std::vector<std::pair<std::string, unsigned char>> p)
+    : BaseHeader{packet_id, p}
     {
         std::vector<std::pair<std::string, unsigned char>> params
         {
@@ -28,7 +33,7 @@ namespace Packet
     }
 
     LocalHeaderMX6::LocalHeaderMX6(PacketID packet_id, std::vector<std::pair<std::string, unsigned char>> p)
-    : Content{p}
+    : BaseHeader{packet_id, p}
     {
         std::vector<std::pair<std::string, unsigned char>> params
         {

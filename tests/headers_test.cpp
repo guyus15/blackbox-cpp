@@ -19,7 +19,7 @@ CLOVE_TEST(test_mx5_header_contents)
     // it contains the expected values.
 
     // MX Speak 5 packet header, ID of 0.
-    Packet::LocalHeaderMX5 test_header{Packet::PacketID::INVALID};
+    Packets::LocalHeaderMX5 test_header{Packets::PacketID::INVALID};
 
     std::vector<unsigned char> expected_values {'\x09', '\00', '\00', '\00', '\00', '\00', '\00', '\00', '\00'};
     std::vector<unsigned char> actual_values = test_header.get_byte_array();
@@ -37,7 +37,7 @@ CLOVE_TEST(test_mx6_header_contents)
     // it contains the expected values.
 
     // MX Speak 5 packet header, ID of 0.
-    Packet::LocalHeaderMX6 test_header{Packet::PacketID::INVALID};
+    Packets::LocalHeaderMX6 test_header{Packets::PacketID::INVALID};
 
     std::vector<unsigned char> expected_values {'\x09', 228, '\x00', '\x00','\x00','\x00','\x00','\x00','\x00','\x00','\x00'};
     std::vector<unsigned char> actual_values = test_header.get_byte_array();

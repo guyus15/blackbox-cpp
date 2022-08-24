@@ -10,16 +10,34 @@
 #include "packet/content.h"
 #include "packet/packet_ids.h"
 
-namespace Packet
+namespace Packets
 {
-    class LocalHeaderMX5 : public Content
+    /**
+     * @brief General class for packet headers.
+     */
+    class BaseHeader : public Content
+    {
+        public:
+            BaseHeader(PacketID packet_id = PacketID::INVALID,
+            std::vector<std::pair<std::string, unsigned char>> p = std::vector<std::pair<std::string, unsigned char>>());
+    };
+
+    /**
+     * @brief An MX Speak 5 Local Header, which is used when connected to the panel's COM2
+     * serial port.
+     */
+    class LocalHeaderMX5 : public BaseHeader
     {
         public:
             LocalHeaderMX5(PacketID packet_id, 
             std::vector<std::pair<std::string, unsigned char>> p = std::vector<std::pair<std::string, unsigned char>>());
     };
 
-    class LocalHeaderMX6 : public Content
+    /**
+     * @brief An MX Speak 6 Local Header, which is used when connected to the panel's COM2
+     * serial port.
+     */
+    class LocalHeaderMX6 : public BaseHeader
     {
         public:
             LocalHeaderMX6(PacketID packet_id,

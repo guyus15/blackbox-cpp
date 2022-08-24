@@ -11,7 +11,7 @@
 #include <string>
 #include <vector>
 
-namespace Packet
+namespace Packets
 {
     class IByteContainer
     {

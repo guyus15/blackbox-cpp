@@ -7,7 +7,7 @@
 #ifndef PACKET_IDS_H
 #define PACKET_IDS_H
 
-namespace Packet
+namespace Packets
 {
     enum class PacketID
     {

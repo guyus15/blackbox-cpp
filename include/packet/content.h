@@ -12,7 +12,7 @@
 #include <string>
 #include <iostream>
 
-namespace Packet
+namespace Packets
 {
     class Content : public IByteContainer
     {
