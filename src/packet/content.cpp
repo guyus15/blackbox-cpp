@@ -44,7 +44,7 @@ namespace Packets
         return _bytes;
     } 
 
-    void Content::set_parameter(std::string& key, unsigned char value)
+    void Content::set_parameter(std::string key, unsigned char value)
     {
         if (!check_exists(key))
         {
@@ -62,7 +62,7 @@ namespace Packets
         }
     }
 
-    unsigned char Content::get_parameter(std::string& key)
+    unsigned char Content::get_parameter(std::string key)
     {
         if (!check_exists(key))
         {
