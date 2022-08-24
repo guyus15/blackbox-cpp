@@ -6,15 +6,21 @@ BIN = bin
 TEST_BIN = tests/bin
 
 # Target
-TARGET_SOURCES = src/main.cpp src/packet/content.cpp src/packet/headers.cpp
+TARGET_SOURCES = src/main.cpp \
+				 src/packet/content.cpp \
+				 src/packet/headers.cpp \
+				 src/packet/packet.cpp
+				 
 TARGET_INCLUDES = -I include/
 
 # Tests
 TEST_SOURCES = tests/run_tests.cpp \
 			   tests/content_test.cpp \
 			   tests/headers_test.cpp \
+			   tests/packet_test.cpp \
 			   src/packet/content.cpp \
 			   src/packet/headers.cpp \
+			   src/packet/packet.cpp \
 
 TEST_INCLUDES = -I include/
 TEST_NAME = run_tests
