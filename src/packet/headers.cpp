@@ -18,14 +18,14 @@ namespace Packets
     {
         std::vector<std::pair<std::string, unsigned char>> params
         {
-            {"packet_length",               '\x09'},
-            {"network_node",                '\x00'},
-            {"channel",                     '\x00'},
-            {"destination_channel_address", '\x00'},
-            {"destination_task",            '\x00'},
-            {"source_channel_address",      '\x00'},
-            {"source_task",                 '\x00'},
-            {"marker",                      '\x00'},
+            {"packet_length",               0x09},
+            {"network_node",                0x00},
+            {"channel",                     0x00},
+            {"destination_channel_address", 0x00},
+            {"destination_task",            0x00},
+            {"source_channel_address",      0x00},
+            {"source_task",                 0x00},
+            {"marker",                      0x00},
             {"packet_id",                   (unsigned char)packet_id}
         };
 
@@ -37,17 +37,17 @@ namespace Packets
     {
         std::vector<std::pair<std::string, unsigned char>> params
         {
-            {"packet_length",               '\x09'},
-            {"mx_speak_signature",          '\xe4'},  // 228
-            {"network_node",                '\x00'},
-            {"channel",                     '\x00'},
-            {"destination_channel_address", '\x00'},
-            {"destination_task",            '\x00'},
-            {"source_channel_address",      '\x00'},
-            {"source_task",                 '\x00'},
-            {"marker",                      '\x00'},
+            {"packet_length",               0x09},
+            {"mx_speak_signature",          0xe4},  // 228
+            {"network_node",                0x00},
+            {"channel",                     0x00},
+            {"destination_channel_address", 0x00},
+            {"destination_task",            0x00},
+            {"source_channel_address",      0x00},
+            {"source_task",                 0x00},
+            {"marker",                      0x00},
             {"packet_id",                   (unsigned char)packet_id},
-            {"reserved",                    '\x00'}
+            {"reserved",                    0x00}
         };
 
         _params = params;
