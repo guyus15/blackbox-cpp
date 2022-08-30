@@ -1,4 +1,4 @@
-/**[1-9]  
+/**
  * @file packet_ids.h
  * @brief A container for each packet ID used by the panel.
  * @author G. Chamberlain-Webber
@@ -9,6 +9,9 @@
 
 namespace Packets
 {
+    /**
+     * @brief A reference for each packet ID used by the panel.
+     */
     enum class PacketID
     {
         INVALID                         = 0,     // 0x00 - SPECIAL
