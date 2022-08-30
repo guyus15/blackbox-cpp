@@ -14,7 +14,7 @@ namespace Packets
     {
         public:
             virtual void write(std::vector<unsigned char>& byte_array) = 0;
-    }
+    };
 }
 
 #endif
