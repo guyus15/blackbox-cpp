@@ -9,7 +9,9 @@ TEST_BIN = tests/bin
 TARGET_SOURCES = src/main.cpp \
 				 src/packet/content.cpp \
 				 src/packet/headers.cpp \
-				 src/packet/packet.cpp
+				 src/packet/packet.cpp \
+				 src/packet/serial_data_transfer.cpp \
+				 src/serial/serialib.cpp
 				 
 TARGET_INCLUDES = -I include/
 
