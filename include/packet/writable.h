@@ -8,6 +8,8 @@
 #ifndef WRITABLE_H
 #define WRITABLE_H
 
+#include <vector>
+
 namespace Packets
 {
     class IWritable
