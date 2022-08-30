@@ -5,9 +5,13 @@
  */
 
 #include "packet/packet.h"
+#include "packet/serial_data_transfer.h"
 
 namespace Packets
 {
+    unsigned char Packet::soh = 0x01;
+    unsigned char Packet::seq = 0x01;
+
     Packet::Packet(BaseHeader header, std::vector<std::pair<std::string, unsigned char>> p)
     : Content{p}
     {
@@ -19,5 +23,56 @@ namespace Packets
 
         // Update the packet length parameter.
         set_parameter("packet_length", _params.size());
+    }
+
+    Packet::~Packet() {}
+
+    std::vector<unsigned char>& Packet::get_byte_array()
+    {
+        _bytes.clear();
+
+        // Add on the SOH and SEQ numbers.
+        _bytes.push_back(Packet::soh);
+        _bytes.push_back(Packet::seq);
+
+        int checksum = 0;
+        
+        checksum += Packet::seq;
+
+        for (int i = 0; i < _params.size(); i++)
+        {
+            unsigned char value = _params[i].second;
+            _bytes.push_back(value);
+
+            // Calculate checksum
+            checksum += value;
+        }
+
+        checksum %= 256;
+
+        _bytes.push_back((unsigned char)checksum);
+
+        return _bytes;
+    }
+
+    void Packet::write()
+    {
+        SerialDataTransfer serial;
+
+        std::vector<unsigned char> data = get_byte_array();
+        serial.write(data);
+
+        Packet::increment_seq();
+    }
+
+    void Packet::increment_seq()
+    {
+        seq++;
+                
+        // Wrap round if SEQ exceeds 15.
+        if (seq > 0x0f)
+        {
+            seq = 0x01;
+        }
     }
 }

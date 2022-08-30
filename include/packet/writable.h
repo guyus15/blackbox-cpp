@@ -15,7 +15,7 @@ namespace Packets
     class IWritable
     {
         public:
-            virtual void write(std::vector<unsigned char>& byte_array) = 0;
+            virtual void write() = 0;
     };
 }
 

@@ -32,15 +32,15 @@ CLOVE_TEST(test_create_packet_no_parameters)
     CLOVE_STRING_EQ(parameters[7].first.c_str(), "marker");
     CLOVE_STRING_EQ(parameters[8].first.c_str(), "packet_id");
 
-    CLOVE_CHAR_EQ(parameters[0].second, '\x09');
-    CLOVE_CHAR_EQ(parameters[1].second, '\x00');
-    CLOVE_CHAR_EQ(parameters[2].second, '\x00');
-    CLOVE_CHAR_EQ(parameters[3].second, '\x00');
-    CLOVE_CHAR_EQ(parameters[4].second, '\x00');
-    CLOVE_CHAR_EQ(parameters[5].second, '\x00');
-    CLOVE_CHAR_EQ(parameters[6].second, '\x00');
-    CLOVE_CHAR_EQ(parameters[7].second, '\x00');
-    CLOVE_CHAR_EQ(parameters[8].second, '\x00');
+    CLOVE_CHAR_EQ(parameters[0].second, 0x09);
+    CLOVE_CHAR_EQ(parameters[1].second, 0x00);
+    CLOVE_CHAR_EQ(parameters[2].second, 0x00);
+    CLOVE_CHAR_EQ(parameters[3].second, 0x00);
+    CLOVE_CHAR_EQ(parameters[4].second, 0x00);
+    CLOVE_CHAR_EQ(parameters[5].second, 0x00);
+    CLOVE_CHAR_EQ(parameters[6].second, 0x00);
+    CLOVE_CHAR_EQ(parameters[7].second, 0x00);
+    CLOVE_CHAR_EQ(parameters[8].second, 0x00);
 }
 
 // Test 2
@@ -52,18 +52,18 @@ CLOVE_TEST(test_packet_length)
     Packets::LocalHeaderMX5 test_header{Packets::PacketID::INVALID};
     std::vector<std::pair<std::string, unsigned char>> test_parameters
     {
-        {"some_param1", '\x00'},
-        {"some_param2", '\x01'},
-        {"some_param3", '\x02'},
-        {"some_param4", '\x03'},
-        {"some_param5", '\x04'},
+        {"some_param1", 0x00},
+        {"some_param2", 0x01},
+        {"some_param3", 0x02},
+        {"some_param4", 0x03},
+        {"some_param5", 0x04},
     };
 
     Packets::Packet test_packet{test_header, test_parameters};
 
     unsigned char packet_length = test_packet.get_parameter("packet_length");
 
-    CLOVE_CHAR_EQ(packet_length, '\x0e');
+    CLOVE_CHAR_EQ(packet_length, 0x0e);
 }
 
 
@@ -76,11 +76,11 @@ CLOVE_TEST(test_create_packet_w_parameters)
     Packets::LocalHeaderMX5 test_header{Packets::PacketID::INVALID};
     std::vector<std::pair<std::string, unsigned char>> test_parameters
     {
-        {"some_param1", '\x00'},
-        {"some_param2", '\x01'},
-        {"some_param3", '\x02'},
-        {"some_param4", '\x03'},
-        {"some_param5", '\x04'},
+        {"some_param1", 0x00},
+        {"some_param2", 0x01},
+        {"some_param3", 0x02},
+        {"some_param4", 0x03},
+        {"some_param5", 0x04},
     };
 
     Packets::Packet test_packet{test_header, test_parameters};
@@ -102,18 +102,83 @@ CLOVE_TEST(test_create_packet_w_parameters)
     CLOVE_STRING_EQ(parameters[12].first.c_str(), "some_param4");
     CLOVE_STRING_EQ(parameters[13].first.c_str(), "some_param5");
 
-    CLOVE_CHAR_EQ(parameters[0].second, '\x0e');
-    CLOVE_CHAR_EQ(parameters[1].second, '\x00');
-    CLOVE_CHAR_EQ(parameters[2].second, '\x00');
-    CLOVE_CHAR_EQ(parameters[3].second, '\x00');
-    CLOVE_CHAR_EQ(parameters[4].second, '\x00');
-    CLOVE_CHAR_EQ(parameters[5].second, '\x00');
-    CLOVE_CHAR_EQ(parameters[6].second, '\x00');
-    CLOVE_CHAR_EQ(parameters[7].second, '\x00');
-    CLOVE_CHAR_EQ(parameters[8].second, '\x00');
-    CLOVE_CHAR_EQ(parameters[9].second, '\x00');
-    CLOVE_CHAR_EQ(parameters[10].second, '\x01');
-    CLOVE_CHAR_EQ(parameters[11].second, '\x02');
-    CLOVE_CHAR_EQ(parameters[12].second, '\x03');
-    CLOVE_CHAR_EQ(parameters[13].second, '\x04');
+    CLOVE_CHAR_EQ(parameters[0].second, 0x0e);
+    CLOVE_CHAR_EQ(parameters[1].second, 0x00);
+    CLOVE_CHAR_EQ(parameters[2].second, 0x00);
+    CLOVE_CHAR_EQ(parameters[3].second, 0x00);
+    CLOVE_CHAR_EQ(parameters[4].second, 0x00);
+    CLOVE_CHAR_EQ(parameters[5].second, 0x00);
+    CLOVE_CHAR_EQ(parameters[6].second, 0x00);
+    CLOVE_CHAR_EQ(parameters[7].second, 0x00);
+    CLOVE_CHAR_EQ(parameters[8].second, 0x00);
+    CLOVE_CHAR_EQ(parameters[9].second, 0x00);
+    CLOVE_CHAR_EQ(parameters[10].second, 0x01);
+    CLOVE_CHAR_EQ(parameters[11].second, 0x02);
+    CLOVE_CHAR_EQ(parameters[12].second, 0x03);
+    CLOVE_CHAR_EQ(parameters[13].second, 0x04);
+}
+
+// Test 4
+CLOVE_TEST(test_packet_byte_array)
+{
+    // This test ensures that when the get_byte_array() method is called on a packet object,
+    // the resulting byte array contains the correct data and the SEQ number and checksum have 
+    // been appropriately set.
+
+    Packets::LocalHeaderMX5 test_header{Packets::PacketID::INVALID};
+    Packets::Packet test_packet{test_header};
+
+    std::vector<unsigned char> byte_array = test_packet.get_byte_array();
+
+    CLOVE_CHAR_EQ(byte_array[0], 0x01);  // SOH
+    CLOVE_CHAR_EQ(byte_array[1], 0x01);  // SEQ
+    CLOVE_CHAR_EQ(byte_array[2], 0x09);  // Packet length
+    CLOVE_CHAR_EQ(byte_array[3], 0x00);  // Packet header contents
+    CLOVE_CHAR_EQ(byte_array[4], 0x00);  // Packet header contents
+    CLOVE_CHAR_EQ(byte_array[5], 0x00);  // Packet header contents
+    CLOVE_CHAR_EQ(byte_array[6], 0x00);  // Packet header contents
+    CLOVE_CHAR_EQ(byte_array[7], 0x00);  // Packet header contents
+    CLOVE_CHAR_EQ(byte_array[8], 0x00);  // Packet header contents
+    CLOVE_CHAR_EQ(byte_array[9], 0x00);  // Packet header contents
+    CLOVE_CHAR_EQ(byte_array[10], 0x00); // Packet header contents
+    CLOVE_CHAR_EQ(byte_array[11], 0x0a); // Checksum
+}
+
+// Test 5
+CLOVE_TEST(test_large_packet_byte_array)
+{
+    // This test ensures that when the get_byte_array() method is called on a large packet object,
+    // the resulting byte array contains the correct data and the SEQ number and checksum have been
+    // appropriately set.
+
+    Packets::LocalHeaderMX5 test_header{Packets::PacketID::INVALID};
+    std::vector<std::pair<std::string, unsigned char>> test_parameters
+    {
+        {"some_param1", 0x99},
+        {"some_param2", 0xe4},
+        {"some_param3", 0x12},
+        {"some_param4", 0x39},
+        {"some_param5", 0x67},
+    };
+    Packets::Packet test_packet{test_header, test_parameters};
+
+    std::vector<unsigned char> byte_array = test_packet.get_byte_array();
+
+    CLOVE_CHAR_EQ(byte_array[0], 0x01);  // SOH
+    CLOVE_CHAR_EQ(byte_array[1], 0x01);  // SEQ
+    CLOVE_CHAR_EQ(byte_array[2], 0x0e);  // Packet length
+    CLOVE_CHAR_EQ(byte_array[3], 0x00);  // Packet header contents
+    CLOVE_CHAR_EQ(byte_array[4], 0x00);  // Packet header contents
+    CLOVE_CHAR_EQ(byte_array[5], 0x00);  // Packet header contents
+    CLOVE_CHAR_EQ(byte_array[6], 0x00);  // Packet header contents
+    CLOVE_CHAR_EQ(byte_array[7], 0x00);  // Packet header contents
+    CLOVE_CHAR_EQ(byte_array[8], 0x00);  // Packet header contents
+    CLOVE_CHAR_EQ(byte_array[9], 0x00);  // Packet header contents
+    CLOVE_CHAR_EQ(byte_array[10], 0x00); // Packet header contents
+    CLOVE_CHAR_EQ(byte_array[11], 0x99); // Packet contents
+    CLOVE_CHAR_EQ(byte_array[12], 0xe4); // Packet contents
+    CLOVE_CHAR_EQ(byte_array[13], 0x12); // Packet contents
+    CLOVE_CHAR_EQ(byte_array[14], 0x39); // Packet contents
+    CLOVE_CHAR_EQ(byte_array[15], 0x67); // Packet contents
+    CLOVE_CHAR_EQ(byte_array[16], 0x3e); // Checksum
 }

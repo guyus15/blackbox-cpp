@@ -13,7 +13,7 @@
 namespace Packets
 {
     Content::Content(std::vector<std::pair<std::string, unsigned char>>& params)
-    : _params{params}
+    : _params{params}, _bytes{}
     {
         get_byte_array();
     }
