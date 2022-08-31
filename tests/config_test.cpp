@@ -90,3 +90,15 @@ CLOVE_TEST(test_get_poll_time_period)
 
     CLOVE_FLOAT_EQ(expected_value, actual_value);
 }
+
+// Test 7
+CLOVE_TEST(test_get_ping_time_period)
+{
+    // This test ensures that the get_ping_time_period() function will return the correct time period
+    // value from the configuration file.
+
+    float expected_value = local_config.at("timing").at("ping-time-period").as<float>();
+    float actual_value = Config::get_ping_time_period();
+
+    CLOVE_FLOAT_EQ(expected_value, actual_value);
+}

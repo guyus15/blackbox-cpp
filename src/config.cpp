@@ -147,4 +147,11 @@ namespace Config
 
         return polling_time_period;
     }
+
+    float get_ping_time_period()
+    {
+        const float ping_time_period = config.at("timing").at("ping-time-period").as<float>();
+
+        return ping_time_period;
+    }
 }

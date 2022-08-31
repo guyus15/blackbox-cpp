@@ -73,4 +73,11 @@ namespace Config
      * @return float The polling time period value from the configuration file.
      */
     float get_poll_time_period();
+
+    /**
+     * @brief Gets the ping time period value from the configuration file.
+     * 
+     * @return float The ping time period value from the configuration file.
+     */
+    float get_ping_time_period();
 }
