@@ -17,14 +17,14 @@ namespace Config
 
     std::string get_log_dir()
     {
-        std::string directory = config.at("logging").at("directory").as<std::string>();
+        const std::string directory = config.at("logging").at("directory").as<std::string>();
 
         return directory;
     }
 
     bool get_log_enabled()
     {
-        bool enabled = config.at("logging").at("enabled").as<bool>();
+        const bool enabled = config.at("logging").at("enabled").as<bool>();
 
         return enabled;
     }
@@ -32,9 +32,9 @@ namespace Config
     std::string get_com_port()
     {
         #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
-        std::string com_port = config.at("serial").at("com").at("windows").as<std::string>();
+        const std::string com_port = config.at("serial").at("com").at("windows").as<std::string>();
         #else
-        std::string com_port = config.at("serial").at("com").at("linux").as<std::string>();
+        const std::string com_port = config.at("serial").at("com").at("linux").as<std::string>();
         #endif
 
         return com_port;
@@ -42,21 +42,21 @@ namespace Config
 
     int get_baudrate()
     {
-        int baudrate = config.at("serial").at("baudrate").as<int>();
+        const int baudrate = config.at("serial").at("baudrate").as<int>();
 
         return baudrate;
     }
 
     int get_timeout()
     {
-        int timeout = config.at("serial").at("timeout").as<int>();
+        const int timeout = config.at("serial").at("timeout").as<int>();
 
         return timeout;
     }
 
     enum SerialDataBits get_bytesize()
     {
-        int bytesize = config.at("serial").at("bytesize").as<int>();
+        const int bytesize = config.at("serial").at("bytesize").as<int>();
 
         // Set data bits size to 8 by default.
         SerialDataBits databits = SERIAL_DATABITS_8;
@@ -114,5 +114,30 @@ namespace Config
         }
 
         return parity_value;
+    }
+
+    enum SerialStopBits get_stopbits()
+    {
+        const float stopbits = config.at("serial").at("stopbits").as<float>();
+
+        // One stopbit by default.
+        SerialStopBits stopbits_value = SERIAL_STOPBITS_1;
+
+        if (stopbits == 1.0f)
+        {
+            stopbits_value = SERIAL_STOPBITS_1;
+        } else if (stopbits == 1.5f)
+        {
+            stopbits_value = SERIAL_STOPBITS_1_5;
+        } else if (stopbits == 2.0f)
+        {
+            stopbits_value = SERIAL_STOPBITS_2;
+        } else 
+        {
+            // Default to '1' stopbit if it has not been accounted for.
+            stopbits_value = SERIAL_STOPBITS_1;
+        }
+
+        return stopbits_value;
     }
 }

@@ -59,4 +59,11 @@ namespace Config
      * @return SerialParity The parity value from the configuration file.
      */
     enum SerialParity get_parity();
+
+    /**
+     * @brief Gets the stopbits value from the configuration file as a SerialStopBits enum value.
+     * 
+     * @return enum SerialStopBits The stopbits value from the configuration file.
+     */
+    enum SerialStopBits get_stopbits();
 }
