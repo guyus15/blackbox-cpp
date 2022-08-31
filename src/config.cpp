@@ -140,4 +140,11 @@ namespace Config
 
         return stopbits_value;
     }
+
+    float get_poll_time_period()
+    {
+        const float polling_time_period = config.at("timing").at("poll-time-period").as<float>();
+
+        return polling_time_period;
+    }
 }

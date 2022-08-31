@@ -70,11 +70,23 @@ CLOVE_TEST(test_get_baudrate)
 // Test 5
 CLOVE_TEST(test_get_timeout)
 {
-    // This test ensures that the get_timeout() function will return the correct timeout valeu
+    // This test ensures that the get_timeout() function will return the correct timeout value
     // specified in the configuration file.
 
     int expected_value = local_config.at("serial").at("timeout").as<int>();
     int actual_value = Config::get_timeout();
 
     CLOVE_INT_EQ(expected_value, actual_value);
+}
+
+// Test 6
+CLOVE_TEST(test_get_poll_time_period)
+{
+    // This test ensures that the get_poll_time_period() function will return the correct time period
+    // value from the configuration file.
+
+    float expected_value = local_config.at("timing").at("poll-time-period").as<float>();
+    float actual_value = Config::get_poll_time_period();
+
+    CLOVE_FLOAT_EQ(expected_value, actual_value);
 }

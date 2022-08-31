@@ -66,4 +66,11 @@ namespace Config
      * @return enum SerialStopBits The stopbits value from the configuration file.
      */
     enum SerialStopBits get_stopbits();
+
+    /**
+     * @brief Gets the polling time period value from the configuration file.
+     * 
+     * @return float The polling time period value from the configuration file.
+     */
+    float get_poll_time_period();
 }
