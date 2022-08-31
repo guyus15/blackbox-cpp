@@ -36,4 +36,11 @@ namespace Config
      * @return int The baudrate value from the configuration file.
      */
     int get_baudrate();
+
+    /**
+     * @brief Get the timeout value from the configuration file.
+     * 
+     * @return int The timeout value from the configuration file.
+     */
+    int get_timeout();
 }

@@ -44,4 +44,11 @@ namespace Config
 
         return baudrate;
     }
+
+    int get_timeout()
+    {
+        int timeout = config.at("serial").at("timeout").as<int>();
+
+        return timeout;
+    }
 }

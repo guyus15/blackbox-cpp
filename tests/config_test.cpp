@@ -66,3 +66,15 @@ CLOVE_TEST(test_get_baudrate)
 
     CLOVE_INT_EQ(expected_value, actual_value);
 }
+
+// Test 5
+CLOVE_TEST(test_get_timeout)
+{
+    // This test ensures that the get_timeout() function will return the correct timeout valeu
+    // specified in the configuration file.
+
+    int expected_value = local_config.at("serial").at("timeout").as<int>();
+    int actual_value = Config::get_timeout();
+
+    CLOVE_INT_EQ(expected_value, actual_value);
+}
