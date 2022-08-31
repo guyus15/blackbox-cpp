@@ -19,4 +19,11 @@ namespace Config
 
         return directory;
     }
+
+    bool get_log_enabled()
+    {
+        bool enabled = config.at("logging").at("enabled").as<bool>();
+
+        return enabled;
+    }
 }

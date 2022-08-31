@@ -24,3 +24,14 @@ CLOVE_TEST(test_get_log_dir)
 
     CLOVE_STRING_EQ(expected_value.c_str(), actual_value.c_str());
 }
+
+// Test 2
+CLOVE_TEST(test_get_log_enabled)
+{
+    // This test ensures that get_log_enabled() returns the expected value.
+
+    bool expected_value = local_config.at("logging").at("enabled").as<bool>();
+    bool actual_value = Config::get_log_enabled();
+
+    CLOVE_INT_EQ(expected_value, actual_value);
+}
