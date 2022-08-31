@@ -51,4 +51,31 @@ namespace Config
 
         return timeout;
     }
+
+    SerialDataBits get_bytesize()
+    {
+        int bytesize = config.at("serial").at("bytesize").as<int>();
+
+        // Set data bits size to 8 by default.
+        SerialDataBits databits = SERIAL_DATABITS_8;
+
+        switch (bytesize)
+        {
+            case 5:
+                databits = SERIAL_DATABITS_5;
+                break;
+            case 6:
+                databits = SERIAL_DATABITS_6;
+                break;
+            case 7:
+                databits = SERIAL_DATABITS_7;
+                break;
+            case 8:
+                databits = SERIAL_DATABITS_8;
+                break;
+            case 16:
+                databits = SERIAL_DATABITS_16;
+                break;
+        }
+    }
 }

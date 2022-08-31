@@ -4,6 +4,8 @@
  * @author G. Chamberlain-Webber
  */
 
+#include "serial/serialib.h"
+
 #include <string>
 
 namespace Config
@@ -38,9 +40,16 @@ namespace Config
     int get_baudrate();
 
     /**
-     * @brief Get the timeout value from the configuration file.
+     * @brief Gets the timeout value from the configuration file.
      * 
      * @return int The timeout value from the configuration file.
      */
     int get_timeout();
+
+    /**
+     * @brief Gets the bytesize valeu from the configuration file.
+     * 
+     * @return int The bytesize value from the configuration file.
+     */
+    SerialDataBits get_bytesize();
 }
