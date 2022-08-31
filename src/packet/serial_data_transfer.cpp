@@ -5,6 +5,7 @@
  */
 
 #include "packet/serial_data_transfer.h"
+#include "config.h"
 
 #include <cstdio>
 #include <cstdlib>
@@ -13,8 +14,17 @@ namespace Packets
 {
     SerialDataTransfer::SerialDataTransfer()
     {
-        // Hard-coded serial setup for now, but this will later be be configurable.
-        if (!_serial.openDevice("COM8", 115200)) 
+        const char *com_port = Config::get_com_port().c_str();
+        const int baudrate = Config::get_baudrate();
+        enum SerialDataBits databits = Config::get_bytesize();
+        enum SerialParity parity = Config::get_parity();
+        enum SerialStopBits stopbits = Config::get_stopbits();
+
+        if (!_serial.openDevice(com_port,
+                                baudrate,
+                                databits,
+                                parity,
+                                stopbits)) 
         {
             fprintf(stderr, "Error: There has been an error opening serial device.\n");
             exit(EXIT_FAILURE);
