@@ -23,6 +23,8 @@ TEST_SOURCES = tests/run_tests.cpp \
 			   src/packet/content.cpp \
 			   src/packet/headers.cpp \
 			   src/packet/packet.cpp \
+			   src/packet/serial_data_transfer.cpp \
+			   src/serial/serialib.cpp
 
 TEST_INCLUDES = -I include/
 TEST_NAME = run_tests
