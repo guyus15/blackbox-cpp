@@ -37,4 +37,11 @@ namespace Config
 
         return com_port;
     }
+
+    int get_baudrate()
+    {
+        int baudrate = config.at("serial").at("baudrate").as<int>();
+
+        return baudrate;
+    }
 }

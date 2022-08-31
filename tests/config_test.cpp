@@ -54,3 +54,15 @@ CLOVE_TEST(test_get_com_port)
     CLOVE_STRING_EQ(expected_value.c_str(), actual_value.c_str());
     #endif
 }
+
+// Test 4
+CLOVE_TEST(test_get_baudrate)
+{
+    // This test ensures that the get_baudrate() function will return the correct baudrate specified
+    // in the configuration file.
+
+    int expected_value = local_config.at("serial").at("baudrate").as<int>();
+    int actual_value = Config::get_baudrate();
+
+    CLOVE_INT_EQ(expected_value, actual_value);
+}

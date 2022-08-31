@@ -29,4 +29,11 @@ namespace Config
      * @return std::string The COM port from the configuration file.
      */
     std::string get_com_port();
+
+    /**
+     * @brief Gets the baudrate value from the configuration file.
+     * 
+     * @return int The baudrate value from the configuration file.
+     */
+    int get_baudrate();
 }
