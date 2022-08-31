@@ -5,7 +5,7 @@
   },
   "serial": {
     "com": {
-      "windows": "COM7",
+      "windows": "COM8",
       "linux": "/dev/ttyUSB0"
     },
     "baudrate": 115200,
@@ -13,5 +13,9 @@
     "bytesize": 8,
     "parity": "none",
     "stopbits": 1
+  },
+  "timing": {
+    "poll-time-period": 1,
+    "ping-time-period": 5
   }
 }
