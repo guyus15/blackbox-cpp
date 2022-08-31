@@ -35,3 +35,22 @@ CLOVE_TEST(test_get_log_enabled)
 
     CLOVE_INT_EQ(expected_value, actual_value);
 }
+
+// Test 3
+CLOVE_TEST(test_get_com_port)
+{
+    // This test ensures that get_com_port() returns the expected value.
+
+    #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+    std::string expected_value = local_config.at("serial").at("com").at("windows").as<std::string>();
+    std::string actual_value = Config::get_com_port();
+
+    CLOVE_STRING_EQ(expected_value.c_str(), actual_value.c_str());
+
+    #else
+    std::string expected_value = local_config.at("serial").at("com").at("linux").as<std::string>();
+    std::string actual_value = Config::get_com_port();
+
+    CLOVE_STRING_EQ(expected_value.c_str(), actual_value.c_str());
+    #endif
+}

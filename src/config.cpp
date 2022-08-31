@@ -26,4 +26,15 @@ namespace Config
 
         return enabled;
     }
+
+    std::string get_com_port()
+    {
+        #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+        std::string com_port = config.at("serial").at("com").at("windows").as<std::string>();
+        #else
+        std::string com_port = config.at("serial").at("com").at("linux").as<std::string>();
+        #endif
+
+        return com_port;
+    }
 }

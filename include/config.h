@@ -22,4 +22,11 @@ namespace Config
      * @return false If logging enabled is set to false in the configuration file.
      */
     bool get_log_enabled();
+
+    /**
+     * @brief Gets the COM port value from the configuration file.
+     * 
+     * @return std::string The COM port from the configuration file.
+     */
+    std::string get_com_port();
 }
