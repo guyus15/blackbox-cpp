@@ -2,5 +2,16 @@
   "logging": {
     "enabled": true,
     "directory": "logs"
+  },
+  "serial": {
+    "com": {
+      "windows": "COM7",
+      "linux": "/dev/ttyUSB0"
+    },
+    "baudrate": 115200,
+    "timeout": 1,
+    "bytesize": 8,
+    "parity": "none",
+    "stopbits": 1
   }
 }
