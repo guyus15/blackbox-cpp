@@ -4,6 +4,8 @@
  * @author G. Chamberlain-Webber
  */
 
+#include "config.h"
+
 #include "tao/json/value.hpp"
 #include "tao/json/from_file.hpp"
 
@@ -52,7 +54,7 @@ namespace Config
         return timeout;
     }
 
-    SerialDataBits get_bytesize()
+    enum SerialDataBits get_bytesize()
     {
         int bytesize = config.at("serial").at("bytesize").as<int>();
 
@@ -76,6 +78,41 @@ namespace Config
             case 16:
                 databits = SERIAL_DATABITS_16;
                 break;
+            default:
+                databits = SERIAL_DATABITS_8;
         }
+
+        return databits;
+    }
+
+    enum SerialParity get_parity()
+    {
+        const std::string parity = config.at("serial").at("parity").as<std::string>();
+
+        // Set parity to none by default.
+        SerialParity parity_value = SERIAL_PARITY_NONE;
+
+        if (parity == "none")
+        {
+            parity_value = SERIAL_PARITY_NONE;
+        } else if (parity == "even")
+        {
+            parity_value = SERIAL_PARITY_EVEN;
+        } else if (parity == "odd")
+        {
+            parity_value = SERIAL_PARITY_ODD;
+        } else if (parity == "mark")
+        {
+            parity_value = SERIAL_PARITY_MARK;
+        } else if (parity == "space")
+        {
+            parity_value = SERIAL_PARITY_SPACE;
+        } else
+        {
+            // Default to 'none' if it has not been accounted for.
+            parity_value = SERIAL_PARITY_NONE;
+        }
+
+        return parity_value;
     }
 }

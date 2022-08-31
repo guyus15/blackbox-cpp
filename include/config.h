@@ -47,9 +47,16 @@ namespace Config
     int get_timeout();
 
     /**
-     * @brief Gets the bytesize valeu from the configuration file.
+     * @brief Gets the bytesize value from the configuration file as a SerialDataBits enum value.
      * 
-     * @return int The bytesize value from the configuration file.
+     * @return SerialDataBits The bytesize value from the configuration file.
      */
-    SerialDataBits get_bytesize();
+    enum SerialDataBits get_bytesize();
+
+    /**
+     * @brief Gets the parity value from the configuration file as a SerialParity enum value.
+     * 
+     * @return SerialParity The parity value from the configuration file.
+     */
+    enum SerialParity get_parity();
 }
