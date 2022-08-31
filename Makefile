@@ -14,8 +14,7 @@ TARGET_SOURCES = src/main.cpp \
 				 src/serial/serialib.cpp \
 				 src/config.cpp
 
-TARGET_INCLUDES = -I include/ \
-				  -I libs/yaml-cpp/include
+TARGET_INCLUDES = -I include/
 
 # Tests
 TEST_SOURCES = tests/run_tests.cpp \
@@ -30,9 +29,7 @@ TEST_SOURCES = tests/run_tests.cpp \
 			   src/serial/serialib.cpp \
 			   src/config.cpp
 
-TEST_INCLUDES = -I include/ \
-				-I libs/yaml-cpp/include
-
+TEST_INCLUDES = -I include/
 TEST_NAME = run_tests
 
 main:
