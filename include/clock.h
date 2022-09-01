@@ -22,7 +22,7 @@ class Clock
          * @return true If 'seconds' have passed since the start time.
          * @return false If 'seconds' have not passed since the start time.
          */
-        bool time_elapsed(int seconds);
+        bool time_elapsed(float seconds);
 
     private:
         std::chrono::time_point<std::chrono::system_clock> _start_time;

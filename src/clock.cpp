@@ -11,7 +11,7 @@ Clock::Clock(bool start_true)
 {
 }
 
-bool Clock::time_elapsed(int seconds)
+bool Clock::time_elapsed(float seconds)
 {
     if (_start_true)
     {
