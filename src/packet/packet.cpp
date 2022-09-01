@@ -7,6 +7,8 @@
 #include "packet/packet.h"
 #include "packet/serial_data_transfer.h"
 
+#include "constants.h"
+
 namespace Packets
 {
     unsigned char Packet::soh = 0x01;
@@ -48,7 +50,7 @@ namespace Packets
             checksum += value;
         }
 
-        checksum %= 256;
+        checksum %= Constants::CHECKSUM_MOD;
 
         _bytes.push_back((unsigned char)checksum);
 
@@ -92,7 +94,7 @@ namespace Packets
         // If data has been read. We should send back an acknowledgememt (ACK) byte.
         if (read_data.size() > 1)
         {
-            serial->write_byte(0x06);
+            serial->write_byte(Constants::ACK);
         }
 
         delete serial;
@@ -104,10 +106,10 @@ namespace Packets
     {
         seq++;
                 
-        // Wrap round if SEQ exceeds 15.
-        if (seq > 0x0f)
+        // Wrap round if SEQ exceeds the constant value.
+        if (seq > Constants::SEQ_WRAP)
         {
-            seq = 0x01;
+            seq = Constants::SEQ;
         }
     }
 }
