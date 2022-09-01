@@ -11,6 +11,7 @@ TARGET_SOURCES = src/main.cpp \
 				 src/packet/headers.cpp \
 				 src/packet/packet.cpp \
 				 src/packet/serial_data_transfer.cpp \
+				 src/packet/packet_types.cpp \
 				 src/serial/serialib.cpp \
 				 src/config.cpp \
 				 src/logger.cpp \
