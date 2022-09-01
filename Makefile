@@ -13,7 +13,8 @@ TARGET_SOURCES = src/main.cpp \
 				 src/packet/serial_data_transfer.cpp \
 				 src/serial/serialib.cpp \
 				 src/config.cpp \
-				 src/logger.cpp
+				 src/logger.cpp \
+				 src/clock.cpp
 
 TARGET_INCLUDES = -I include/
 
