@@ -6,10 +6,11 @@
 
 #include "packet/headers.h"
 #include "packet/writable.h"
+#include "packet/readable.h"
 
 namespace Packets
 {
-    class Packet : public Content, public IWritable
+    class Packet : public Content, public IWritable, public IReadable
     {
         public:
             static unsigned char soh;
@@ -30,6 +31,11 @@ namespace Packets
              * @brief Writes data to a serial communication port.
              */
             void write();
+
+            /**
+             * @brief Reads from a serial communication port.
+             */
+            void read();
 
             /**
              * @brief Increments the SEQ number.
