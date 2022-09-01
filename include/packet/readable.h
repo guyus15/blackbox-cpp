@@ -4,6 +4,9 @@
  * @author G. Chamberlain-Webber
  */
 
+#ifndef READABLE_H
+#define READABLE_H
+
 #include <vector>
 
 namespace Packets
@@ -14,3 +17,5 @@ namespace Packets
             virtual std::vector<unsigned char> read() = 0;
     };
 }
+
+#endif
