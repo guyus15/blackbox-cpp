@@ -6,6 +6,8 @@
 
 #include "packet/headers.h"
 
+#include "constants.h"
+
 namespace Packets
 {
     BaseHeader::BaseHeader(PacketID packet_id, std::vector<std::pair<std::string, unsigned char>> p)
@@ -18,15 +20,15 @@ namespace Packets
     {
         std::vector<std::pair<std::string, unsigned char>> params
         {
-            {"packet_length",               0x09},
-            {"network_node",                0x00},
-            {"channel",                     0x00},
-            {"destination_channel_address", 0x00},
-            {"destination_task",            0x00},
-            {"source_channel_address",      0x00},
-            {"source_task",                 0x00},
-            {"marker",                      0x00},
-            {"packet_id",                   (unsigned char)packet_id}
+            {Constants::PNAME_PACKET_LENGTH,               0x09},
+            {Constants::PNAME_NETWORK_NODE,                0x00},
+            {Constants::PNAME_CHANNEL,                     0x00},
+            {Constants::PNAME_DESTINATION_CHANNEL_ADDRESS, 0x00},
+            {Constants::PNAME_DESTINATION_TASK,            0x00},
+            {Constants::PNAME_SOURCE_CHANNEL_ADDRESS,      0x00},
+            {Constants::PNAME_SOURCE_TASK,                 0x00},
+            {Constants::PNAME_MARKER,                      0x00},
+            {Constants::PNAME_PACKET_ID,                   (unsigned char)packet_id}
         };
 
         _params = params;
@@ -37,17 +39,17 @@ namespace Packets
     {
         std::vector<std::pair<std::string, unsigned char>> params
         {
-            {"packet_length",               0x09},
-            {"mx_speak_signature",          0xe4},  // 228
-            {"network_node",                0x00},
-            {"channel",                     0x00},
-            {"destination_channel_address", 0x00},
-            {"destination_task",            0x00},
-            {"source_channel_address",      0x00},
-            {"source_task",                 0x00},
-            {"marker",                      0x00},
-            {"packet_id",                   (unsigned char)packet_id},
-            {"reserved",                    0x00}
+            {Constants::PNAME_PACKET_LENGTH,               0x09},
+            {Constants::PNAME_MX6_SPEAKSIGNATURE,          0xe4},  // 228
+            {Constants::PNAME_NETWORK_NODE,                0x00},
+            {Constants::PNAME_CHANNEL,                     0x00},
+            {Constants::PNAME_DESTINATION_CHANNEL_ADDRESS, 0x00},
+            {Constants::PNAME_DESTINATION_TASK,            0x00},
+            {Constants::PNAME_SOURCE_CHANNEL_ADDRESS,      0x00},
+            {Constants::PNAME_SOURCE_TASK,                 0x00},
+            {Constants::PNAME_MARKER,                      0x00},
+            {Constants::PNAME_PACKET_ID,                   (unsigned char)packet_id},
+            {Constants::PNAME_RESERVED,                    0x00}
         };
 
         _params = params;
