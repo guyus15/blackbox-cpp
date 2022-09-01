@@ -85,6 +85,11 @@ namespace Packets::Types
         _packet->write();
     }
 
+    std::vector<unsigned char> PointInformationRequestMX5::read()
+    {
+        return _packet->read();
+    }
+
 
     /*
      * PointInformationRequestMX6

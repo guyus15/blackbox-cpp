@@ -8,11 +8,15 @@
 #define PACKET_TYPES_H
 
 #include "packet/writable.h"
+#include "packet/readable.h"
 #include "packet/packet.h"
 
 namespace Packets::Types
 {
-    class PointInformationRequestMX5 : public IWritable
+    /**
+     * @brief A class representing a point information request (MX5).
+     */
+    class PointInformationRequestMX5 : public IWritable, IReadable
     {
         public:
             PointInformationRequestMX5(int point_number);
@@ -23,11 +27,21 @@ namespace Packets::Types
              */
             void write();
 
+            /**
+             * @brief Reads contents of a packet from a serial communication port.
+             * 
+             * @return std::vector<unsigned char> The read data.
+             */
+            std::vector<unsigned char> read();
+
         private:
             Packet *_packet;
             int _point_number;
     };
 
+    /**
+     * @brief A class representing a point information request (MX6).
+     */
     class PointInformationRequestMX6 : public IWritable
     {
         public:
