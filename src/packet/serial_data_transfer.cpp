@@ -77,7 +77,15 @@ namespace Packets
         char seq = 0;
         char packet_length = 0;
 
-        _serial.readChar(&soh);
+        _serial.readChar(&soh, 500);
+
+        if (soh == 0)
+        {
+            // If the SOH cannot be read, clearly there is no response from the packet,
+            // so we'll return no data and try sending another packet with a different SEQ.
+            return read_data;
+        }
+
         _serial.readChar(&seq);
         _serial.readChar(&packet_length);
 
