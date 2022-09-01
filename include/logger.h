@@ -4,6 +4,9 @@
  * @author G. Chamberlain-Webber
  */
 
+#ifndef LOGGER_H
+#define LOGGER_H
+
 #include <string>
 
 class Logger
@@ -49,3 +52,5 @@ class Logger
          */
         void write_log_linux(const std::string& entry, const std::string logfile);
 };
+
+#endif
