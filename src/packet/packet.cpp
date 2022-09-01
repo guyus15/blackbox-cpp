@@ -65,6 +65,41 @@ namespace Packets
         Packet::increment_seq();
     }
 
+    std::vector<unsigned char> Packet::read()
+    {
+        SerialDataTransfer *serial = new SerialDataTransfer;
+
+        bool has_data = false;
+        std::vector<unsigned char> read_data;
+
+        while (!has_data)
+        {
+            read_data = serial->read();
+
+            if (read_data.size() == 0)
+            {
+                // No data could be read so try another packet.
+                delete serial;
+                Packet::write();
+                serial = new SerialDataTransfer();
+            } else if (read_data.size() > 1)
+            {
+                // Data has been found.
+                has_data = true;
+            }
+        }
+
+        // If data has been read. We should send back an acknowledgememt (ACK) byte.
+        if (read_data.size() > 1)
+        {
+            serial->write_byte(0x06);
+        }
+
+        delete serial;
+
+        return read_data;
+    }
+
     void Packet::increment_seq()
     {
         seq++;

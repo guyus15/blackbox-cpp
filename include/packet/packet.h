@@ -35,7 +35,7 @@ namespace Packets
             /**
              * @brief Reads from a serial communication port.
              */
-            void read();
+            std::vector<unsigned char> read();
 
             /**
              * @brief Increments the SEQ number.
