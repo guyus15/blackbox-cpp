@@ -24,7 +24,7 @@ namespace Packets
         _params = combined;
 
         // Update the packet length parameter.
-        set_parameter("packet_length", _params.size());
+        set_parameter(Constants::PNAME_PACKET_LENGTH, _params.size());
     }
 
     Packet::~Packet() {}
