@@ -57,8 +57,6 @@ namespace Packets
         bool ack_acquired = false;
         char ack = 0;
 
-        printf("Acquiring ACK...\n");
-
         while (!ack_acquired)
         {
             _serial.readChar(&ack);
@@ -68,8 +66,6 @@ namespace Packets
                 ack_acquired = true;
             }
         }
-
-        printf("ACK acquired.\n");
 
         std::vector<unsigned char> read_data;
 
