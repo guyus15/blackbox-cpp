@@ -12,6 +12,10 @@
 
 namespace Packets
 {
+    Content::Content()
+    : _params{}, _bytes{}
+    {}
+
     Content::Content(std::vector<std::pair<std::string, unsigned char>>& params)
     : _params{params}, _bytes{}
     {

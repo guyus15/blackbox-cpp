@@ -21,6 +21,7 @@ namespace Packets
     class Content : public IByteContainer
     {
         public:
+            Content();
             Content(std::vector<std::pair<std::string, unsigned char>>& params);
 
             /**
