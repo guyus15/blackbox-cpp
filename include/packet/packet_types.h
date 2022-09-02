@@ -10,9 +10,12 @@
 #include "packet/writable.h"
 #include "packet/readable.h"
 #include "packet/packet.h"
+#include "packet/content.h"
 
 namespace Packets::Types
 {
+    /* Request packets */
+
     /**
      * @brief A class representing a point information request (MX5).
      */
@@ -63,6 +66,19 @@ namespace Packets::Types
         private:
             Packet *_packet;
             int _point_number;
+    };
+
+    /* Reply packets */
+
+    /**
+     * @brief A class representing a point information reply (MX5).
+     * 
+     */
+    class PointInformationReplyMX5 : public Content
+    {
+        public:
+            PointInformationReplyMX5(int point_number, std::vector<unsigned char> data);
+            ~PointInformationReplyMX5() = default;
     };
 }
 

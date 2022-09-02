@@ -9,6 +9,10 @@
 #include "packet/headers.h"
 #include "packet/packet_ids.h"
 
+#include "constants.h"
+
+#include <iostream>
+
 namespace Packets::Types
 {
     /*
@@ -168,5 +172,69 @@ namespace Packets::Types
     std::vector<unsigned char> PointInformationRequestMX6::read()
     {
         return _packet->read();
+    }
+
+
+    /*
+     * PointInformationReplyMX5
+     */
+    
+    PointInformationReplyMX5::PointInformationReplyMX5(int point_number, std::vector<unsigned char> data)
+    : Content{}
+    {
+        _params.push_back({Constants::PNAME_SOH,                            data[Constants::PIRMX5_SOH_INDEX]});
+        _params.push_back({Constants::PNAME_SEQ,                            data[Constants::PIRMX5_SEQ_INDEX]});
+        _params.push_back({Constants::PNAME_PACKET_LENGTH,                  data[Constants::PIRMX5_PACKET_LENGTH_INDEX]});
+        _params.push_back({Constants::PNAME_NETWORK_NODE,                   data[Constants::PIRMX5_NETWORK_NODE_INDEX]});
+        _params.push_back({Constants::PNAME_CHANNEL,                        data[Constants::PIRMX5_POINT_ADDRESS_CHANNEL_INDEX]});
+        _params.push_back({Constants::PNAME_DESTINATION_CHANNEL_ADDRESS,    data[Constants::PIRMX5_DESTINATION_CHANNEL_ADDRESS_INDEX]});
+        _params.push_back({Constants::PNAME_DESTINATION_TASK,               data[Constants::PIRMX5_DESTINATION_TASK_INDEX]});
+        _params.push_back({Constants::PNAME_SOURCE_CHANNEL_ADDRESS,         data[Constants::PIRMX5_SOURCE_CHANNEL_ADDRESS_INDEX]});
+        _params.push_back({Constants::PNAME_SOURCE_TASK,                    data[Constants::PIRMX5_SOURCE_TASK_INDEX]});
+        _params.push_back({Constants::PNAME_MARKER,                         data[Constants::PIRMX5_MARKER_INDEX]});
+        _params.push_back({Constants::PNAME_PACKET_ID,                      data[Constants::PIRMX5_PACKET_ID_INDEX]});
+        _params.push_back({Constants::PNAME_REPLY_STATUS,                   data[Constants::PIRMX5_REPLY_STATUS_INDEX]});
+        _params.push_back({Constants::PNAME_FLAGS,                          data[Constants::PIRMX5_FLAGS_INDEX]});
+        _params.push_back({Constants::PNAME_NODE,                           data[Constants::PIRMX5_NODE_INDEX]});
+        _params.push_back({Constants::PNAME_PCHANNEL,                       data[Constants::PIRMX5_POINT_ADDRESS_CHANNEL_INDEX]});
+        _params.push_back({Constants::PNAME_CHANNEL_ADDRESS,                data[Constants::PIRMX5_CHANNEL_ADDRESS_INDEX]});
+        _params.push_back({Constants::PNAME_POINT_CATEGORY,                 data[Constants::PIRMX5_POINT_CATEGORY_INDEX]});
+        _params.push_back({Constants::PNAME_POINT_NUMBER,                   data[Constants::PIRMX5_POINT_NUMBER_INDEX]});
+        _params.push_back({Constants::PNAME_LOGICAL_POINT_NUMBER,           data[Constants::PIRMX5_LOGICAL_POINT_NUMBER_INDEX]});
+        _params.push_back({Constants::PNAME_LOGICAL_POINT_ZONE,             data[Constants::PIRMX5_LOGICAL_POINT_ZONE_INDEX]});
+        _params.push_back({Constants::PNAME_DEVICE_TYPE,                    data[Constants::PIRMX5_DEVICE_TYPE_INDEX]});
+        _params.push_back({Constants::PNAME_AUXILIARY_POINT_ATTRIBUTES,     data[Constants::PIRMX5_AUXILIARY_POINT_ATTRIBUTES_INDEX]});
+        _params.push_back({Constants::PNAME_GROUP1,                         data[Constants::PIRMX5_GROUP1_INDEX]});
+        _params.push_back({Constants::PNAME_GROUP2,                         data[Constants::PIRMX5_GROUP2_INDEX]});
+        _params.push_back({Constants::PNAME_AREA_TYPE,                      data[Constants::PIRMX5_AREA_TYPE_INDEX]});
+        _params.push_back({Constants::PNAME_AREA_NUMBER,                    data[Constants::PIRMX5_AREA_NUMBER_INDEX]});
+        _params.push_back({Constants::PNAME_SECTOR_ID,                      data[Constants::PIRMX5_SECTOR_ID_INDEX]});
+        _params.push_back({Constants::PNAME_LOOP_TYPE,                      data[Constants::PIRMX5_LOOP_TYPE_INDEX]});
+        _params.push_back({Constants::PNAME_RAW_IDENTITY,                   data[Constants::PIRMX5_RAW_IDENTITY_INDEX]});
+        _params.push_back({Constants::PNAME_ACTUAL_DEVICE_TYPE,             data[Constants::PIRMX5_ACTUAL_DEVICE_TYPE_INDEX]});
+        _params.push_back({Constants::PNAME_MODE_AND_SENSITIVITY,           data[Constants::PIRMX5_MODE_AND_SENSITIVITY_INDEX]});
+        _params.push_back({Constants::PNAME_RAW_ANALOGUE_VALUES1,           data[Constants::PIRMX5_RAW_ANALOGUE_VALUES1_INDEX]});
+        _params.push_back({Constants::PNAME_RAW_ANALOGUE_VALUES2,           data[Constants::PIRMX5_RAW_ANALOGUE_VALUES2_INDEX]});
+        _params.push_back({Constants::PNAME_RAW_ANALOGUE_VALUES3,           data[Constants::PIRMX5_RAW_ANALOGUE_VALUES3_INDEX]});
+        _params.push_back({Constants::PNAME_LTA_FLAGS,                      data[Constants::PIRMX5_LTA_FLAGS_INDEX]});
+        _params.push_back({Constants::PNAME_RAW_LTA,                        data[Constants::PIRMX5_RAW_LTA_INDEX]});
+        _params.push_back({Constants::PNAME_DIRTINESS,                      data[Constants::PIRMX5_DIRTINESS_INDEX]});
+        _params.push_back({Constants::PNAME_UNITS_OF_MEASURE1,              data[Constants::PIRMX5_UNITS_OF_MEASURE1_INDEX]});
+        _params.push_back({Constants::PNAME_UNITS_OF_MEASURE2,              data[Constants::PIRMX5_UNITS_OF_MEASURE2_INDEX]});
+        _params.push_back({Constants::PNAME_UNITS_OF_MEASURE3,              data[Constants::PIRMX5_UNITS_OF_MEASURE3_INDEX]});
+        _params.push_back({Constants::PNAME_CONVERTED_VALUES1,              data[Constants::PIRMX5_CONVERTED_VALUE1_INDEX]});
+        _params.push_back({Constants::PNAME_CONVERTED_VALUES2,              data[Constants::PIRMX5_CONVERTED_VALUE2_INDEX]});
+        _params.push_back({Constants::PNAME_CONVERTED_VALUES3,              data[Constants::PIRMX5_CONVERTED_VALUE3_INDEX]});
+        _params.push_back({Constants::PNAME_INSTANTANEOUS_ACTIVE_STATE,     data[Constants::PIRMX5_INSTANTANEOUS_ACTIVE_STATE_INDEX]});
+        _params.push_back({Constants::PNAME_INSTANTANEOUS_FAULT_STATE,      data[Constants::PIRMX5_INSTANTANEOUS_FAULT_STATE_INDEX]});
+        _params.push_back({Constants::PNAME_CONFIRMED_ACTIVE_STATE,         data[Constants::PIRMX5_CONFIRMED_ACTIVE_STATE_INDEX]});
+        _params.push_back({Constants::PNAME_CONFIRMED_FAULT_STATE,          data[Constants::PIRMX5_CONFIRMED_FAULT_STATE_INDEX]});
+        _params.push_back({Constants::PNAME_ACKNOWLEDGED_ACTIVE_STATE,      data[Constants::PIRMX5_ACKNOWLEDGED_ACTIVE_STATE_INDEX]});
+        _params.push_back({Constants::PNAME_ACKNOWLEDGED_FAULT_STATE,       data[Constants::PIRMX5_ACKNOWLEDGED_FAULT_STATE_INDEX]});
+        _params.push_back({Constants::PNAME_OUTPUT_FORCED_MODE,             data[Constants::PIRMX5_OUTPUT_FORCED_MODE_INDEX]});
+        _params.push_back({Constants::PNAME_OUTPUT_UNFORCED_STATE,          data[Constants::PIRMX5_OUTPUT_UNFORCED_STATE_INDEX]});
+        _params.push_back({Constants::PNAME_OUTPUT_FORCED_STATE,            data[Constants::PIRMX5_OUTPUT_FORCED_STATE_INDEX]});
+        _params.push_back({Constants::PNAME_CLIENTID1,                      data[Constants::PIRMX5_CLIENT_ID1_INDEX]});
+        _params.push_back({Constants::PNAME_CLIENTID2,                      data[Constants::PIRMX5_CLIENT_ID2_INDEX]});
     }
 }
