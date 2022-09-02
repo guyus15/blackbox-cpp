@@ -82,6 +82,14 @@ namespace Packets::Types
         public:
             PointInformationReplyMX5(std::vector<unsigned char> data);
             ~PointInformationReplyMX5() = default;
+
+            /**
+             * @brief Returns the reply status of the point information reply.
+             * 
+             * @return true The reply has been successful.
+             * @return false The reply has not been successful.
+             */
+            bool reply_successful();
     };
 }
 

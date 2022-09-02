@@ -242,4 +242,9 @@ namespace Packets::Types
         _params.push_back({Constants::PNAME_CLIENTID1,                      data[Constants::PIRMX5_CLIENT_ID1_INDEX]});
         _params.push_back({Constants::PNAME_CLIENTID2,                      data[Constants::PIRMX5_CLIENT_ID2_INDEX]});
     }
+
+    bool PointInformationReplyMX5::reply_successful()
+    {
+        return get_parameter(Constants::PNAME_REPLY_STATUS) == 0;
+    }
 }
