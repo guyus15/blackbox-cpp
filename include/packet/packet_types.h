@@ -16,10 +16,12 @@ namespace Packets::Types
 {
     /* Request packets */
 
+    class PointInformationReplyMX5;
+
     /**
      * @brief A class representing a point information request (MX5).
      */
-    class PointInformationRequestMX5 : public IWritable, IReadable
+    class PointInformationRequestMX5 : public IWritable
     {
         public:
             PointInformationRequestMX5(int point_number);
@@ -31,11 +33,12 @@ namespace Packets::Types
             void write();
 
             /**
-             * @brief Reads contents of a packet from a serial communication port.
+             * @brief Reads contents of a packet from a serial communication port by
+             * calling the underlying packet read method.
              * 
-             * @return std::vector<unsigned char> The read data.
+             * @return std::vector<unsigned char> The data in the form of a PointInformationReplyMX5.
              */
-            std::vector<unsigned char> read();
+            PointInformationReplyMX5 *read();
 
         private:
             Packet *_packet;
@@ -77,7 +80,7 @@ namespace Packets::Types
     class PointInformationReplyMX5 : public Content
     {
         public:
-            PointInformationReplyMX5(int point_number, std::vector<unsigned char> data);
+            PointInformationReplyMX5(std::vector<unsigned char> data);
             ~PointInformationReplyMX5() = default;
     };
 }

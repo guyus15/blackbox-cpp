@@ -89,9 +89,14 @@ namespace Packets::Types
         _packet->write();
     }
 
-    std::vector<unsigned char> PointInformationRequestMX5::read()
+    PointInformationReplyMX5 *PointInformationRequestMX5::read()
     {
-        return _packet->read();
+        std::vector<unsigned char> read_data = _packet->read();
+
+        // TODO: ensure that this packet is deleted when out of scope.
+        PointInformationReplyMX5 *reply_packet = new PointInformationReplyMX5{read_data};
+
+        return reply_packet;
     }
 
 
@@ -179,7 +184,7 @@ namespace Packets::Types
      * PointInformationReplyMX5
      */
     
-    PointInformationReplyMX5::PointInformationReplyMX5(int point_number, std::vector<unsigned char> data)
+    PointInformationReplyMX5::PointInformationReplyMX5(std::vector<unsigned char> data)
     : Content{}
     {
         _params.push_back({Constants::PNAME_SOH,                            data[Constants::PIRMX5_SOH_INDEX]});
