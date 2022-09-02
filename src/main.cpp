@@ -39,10 +39,7 @@ int main()
 
             Packets::Types::PointInformationReplyMX5 *reply = packet.read();
 
-            for (const auto& param : reply->get_parameters())
-            {
-                std::cout << param.first << ": " << std::hex << (int)param.second << std::endl;
-            }
+            std::cout << reply->get_as_csv() << std::endl; 
         }
     }
 
