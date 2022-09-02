@@ -164,4 +164,9 @@ namespace Packets::Types
     {
         _packet->write();
     }
+
+    std::vector<unsigned char> PointInformationRequestMX6::read()
+    {
+        return _packet->read();
+    }
 }

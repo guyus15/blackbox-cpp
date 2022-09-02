@@ -53,6 +53,13 @@ namespace Packets::Types
              */
             void write();
 
+            /**
+             * @brief Reads contents of a packet from a serial communication port.
+             * 
+             * @return std::vector<unsignedchar> The read data.
+             */
+            std::vector<unsigned char> read();
+
         private:
             Packet *_packet;
             int _point_number;
