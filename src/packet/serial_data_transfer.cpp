@@ -20,11 +20,11 @@ namespace Packets
         enum SerialParity parity = Config::get_parity();
         enum SerialStopBits stopbits = Config::get_stopbits();
 
-        if (!_serial.openDevice(com_port,
+        if (_serial.openDevice(com_port,
                                 baudrate,
                                 databits,
                                 parity,
-                                stopbits)) 
+                                stopbits) != 1) 
         {
             fprintf(stderr, "Error: There has been an error opening serial device.\n");
             exit(EXIT_FAILURE);
