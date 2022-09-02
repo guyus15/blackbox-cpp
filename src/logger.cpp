@@ -58,7 +58,7 @@ void Logger::write_log(std::string entry, std::string logfile)
     time_string = std::regex_replace(time_string, newline_regex, "");
 
     char new_entry[128];
-    sprintf(new_entry, "%s - %s\n", time_string.c_str(), entry.c_str());
+    sprintf(new_entry, "%s,%s\n", time_string.c_str(), entry.c_str());
     entry = new_entry;
 
     // Log either on Linux or Windows, depending on current platform.
