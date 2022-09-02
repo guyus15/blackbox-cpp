@@ -15,7 +15,7 @@
     "stopbits": 1
   },
   "timing": {
-    "poll-time-period": 1,
+    "poll-time-period": 0.05,
     "ping-time-period": 5
   }
 }
