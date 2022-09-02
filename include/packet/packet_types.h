@@ -90,6 +90,13 @@ namespace Packets::Types
              * @return false The reply has not been successful.
              */
             bool reply_successful();
+
+            /**
+             * @brief Gets the point information reply in a CSV format.
+             * 
+             * @return std::string The CSV format point information reply.
+             */
+            std::string get_as_csv();
     };
 }
 

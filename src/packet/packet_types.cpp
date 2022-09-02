@@ -12,6 +12,7 @@
 #include "constants.h"
 
 #include <iostream>
+#include <sstream>
 
 namespace Packets::Types
 {
@@ -246,5 +247,22 @@ namespace Packets::Types
     bool PointInformationReplyMX5::reply_successful()
     {
         return get_parameter(Constants::PNAME_REPLY_STATUS) == 0;
+    }
+
+    std::string PointInformationReplyMX5::get_as_csv()
+    {
+        std::stringstream csv_stream;
+
+        for (const auto& byte : get_byte_array())
+        {
+            csv_stream << std::hex << (int)byte;
+            csv_stream << ",";
+        }
+
+        std::string csv_string = csv_stream.str();
+
+        csv_string = csv_string.substr(0, csv_string.size() - 1);
+
+        return csv_string;
     }
 }
