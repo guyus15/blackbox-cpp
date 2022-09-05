@@ -7,6 +7,7 @@
 #include "packet/packet_types.h"
 #include "clock.h"
 #include "config.h"
+#include "logger.h"
 
 #include <iostream>
 #include <vector>
@@ -17,7 +18,10 @@ int main()
 {
     std::vector<int> points = poll_points();
 
+    Logger logger;
     Clock clock{true};
+
+    std::string logfile = "logfile.txt";
 
     bool should_run = true;
     float ping_time_period = Config::get_ping_time_period();
@@ -39,7 +43,12 @@ int main()
 
             Packets::Types::PointInformationReplyMX5 *reply = packet.read();
 
-            std::cout << reply->get_as_csv() << std::endl; 
+            std::string entry = reply->get_as_csv();
+
+            std::cout << entry << std::endl; 
+
+            
+            logger.write_log(entry, logfile);
         }
     }
 
