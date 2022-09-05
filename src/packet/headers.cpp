@@ -8,11 +8,16 @@
 
 #include "constants.h"
 
+#include <string>
+
 namespace Packets
 {
     BaseHeader::BaseHeader(PacketID packet_id, std::vector<std::pair<std::string, unsigned char>> p)
     : Content{p}
     {
+        std::cout <<
+            "Do not use BaseHeader: use children of the class, LocalHeaderMX5 or LocalHeaderMX6 (packet ID:"
+            << (int)packet_id << ")" << std::endl; 
     }
 
     LocalHeaderMX5::LocalHeaderMX5(PacketID packet_id, std::vector<std::pair<std::string, unsigned char>> p)
