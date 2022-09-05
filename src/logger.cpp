@@ -52,13 +52,12 @@ void Logger::write_log(std::string entry, std::string logfile)
     std::string time_string = std::ctime(&current_time);
 
     // Remove new line characters
-    std::regex newline_regex{"\n"};
+    std::regex newline_regex{"[\r\n]+"};
 
     entry = std::regex_replace(entry, newline_regex, "");
     time_string = std::regex_replace(time_string, newline_regex, "");
 
-    char new_entry[128];
-    sprintf(new_entry, "%s,%s\n", time_string.c_str(), entry.c_str());
+    std::string new_entry = time_string + "," + entry + "\n";
     entry = new_entry;
 
     // Log either on Linux or Windows, depending on current platform.
@@ -84,7 +83,7 @@ void Logger::write_log_windows(const std::string& entry, const std::string logfi
     
 void Logger::write_log_linux(const std::string& entry, const std::string logfile)
 {
-    // This is a separate implementation to reserve a different behaviour for Linux in the 
+    // This is a separate implementation to reserve a differenta behaviour for Linux in the 
     // future. For example, we could do a check to see if the user has a USB connected, if
     // so, the logs can be written there instead.
     // Maybe something could also be done with status LEDs and other visual hardware.
