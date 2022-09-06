@@ -94,7 +94,6 @@ namespace Packets::Types
     {
         std::vector<unsigned char> read_data = _packet->read();
 
-        // TODO: ensure that this packet is deleted when out of scope.
         PointInformationReplyMX5 *reply_packet = new PointInformationReplyMX5{read_data};
 
         return reply_packet;

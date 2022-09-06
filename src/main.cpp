@@ -47,8 +47,9 @@ int main()
 
             std::cout << entry << std::endl; 
 
-            
             logger.write_log(entry, logfile);
+
+            delete reply;
         }
     }
 
