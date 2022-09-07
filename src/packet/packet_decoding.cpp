@@ -170,7 +170,7 @@ namespace Packets::Decoding
         {
             for (const auto& byte : data)
             {
-                std::cout << std::hex << (int)byte << ",";
+                std::cout << (int)byte << ",";
             }
 
             std::cout << "\n";
@@ -185,7 +185,7 @@ namespace Packets::Decoding
 
             // Node
             std::stringstream node_stream;
-            node_stream << std::hex << (int)data[Constants::PIRMX5_NODE_INDEX];
+            node_stream << (int)data[Constants::PIRMX5_NODE_INDEX];
             new_data.push_back(node_stream.str());
 
             // Channel
@@ -218,13 +218,13 @@ namespace Packets::Decoding
             else
             {
                 std::stringstream point_number_stream;
-                point_number_stream << std::hex << (int)data[Constants::PIRMX5_POINT_NUMBER_INDEX];
+                point_number_stream << (int)data[Constants::PIRMX5_POINT_NUMBER_INDEX];
                 new_data.push_back(point_number_stream.str());
             }
             
             // Logical point number
             std::stringstream logical_point_number_stream;
-            logical_point_number_stream << std::hex << (int)data[Constants::PIRMX5_LOGICAL_POINT_NUMBER_INDEX];
+            logical_point_number_stream << (int)data[Constants::PIRMX5_LOGICAL_POINT_NUMBER_INDEX];
             new_data.push_back(logical_point_number_stream.str());
 
             // Logical point zone
@@ -237,7 +237,7 @@ namespace Packets::Decoding
             else
             {
                 std::stringstream logical_point_zone_stream;
-                logical_point_zone_stream << std::hex << (int)data[Constants::PIRMX5_LOGICAL_POINT_ZONE_INDEX];
+                logical_point_zone_stream << (int)data[Constants::PIRMX5_LOGICAL_POINT_ZONE_INDEX];
                 new_data.push_back(logical_point_zone_stream.str());
             }
 
@@ -246,7 +246,7 @@ namespace Packets::Decoding
             
             // Auxiliary point attributes
             std::stringstream auxiliary_point_attributes_stream;
-            auxiliary_point_attributes_stream << std::hex << (int)data[Constants::PIRMX5_AUXILIARY_POINT_ATTRIBUTES_INDEX];
+            auxiliary_point_attributes_stream << (int)data[Constants::PIRMX5_AUXILIARY_POINT_ATTRIBUTES_INDEX];
             new_data.push_back(auxiliary_point_attributes_stream.str());
 
             // Group
@@ -255,17 +255,17 @@ namespace Packets::Decoding
             unsigned char group = (group1 << 8) + group2;
 
             std::stringstream group_stream;
-            group_stream << std::hex << (int)group;
+            group_stream << (int)group;
             new_data.push_back(group_stream.str());
 
             // Area type
             std::stringstream area_type_stream;
-            area_type_stream << std::hex << (int)data[Constants::PIRMX5_AREA_NUMBER_INDEX];
+            area_type_stream << (int)data[Constants::PIRMX5_AREA_NUMBER_INDEX];
             new_data.push_back(area_type_stream.str());
 
             // Area number
             std::stringstream area_number_stream;
-            area_number_stream << std::hex << (int)data[Constants::PIRMX5_AREA_NUMBER_INDEX];
+            area_number_stream << (int)data[Constants::PIRMX5_AREA_NUMBER_INDEX];
             new_data.push_back(area_number_stream.str());
 
             // Sector ID
@@ -278,7 +278,7 @@ namespace Packets::Decoding
             else
             {
                 std::stringstream sector_id_stream;
-                sector_id_stream << std::hex << (int)data[Constants::PIRMX5_SECTOR_ID_INDEX];
+                sector_id_stream << (int)data[Constants::PIRMX5_SECTOR_ID_INDEX];
                 new_data.push_back(sector_id_stream.str());
             }
             
@@ -287,26 +287,26 @@ namespace Packets::Decoding
 
             // Raw identity
             std::stringstream raw_identity_stream;
-            raw_identity_stream << std::hex << (int)data[Constants::PIRMX5_RAW_IDENTITY_INDEX];
+            raw_identity_stream << (int)data[Constants::PIRMX5_RAW_IDENTITY_INDEX];
             new_data.push_back(raw_identity_stream.str());
 
             // Actual device type
             std::stringstream actual_device_type_stream;
-            actual_device_type_stream << std::hex << (int)data[Constants::PIRMX5_ACTUAL_DEVICE_TYPE_INDEX];
+            actual_device_type_stream << (int)data[Constants::PIRMX5_ACTUAL_DEVICE_TYPE_INDEX];
             new_data.push_back(actual_device_type_stream.str());
 
             // Mode & sensitivity
             std::stringstream mode_sensitivity_stream;
-            mode_sensitivity_stream << std::hex << (int)data[Constants::PIRMX5_ACTUAL_DEVICE_TYPE_INDEX];
+            mode_sensitivity_stream << (int)data[Constants::PIRMX5_ACTUAL_DEVICE_TYPE_INDEX];
             new_data.push_back(mode_sensitivity_stream.str());
 
             // Raw analogue values
             std::stringstream raw_analogue_stream1;
-            raw_analogue_stream1 << std::hex << (int)data[Constants::PIRMX5_RAW_ANALOGUE_VALUES1_INDEX];
+            raw_analogue_stream1 << (int)data[Constants::PIRMX5_RAW_ANALOGUE_VALUES1_INDEX];
             std::stringstream raw_analogue_stream2;
-            raw_analogue_stream2 << std::hex << (int)data[Constants::PIRMX5_RAW_ANALOGUE_VALUES2_INDEX];
+            raw_analogue_stream2 << (int)data[Constants::PIRMX5_RAW_ANALOGUE_VALUES2_INDEX];
             std::stringstream raw_analogue_stream3;
-            raw_analogue_stream3 << std::hex << (int)data[Constants::PIRMX5_RAW_ANALOGUE_VALUES3_INDEX];
+            raw_analogue_stream3 << (int)data[Constants::PIRMX5_RAW_ANALOGUE_VALUES3_INDEX];
 
             new_data.push_back(raw_analogue_stream1.str());
             new_data.push_back(raw_analogue_stream2.str());
@@ -322,18 +322,18 @@ namespace Packets::Decoding
             else
             {
                 std::stringstream lta_flags_stream;
-                lta_flags_stream << std::hex << (int)data[Constants::PIRMX5_LTA_FLAGS_INDEX];
+                lta_flags_stream << (int)data[Constants::PIRMX5_LTA_FLAGS_INDEX];
                 new_data.push_back(lta_flags_stream.str());
             }
 
             // Raw LTA
             std::stringstream raw_lta_stream;
-            raw_lta_stream << std::hex << (int)data[Constants::PIRMX5_RAW_LTA_INDEX];
+            raw_lta_stream << (int)data[Constants::PIRMX5_RAW_LTA_INDEX];
             new_data.push_back(raw_lta_stream.str());
 
             // Dirtiness
             std::stringstream dirtiness_stream;
-            dirtiness_stream << std::hex << (int)data[Constants::PIRMX5_DIRTINESS_INDEX];
+            dirtiness_stream << (int)data[Constants::PIRMX5_DIRTINESS_INDEX];
             new_data.push_back(dirtiness_stream.str());
 
             // Units of measurement
@@ -343,11 +343,11 @@ namespace Packets::Decoding
 
             // Converted values
             std::stringstream converted_values_stream1;
-            converted_values_stream1 << std::hex << (int)data[Constants::PIRMX5_CONVERTED_VALUE1_INDEX];
+            converted_values_stream1 << (int)data[Constants::PIRMX5_CONVERTED_VALUE1_INDEX];
             std::stringstream converted_values_stream2;
-            converted_values_stream2 << std::hex << (int)data[Constants::PIRMX5_CONVERTED_VALUE2_INDEX];
+            converted_values_stream2 << (int)data[Constants::PIRMX5_CONVERTED_VALUE2_INDEX];
             std::stringstream converted_values_stream3;
-            converted_values_stream3 << std::hex << (int)data[Constants::PIRMX5_CONVERTED_VALUE3_INDEX];
+            converted_values_stream3 << (int)data[Constants::PIRMX5_CONVERTED_VALUE3_INDEX];
 
             new_data.push_back(converted_values_stream1.str());
             new_data.push_back(converted_values_stream2.str());
@@ -357,7 +357,7 @@ namespace Packets::Decoding
             new_data.push_back(instantaneous_active_state[data[Constants::PIRMX5_INSTANTANEOUS_ACTIVE_STATE_INDEX]]);
 
             std::stringstream instantaneous_fault_state_stream;
-            instantaneous_fault_state_stream << std::hex << (int)data[Constants::PIRMX5_INSTANTANEOUS_FAULT_STATE_INDEX];
+            instantaneous_fault_state_stream << (int)data[Constants::PIRMX5_INSTANTANEOUS_FAULT_STATE_INDEX];
             new_data.push_back(instantaneous_fault_state_stream.str());
 
             // Confirmed states
@@ -370,21 +370,21 @@ namespace Packets::Decoding
             else
             {
                 std::stringstream confirmed_states_stream;
-                confirmed_states_stream << std::hex << (int)data[Constants::PIRMX5_CONFIRMED_ACTIVE_STATE_INDEX];
+                confirmed_states_stream << (int)data[Constants::PIRMX5_CONFIRMED_ACTIVE_STATE_INDEX];
                 new_data.push_back(confirmed_states_stream.str());
             }
 
             std::stringstream confirmed_fault_state_stream;
-            confirmed_fault_state_stream << std::hex << (int)data[Constants::PIRMX5_CONFIRMED_FAULT_STATE_INDEX];
+            confirmed_fault_state_stream << (int)data[Constants::PIRMX5_CONFIRMED_FAULT_STATE_INDEX];
             new_data.push_back(confirmed_fault_state_stream.str());
 
             // Acknowledged states
             std::stringstream acknowledged_active_state_stream;
-            acknowledged_active_state_stream << std::hex << (int)data[Constants::PIRMX5_ACKNOWLEDGED_ACTIVE_STATE_INDEX];
+            acknowledged_active_state_stream << (int)data[Constants::PIRMX5_ACKNOWLEDGED_ACTIVE_STATE_INDEX];
             new_data.push_back(acknowledged_active_state_stream.str());
 
             std::stringstream acknowledged_fault_state_stream;
-            acknowledged_fault_state_stream << std::hex << (int)data[Constants::PIRMX5_ACKNOWLEDGED_FAULT_STATE_INDEX];
+            acknowledged_fault_state_stream << (int)data[Constants::PIRMX5_ACKNOWLEDGED_FAULT_STATE_INDEX];
             new_data.push_back(acknowledged_fault_state_stream.str());
 
             // Output forced mode
