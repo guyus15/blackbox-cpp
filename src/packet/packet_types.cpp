@@ -8,6 +8,7 @@
 
 #include "packet/headers.h"
 #include "packet/packet_ids.h"
+#include "packet/packet_decoding.h"
 
 #include "constants.h"
 
@@ -251,15 +252,19 @@ namespace Packets::Types
     std::string PointInformationReplyMX5::get_as_csv()
     {
         std::stringstream csv_stream;
+        
+        std::vector<unsigned char> byte_array = get_byte_array();
+        std::vector<std::string> decoded = Packets::Decoding::MX5::decode_point_information_reply(byte_array);
 
-        for (const auto& byte : get_byte_array())
+        for (const auto& value : decoded)
         {
-            csv_stream << std::hex << (int)byte;
+            csv_stream << value;
             csv_stream << ",";
         }
 
         std::string csv_string = csv_stream.str();
 
+        // Remove last comma from end.
         csv_string = csv_string.substr(0, csv_string.size() - 1);
 
         return csv_string;
