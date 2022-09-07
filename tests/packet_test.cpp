@@ -22,15 +22,15 @@ CLOVE_TEST(test_create_packet_no_parameters)
 
     std::vector<std::pair<std::string, unsigned char>> parameters = test_packet.get_parameters();
 
-    CLOVE_STRING_EQ(parameters[0].first.c_str(), "packet_length");
-    CLOVE_STRING_EQ(parameters[1].first.c_str(), "network_node");
-    CLOVE_STRING_EQ(parameters[2].first.c_str(), "channel");
-    CLOVE_STRING_EQ(parameters[3].first.c_str(), "destination_channel_address");
-    CLOVE_STRING_EQ(parameters[4].first.c_str(), "destination_task");
-    CLOVE_STRING_EQ(parameters[5].first.c_str(), "source_channel_address");
-    CLOVE_STRING_EQ(parameters[6].first.c_str(), "source_task");
-    CLOVE_STRING_EQ(parameters[7].first.c_str(), "marker");
-    CLOVE_STRING_EQ(parameters[8].first.c_str(), "packet_id");
+    CLOVE_STRING_EQ(parameters[0].first.c_str(), "hpacket_length");
+    CLOVE_STRING_EQ(parameters[1].first.c_str(), "hnetwork_node");
+    CLOVE_STRING_EQ(parameters[2].first.c_str(), "hchannel");
+    CLOVE_STRING_EQ(parameters[3].first.c_str(), "hdestination_channel_address");
+    CLOVE_STRING_EQ(parameters[4].first.c_str(), "hdestination_task");
+    CLOVE_STRING_EQ(parameters[5].first.c_str(), "hsource_channel_address");
+    CLOVE_STRING_EQ(parameters[6].first.c_str(), "hsource_task");
+    CLOVE_STRING_EQ(parameters[7].first.c_str(), "hmarker");
+    CLOVE_STRING_EQ(parameters[8].first.c_str(), "hpacket_id");
 
     CLOVE_CHAR_EQ(parameters[0].second, 0x09);
     CLOVE_CHAR_EQ(parameters[1].second, 0x00);
@@ -87,16 +87,16 @@ CLOVE_TEST(test_create_packet_w_parameters)
 
     std::vector<std::pair<std::string, unsigned char>> parameters = test_packet.get_parameters();
 
-    CLOVE_STRING_EQ(parameters[0].first.c_str(), "packet_length");
-    CLOVE_STRING_EQ(parameters[1].first.c_str(), "network_node");
-    CLOVE_STRING_EQ(parameters[2].first.c_str(), "channel");
-    CLOVE_STRING_EQ(parameters[3].first.c_str(), "destination_channel_address");
-    CLOVE_STRING_EQ(parameters[4].first.c_str(), "destination_task");
-    CLOVE_STRING_EQ(parameters[5].first.c_str(), "source_channel_address");
-    CLOVE_STRING_EQ(parameters[6].first.c_str(), "source_task");
-    CLOVE_STRING_EQ(parameters[7].first.c_str(), "marker");
-    CLOVE_STRING_EQ(parameters[8].first.c_str(), "packet_id");
-    CLOVE_STRING_EQ(parameters[9].first.c_str(), "some_param1");
+    CLOVE_STRING_EQ(parameters[0].first.c_str(),  "hpacket_length");
+    CLOVE_STRING_EQ(parameters[1].first.c_str(),  "hnetwork_node");
+    CLOVE_STRING_EQ(parameters[2].first.c_str(),  "hchannel");
+    CLOVE_STRING_EQ(parameters[3].first.c_str(),  "hdestination_channel_address");
+    CLOVE_STRING_EQ(parameters[4].first.c_str(),  "hdestination_task");
+    CLOVE_STRING_EQ(parameters[5].first.c_str(),  "hsource_channel_address");
+    CLOVE_STRING_EQ(parameters[6].first.c_str(),  "hsource_task");
+    CLOVE_STRING_EQ(parameters[7].first.c_str(),  "hmarker");
+    CLOVE_STRING_EQ(parameters[8].first.c_str(),  "hpacket_id");
+    CLOVE_STRING_EQ(parameters[9].first.c_str(),  "some_param1");
     CLOVE_STRING_EQ(parameters[10].first.c_str(), "some_param2");
     CLOVE_STRING_EQ(parameters[11].first.c_str(), "some_param3");
     CLOVE_STRING_EQ(parameters[12].first.c_str(), "some_param4");

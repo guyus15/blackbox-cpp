@@ -59,15 +59,15 @@ CLOVE_TEST(test_mx5_header_parameters)
 
     std::vector<std::pair<std::string, unsigned char>> expected_values
     {
-        {"packet_length",               0x09},
-        {"network_node",                0x00},
-        {"channel",                     0x00},
-        {"destination_channel_address", 0x00},
-        {"destination_task",            0x00},
-        {"source_channel_address",      0x00},
-        {"source_task",                 0x00},
-        {"marker",                      0x00},
-        {"packet_id",                   0x00}
+        {"hpacket_length",               0x09},
+        {"hnetwork_node",                0x00},
+        {"hchannel",                     0x00},
+        {"hdestination_channel_address", 0x00},
+        {"hdestination_task",            0x00},
+        {"hsource_channel_address",      0x00},
+        {"hsource_task",                 0x00},
+        {"hmarker",                      0x00},
+        {"hpacket_id",                   0x00}
     };
 
     std::vector<std::pair<std::string, unsigned char>> actual_values = test_header.get_parameters();
@@ -90,17 +90,17 @@ CLOVE_TEST(test_mx6_header_parameters)
 
     std::vector<std::pair<std::string, unsigned char>> expected_values
     {
-        {"packet_length",               0x09},
-        {"mx_speak_signature",          0xe4},
-        {"network_node",                0x00},
-        {"channel",                     0x00},
-        {"destination_channel_address", 0x00},
-        {"destination_task",            0x00},
-        {"source_channel_address",      0x00},
-        {"source_task",                 0x00},
-        {"marker",                      0x00},
-        {"packet_id",                   0x00},
-        {"reserved",                    0x00}
+        {"hpacket_length",               0x09},
+        {"hmx_speak_signature",          0xe4},
+        {"hnetwork_node",                0x00},
+        {"hchannel",                     0x00},
+        {"hdestination_channel_address", 0x00},
+        {"hdestination_task",            0x00},
+        {"hsource_channel_address",      0x00},
+        {"hsource_task",                 0x00},
+        {"hmarker",                      0x00},
+        {"hpacket_id",                   0x00},
+        {"hreserved",                    0x00}
     };
 
     std::vector<std::pair<std::string, unsigned char>> actual_values = test_header.get_parameters();
