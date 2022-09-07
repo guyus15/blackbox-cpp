@@ -21,7 +21,7 @@ int main()
     Logger logger;
     Clock clock{true};
 
-    std::string logfile = "logfile.txt";
+    std::string logfile = Config::get_log_file();
 
     bool should_run = true;
     float ping_time_period = Config::get_ping_time_period();
