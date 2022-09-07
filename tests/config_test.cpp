@@ -102,3 +102,15 @@ CLOVE_TEST(test_get_ping_time_period)
 
     CLOVE_FLOAT_EQ(expected_value, actual_value);
 }
+
+// Test 8
+CLOVE_TEST(test_get_log_file)
+{
+    // This test ensures that the get_log_file() function will return the correct logfile value
+    // from the configuration file.
+
+    std::string expected_value = local_config.at("logging").at("logfile").as<std::string>();
+    std::string actual_value = Config::get_log_file();
+
+    CLOVE_STRING_EQ(expected_value.c_str(), actual_value.c_str());
+}

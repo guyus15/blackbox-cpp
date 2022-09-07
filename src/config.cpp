@@ -15,6 +15,13 @@ namespace Config
 {
     const tao::json::value config = tao::json::from_file("config.json");
 
+    bool get_log_enabled()
+    {
+        const bool enabled = config.at("logging").at("enabled").as<bool>();
+
+        return enabled;
+    }
+
     std::string get_log_dir()
     {
         const std::string directory = config.at("logging").at("directory").as<std::string>();
@@ -22,11 +29,11 @@ namespace Config
         return directory;
     }
 
-    bool get_log_enabled()
+    std::string get_log_file()
     {
-        const bool enabled = config.at("logging").at("enabled").as<bool>();
+        const std::string logfile = config.at("logging").at("logfile").as<std::string>();
 
-        return enabled;
+        return logfile;
     }
 
     std::string get_com_port()

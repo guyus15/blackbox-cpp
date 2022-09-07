@@ -11,6 +11,14 @@
 namespace Config
 {
     /**
+     * @brief Gets the logging enabled value from the configuration file.
+     * 
+     * @return true If logging enabled is set to true in the configuration file.
+     * @return false If logging enabled is set to false in the configuration file.
+     */
+    bool get_log_enabled();
+
+    /**
      * @brief Gets the path to the log directory.
      * 
      * @return std::string The path to the log directory.
@@ -18,12 +26,11 @@ namespace Config
     std::string get_log_dir();
 
     /**
-     * @brief Gets the logging enabled value from the configuration file.
+     * @brief Gets the log file name.
      * 
-     * @return true If logging enabled is set to true in the configuration file.
-     * @return false If logging enabled is set to false in the configuration file.
+     * @return std::string The name the log file should take.
      */
-    bool get_log_enabled();
+    std::string get_log_file();
 
     /**
      * @brief Gets the COM port value from the configuration file.
