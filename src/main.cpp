@@ -12,16 +12,19 @@
 #include <iostream>
 #include <vector>
 
+void send_test_packet(Logger& logger, std::string& logfile);
 std::vector<int> poll_points();
 
 int main()
 {
-    std::vector<int> points = poll_points();
-
     Logger logger;
     Clock clock{true};
 
     std::string logfile = Config::get_log_file();
+
+    send_test_packet(logger, logfile);
+
+    std::vector<int> points = poll_points();
 
     bool should_run = true;
     float ping_time_period = Config::get_ping_time_period();
@@ -54,6 +57,28 @@ int main()
     }
 
     return 0;
+}
+
+/**
+ * @brief Sends a test packet to determine that the configuration file is set up correctly.
+ * It will also write headers to the selected log file if they are not already there.
+ * 
+ */
+void send_test_packet(Logger& logger, std::string& logfile)
+{
+    // Point informationr request for point 0.
+    Packets::Types::PointInformationRequestMX5 test_packet{0};
+
+    test_packet.write();
+
+    Packets::Types::PointInformationReplyMX5 *reply = test_packet.read();
+
+    // Log file headers  (only added once)
+    {
+        std::vector<std::string> headers = reply->get_headers();
+
+        logger.write_headers(headers, logfile);
+    }
 }
 
 /**

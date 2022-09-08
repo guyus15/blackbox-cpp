@@ -269,4 +269,59 @@ namespace Packets::Types
 
         return csv_string;
     }
+
+    std::vector<std::string> PointInformationReplyMX5::get_headers()
+    {
+        std::vector<std::string> headers
+        {
+            Constants::PNAME_REPLY_STATUS,
+            Constants::PNAME_FLAGS,
+            Constants::PNAME_NODE,
+            Constants::PNAME_PCHANNEL,
+            Constants::PNAME_CHANNEL_ADDRESS,
+            Constants::PNAME_POINT_CATEGORY,
+            Constants::PNAME_POINT_NUMBER,
+            Constants::PNAME_LOGICAL_POINT_NUMBER,
+            Constants::PNAME_LOGICAL_POINT_ZONE,
+            Constants::PNAME_DEVICE_TYPE,
+            Constants::PNAME_AUXILIARY_POINT_ATTRIBUTES,
+            Constants::PNAME_GROUP,
+            Constants::PNAME_AREA_TYPE,
+            Constants::PNAME_AREA_NUMBER,
+            Constants::PNAME_SECTOR_ID,
+            Constants::PNAME_LOOP_TYPE,
+            Constants::PNAME_RAW_IDENTITY,
+            Constants::PNAME_ACTUAL_DEVICE_TYPE,
+            Constants::PNAME_MODE_AND_SENSITIVITY,
+            Constants::PNAME_RAW_ANALOGUE_VALUES1,
+            Constants::PNAME_RAW_ANALOGUE_VALUES2,
+            Constants::PNAME_RAW_ANALOGUE_VALUES3,
+            Constants::PNAME_LTA_FLAGS,
+            Constants::PNAME_RAW_LTA,
+            Constants::PNAME_DIRTINESS,
+            Constants::PNAME_UNITS_OF_MEASURE1,
+            Constants::PNAME_UNITS_OF_MEASURE2,
+            Constants::PNAME_UNITS_OF_MEASURE3,
+            Constants::PNAME_CONVERTED_VALUES1,
+            Constants::PNAME_CONVERTED_VALUES2,
+            Constants::PNAME_CONVERTED_VALUES3,
+            Constants::PNAME_INSTANTANEOUS_ACTIVE_STATE,
+            Constants::PNAME_INSTANTANEOUS_FAULT_STATE,
+            Constants::PNAME_CONFIRMED_ACTIVE_STATE,
+            Constants::PNAME_CONFIRMED_FAULT_STATE,
+            Constants::PNAME_ACKNOWLEDGED_ACTIVE_STATE,
+            Constants::PNAME_ACKNOWLEDGED_FAULT_STATE,
+            Constants::PNAME_OUTPUT_FORCED_MODE,
+            Constants::PNAME_OUTPUT_UNFORCED_STATE,
+            Constants::PNAME_OUTPUT_FORCED_STATE
+        };
+
+        // Remove leading 'p'.
+        for (auto& header : headers)
+        {
+            header = header.substr(1, header.size());
+        }
+
+        return headers;
+    }
 }

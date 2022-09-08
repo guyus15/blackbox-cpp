@@ -37,7 +37,7 @@ void Logger::create_log_dir()
     }
 }
 
-void Logger::write_log(std::string entry, std::string logfile)
+void Logger::write_log(std::string entry, std::string logfile, bool prepend_date)
 {
     // Don't write to the log file if logging is has not been enabled.
     if (!Config::get_log_enabled())
@@ -46,19 +46,22 @@ void Logger::write_log(std::string entry, std::string logfile)
     }
 
     // Pre-pend a timestamp onto the entry.
-    auto current = std::chrono::system_clock::now();
-    std::time_t current_time = std::chrono::system_clock::to_time_t(current);
+    if (prepend_date)
+    {
+        auto current = std::chrono::system_clock::now();
+        std::time_t current_time = std::chrono::system_clock::to_time_t(current);
 
-    std::string time_string = std::ctime(&current_time);
+        std::string time_string = std::ctime(&current_time);
 
-    // Remove new line characters
-    std::regex newline_regex{"[\r\n]+"};
+        // Remove new line characters
+        std::regex newline_regex{"[\r\n]+"};
 
-    entry = std::regex_replace(entry, newline_regex, "");
-    time_string = std::regex_replace(time_string, newline_regex, "");
+        entry = std::regex_replace(entry, newline_regex, "");
+        time_string = std::regex_replace(time_string, newline_regex, "");
 
-    std::string new_entry = time_string + "," + entry + "\n";
-    entry = new_entry;
+        std::string new_entry = time_string + "," + entry + "\n";
+        entry = new_entry;
+    }
 
     // Log either on Linux or Windows, depending on current platform.
     #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
@@ -66,6 +69,37 @@ void Logger::write_log(std::string entry, std::string logfile)
     #else
     Logger::write_log_linux(entry, logfile);
     #endif
+}
+
+void Logger::write_headers(std::vector<std::string> headers, const std::string logfile)
+{
+    std::filesystem::path file{logfile};
+
+    // Only write header to the file if it does not exist.
+    if (std::filesystem::exists(file))
+    {
+        std::cout << "File already exists. Not adding header." << std::endl;
+        return;
+    }   
+
+    std::cout << "File does not exist. Writing header." << std::endl;
+
+    std::stringstream csv_stream;
+
+    csv_stream << "datetime" << ","; 
+
+    for (const auto& header : headers)
+    {
+        csv_stream << header << ",";
+    }
+
+    std::string csv_string = csv_stream.str();
+
+    // Remove last comma from end.
+    csv_string = csv_string.substr(0, csv_string.size() - 1);
+    csv_string = csv_string + "\n";
+
+    write_log(csv_string, logfile, false);
 }
 
 void Logger::write_log_windows(const std::string& entry, const std::string logfile)

@@ -97,6 +97,13 @@ namespace Packets::Types
              * @return std::string The CSV format point information reply.
              */
             std::string get_as_csv();
+
+            /**
+             * @brief Gets the headers required for writing to a log file.
+             * 
+             * @return std::vector<std::string> The headers.
+             */
+            std::vector<std::string> get_headers();
     };
 }
 

@@ -8,6 +8,7 @@
 #define LOGGER_H
 
 #include <string>
+#include <vector>
 
 class Logger
 {
@@ -25,7 +26,15 @@ class Logger
          * @param entry The log entry.
          * @param logfile The log file.
          */
-        void write_log(std::string entry, const std::string logfile);
+        void write_log(std::string entry, const std::string logfile, bool prepend_date=true);
+
+        /**
+         * @brief Writes data headers to a log file within the log directory.
+         * 
+         * @param headers The data headers.
+         * @param logfile The log file.
+         */
+        void write_headers(std::vector<std::string> headers, const std::string logfile);
 
     private:
         /**
