@@ -7,6 +7,9 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ./out)
 
+# Off by default
+option (TEST "Build tests" OFF)
+
 set(TARGET_SOURCES src/main.cpp
                    src/packet/content.cpp
                    src/packet/headers.cpp
@@ -20,23 +23,26 @@ set(TARGET_SOURCES src/main.cpp
                    src/clock.cpp
                    )
 
-set(TEST_SOURCES tests/run_tests.cpp
-                 tests/content_test.cpp
-                 tests/headers_test.cpp
-                 tests/packet_test.cpp
-                 tests/config_test.cpp
-                 src/packet/content.cpp
-                 src/packet/headers.cpp
-                 src/packet/packet.cpp
-                 src/packet/serial_data_transfer.cpp
-                 src/serial/serialib.cpp
-                 src/config.cpp
-                 )
-
-include_directories(include/)
-
+if (TEST)
+    set(TEST_SOURCES tests/run_tests.cpp
+                    tests/content_test.cpp
+                    tests/headers_test.cpp
+                    tests/packet_test.cpp
+                    tests/config_test.cpp
+                    src/packet/content.cpp
+                    src/packet/headers.cpp
+                    src/packet/packet.cpp
+                    src/packet/serial_data_transfer.cpp
+                    src/serial/serialib.cpp
+                    src/config.cpp
+                    )
+                    
+    add_executable(tests ${TEST_SOURCES})
+endif()
+                 
 add_executable(blackbox ${TARGET_SOURCES})
-add_executable(tests ${TEST_SOURCES})
+                 
+include_directories(include/)
 
 # Copy the configuration file into the build output directory.
 execute_process(
