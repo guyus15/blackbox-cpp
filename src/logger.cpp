@@ -13,6 +13,7 @@
 #include <fstream>
 #include <iostream>
 #include <regex>
+#include <sstream>
 
 static bool check_directory_exists(const std::filesystem::path& path);
 
@@ -84,7 +85,7 @@ void Logger::write_headers(std::vector<std::string> headers, const std::string l
 
     std::cout << "File does not exist. Writing header." << std::endl;
 
-    std::stringstream csv_stream;
+    std::stringstream csv_stream{};
 
     csv_stream << "datetime" << ","; 
 

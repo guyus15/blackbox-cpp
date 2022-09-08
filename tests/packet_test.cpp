@@ -61,7 +61,7 @@ CLOVE_TEST(test_packet_length)
 
     Packets::Packet test_packet{test_header, test_parameters};
 
-    unsigned char packet_length = test_packet.get_parameter("packet_length");
+    unsigned char packet_length = test_packet.get_parameter("hpacket_length");
 
     CLOVE_CHAR_EQ(packet_length, 0x0e);
 }
