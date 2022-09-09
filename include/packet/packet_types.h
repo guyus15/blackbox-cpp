@@ -24,7 +24,7 @@ namespace Packets::Types
     class PointInformationRequestMX5 : public IWritable
     {
         public:
-            PointInformationRequestMX5(int point_number);
+            PointInformationRequestMX5(int point_number, int loop_number);
             ~PointInformationRequestMX5();
 
             /**
@@ -43,6 +43,7 @@ namespace Packets::Types
         private:
             Packet *_packet;
             int _point_number;
+            int _loop_number;
     };
 
     /**
@@ -51,7 +52,7 @@ namespace Packets::Types
     class PointInformationRequestMX6 : public IWritable
     {
         public:
-            PointInformationRequestMX6(int point_number);
+            PointInformationRequestMX6(int point_number, int loop_number);
             ~PointInformationRequestMX6();
 
             /** 
@@ -69,6 +70,7 @@ namespace Packets::Types
         private:
             Packet *_packet;
             int _point_number;
+            int _loop_number;
     };
 
     /* Reply packets */
