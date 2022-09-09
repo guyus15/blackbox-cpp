@@ -35,6 +35,5 @@
 .vscode/
 
 # Directories
-tests/bin/
-bin/
+build/
 logs/

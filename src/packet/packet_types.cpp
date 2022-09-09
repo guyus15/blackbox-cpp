@@ -21,8 +21,8 @@ namespace Packets::Types
      * PointInformationRequestMX5
      */
 
-    PointInformationRequestMX5::PointInformationRequestMX5(int point_number)
-    : _point_number{point_number}
+    PointInformationRequestMX5::PointInformationRequestMX5(int point_number, int loop_number)
+    : _point_number{point_number}, _loop_number{loop_number}
     {
         LocalHeaderMX5 header{PacketID::POINT_INFO_REQUEST};
     
@@ -30,7 +30,7 @@ namespace Packets::Types
         {
             {"pnode",                     0x00},  // D+0
             {"pchannel",                  0x00},  // D+1
-            {"pchannel_address",          0x01},  // D+2
+            {"pchannel_address",  _loop_number},  // D+2
             {"ppoint_category",           0x00},  // D+3
             {"ppoint_number",    _point_number},  // D+4
             {"plogical_point_number",     0xfd},  // D+5
@@ -105,8 +105,8 @@ namespace Packets::Types
      * PointInformationRequestMX6
      */
 
-    PointInformationRequestMX6::PointInformationRequestMX6(int point_number)
-    : _point_number{point_number}
+    PointInformationRequestMX6::PointInformationRequestMX6(int point_number, int loop_number)
+    : _point_number{point_number}, _loop_number{loop_number}
     {
         LocalHeaderMX6 header{PacketID::POINT_INFO_REQUEST};
 
@@ -114,7 +114,7 @@ namespace Packets::Types
         {
             {"pnode",                     0x00},  // D+0
             {"pchannel",                  0x00},  // D+1
-            {"pchannel_address",          0x01},  // D+2
+            {"pchannel_address",  _loop_number},  // D+2
             {"ppoint_category",           0x00},  // D+3
             {"ppoint_number",    _point_number},  // D+4
             {"plogical_point_number",     0xfd},  // D+5
