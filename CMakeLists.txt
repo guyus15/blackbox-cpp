@@ -45,6 +45,10 @@ add_executable(blackbox ${TARGET_SOURCES})
 include_directories(include/)
 
 # Copy the configuration file into the build output directory.
-execute_process(
-    COMMAND bash -c "cp ./config.json build/out/config.json"
-)
+add_custom_target(copy_config ALL
+        COMMAND ${CMAKE_COMMAND} -E copy
+        ${PROJECT_SOURCE_DIR}/config.json
+        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/config.json
+        COMMENT "Copying config into build directory")
+
+add_dependencies(blackbox copy_config)
