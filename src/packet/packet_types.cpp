@@ -11,6 +11,7 @@
 #include "packet/packet_decoding.h"
 
 #include "constants.h"
+#include "config.h"
 
 #include <iostream>
 #include <sstream>
@@ -254,12 +255,23 @@ namespace Packets::Types
         std::stringstream csv_stream;
         
         std::vector<unsigned char> byte_array = get_byte_array();
-        std::vector<std::string> decoded = Packets::Decoding::MX5::decode_point_information_reply(byte_array);
 
-        for (const auto& value : decoded)
+        if (Config::get_log_verbose_mode())
         {
-            csv_stream << value;
-            csv_stream << ",";
+            // Store more comprehensisble decoded packets in CSV file.
+            std::vector<std::string> decoded = Packets::Decoding::MX5::decode_point_information_reply(byte_array);
+
+            for (const auto& value : decoded)
+            {
+                csv_stream << value << ",";
+            }   
+        } else
+        {
+            // Store raw hexadecimal byte values in CSV file.
+            for (const auto& value : byte_array)
+            {
+                csv_stream << std::hex << (int)value << ",";
+            }
         }
 
         std::string csv_string = csv_stream.str();
