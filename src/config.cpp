@@ -36,6 +36,13 @@ namespace Config
         return logfile;
     }
 
+    bool get_log_verbose_mode()
+    {
+        const bool verbose_mode = config.at("logging").at("verbose-logging").as<bool>();
+
+        return verbose_mode;
+    }
+
     std::string get_com_port()
     {
         #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)

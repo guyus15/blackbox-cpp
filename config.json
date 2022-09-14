@@ -2,7 +2,8 @@
   "logging": {
     "enabled": true,
     "directory": "logs",
-    "logfile": "logfile.txt"
+    "logfile": "logfile.txt",
+    "verbose-logging": true
   },
   "serial": {
     "com": {

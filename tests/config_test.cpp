@@ -114,3 +114,15 @@ CLOVE_TEST(test_get_log_file)
 
     CLOVE_STRING_EQ(expected_value.c_str(), actual_value.c_str());
 }
+
+// Test 9
+CLOVE_TEST(test_get_log_verbose_mode)
+{
+    // This test ensures that the get_log_verbose_mode() function will return the correct log verbose mode
+    // value from the configuration file.
+
+    bool expected_value = local_config.at("logging").at("verbose-logging").as<bool>();
+    bool actual_value = Config::get_log_verbose_mode();
+
+    CLOVE_INT_EQ(expected_value, actual_value);
+}
