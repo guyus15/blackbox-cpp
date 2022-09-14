@@ -33,6 +33,14 @@ namespace Config
     std::string get_log_file();
 
     /**
+     * @brief Gets the log verbose mode.
+     * 
+     * @return true If verbose mode has been enabled in the configuration file.
+     * @return false If verbose mode has been disabled in the configuration file.
+     */
+    bool get_log_verbose_mode();
+
+    /**
      * @brief Gets the COM port value from the configuration file.
      * 
      * @return std::string The COM port from the configuration file.
