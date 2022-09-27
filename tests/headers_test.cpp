@@ -1,5 +1,5 @@
 /**
- * @file header_test.cpp
+ * @file headers_test.cpp
  * @brief Contains tests to test headers.
  * @author G. Chamberlain-Webber
  */

@@ -1,5 +1,5 @@
 /**
- * @file writetable.h
+ * @file writable.h
  * @brief Contains an interface IWritable which is used to enforce write functionality to an
  * object.
  * @author G. Chamberlain-Webber

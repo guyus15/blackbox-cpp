@@ -1,5 +1,5 @@
 /**
- * @file packet_decodings.cpp
+ * @file packet_decoding.cpp
  * @brief Provides functions to decode a series of bytes into a human-readable format.
  * @author G. Chamberlain-Webber
  */
