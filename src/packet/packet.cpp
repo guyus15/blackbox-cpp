@@ -9,6 +9,8 @@
 
 #include "constants.h"
 
+#include <memory>
+
 namespace Packets
 {
     unsigned char Packet::soh = 0x01;
@@ -69,7 +71,7 @@ namespace Packets
 
     std::vector<unsigned char> Packet::read()
     {
-        SerialDataTransfer *serial = new SerialDataTransfer;
+        std::unique_ptr<SerialDataTransfer> serial{new SerialDataTransfer};
 
         bool has_data = false;
         std::vector<unsigned char> read_data;
@@ -81,9 +83,16 @@ namespace Packets
             if (read_data.size() == 0)
             {
                 // No data could be read so try another packet.
-                delete serial;
+
+                // Force a deletion of the SerialDataTransfer object held by the unique pointer
+                // to ensure that there is not a serial port in use when we try to write the 
+                // next packet.
+                serial.release();
+                serial.reset();
+
                 Packet::write();
-                serial = new SerialDataTransfer();
+
+                serial = std::unique_ptr<SerialDataTransfer>{new SerialDataTransfer()};
             } else if (read_data.size() > 1)
             {
                 // Data has been found.
@@ -96,8 +105,6 @@ namespace Packets
         {
             serial->write_byte(Constants::ACK);
         }
-
-        delete serial;
 
         return read_data;
     }

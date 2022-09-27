@@ -5,6 +5,7 @@
  */
 
 #include "packet/packet_types.h"
+#include "packet/serial_data_transfer.h"
 #include "clock.h"
 #include "config.h"
 #include "constants.h"
@@ -69,7 +70,7 @@ int main()
  */
 void send_test_packet(Logger& logger, std::string& logfile)
 {
-    // Point informationr request for point 0.
+    // Point information request for point 0.
     Packets::Types::PointInformationRequestMX5 test_packet{0, 1};
 
     test_packet.write();
