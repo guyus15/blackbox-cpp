@@ -46,3 +46,7 @@ Timing setting can be configured in the "timing" section of the configuration fi
 
 - The polling time period can be set with the "poll-time-period" setting. This is measured in seconds and represents the time between polls in the initial scan of panel loops.
 - The ping time period can be set with the "ping-time-period" setting. This is also measured in seconds and represents the time between pinging the panel for points with existing devices.
+
+<br />
+
+If at all you make changes to cause your configuration to fail, please refer to this repository to see the default configuration file (`config.json`).
