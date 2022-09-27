@@ -12,6 +12,7 @@
 
 #include <iostream>
 #include <vector>
+#include <memory>
 
 void send_test_packet(Logger& logger, std::string& logfile);
 std::vector<std::pair<int, int>> poll_points();
@@ -48,15 +49,13 @@ int main()
 
             packet.write();
 
-            Packets::Types::PointInformationReplyMX5 *reply = packet.read();
+            std::unique_ptr<Packets::Types::PointInformationReplyMX5> reply{packet.read()};
 
             std::string entry = reply->get_as_csv();
 
             std::cout << entry << std::endl; 
 
             logger.write_log(entry, logfile);
-
-            delete reply;
         }
     }
 
@@ -75,7 +74,7 @@ void send_test_packet(Logger& logger, std::string& logfile)
 
     test_packet.write();
 
-    Packets::Types::PointInformationReplyMX5 *reply = test_packet.read();
+    std::unique_ptr<Packets::Types::PointInformationReplyMX5> reply{test_packet.read()};
 
     // Log file headers  (only added once)
     {
@@ -113,9 +112,9 @@ std::vector<std::pair<int, int>> poll_points()
 
             packet.write();
 
-            Packets::Types::PointInformationReplyMX5 *read_data = packet.read();
+            std::unique_ptr<Packets::Types::PointInformationReplyMX5> reply{packet.read()};
 
-            if (read_data->reply_successful())
+            if (reply->reply_successful())
             {
                 valid_points.push_back({current_loop_number, current_point_number});
             }
