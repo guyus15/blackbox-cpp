@@ -1,4 +1,8 @@
 # blackbox-cpp
+
+![Build](https://github.com/guyus15/blackbox-cpp/actions/workflows/build.yml/badge.svg)
+![CodeQL](https://github.com/guyus15/blackbox-cpp/actions/workflows/codeql.yml/badge.svg)
+
 Black box recorder and data logger, written in C++.
 
 ## Installation
