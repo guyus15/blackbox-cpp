@@ -20,32 +20,30 @@ namespace Packets
     : Content{p}
     {
         // Combine the header with the existing parameters.
-        std::vector<std::pair<std::string, unsigned char>> combined {header.get_parameters()};
+        std::vector combined {header.get_parameters()};
         combined.insert(combined.end(), _params.begin(), _params.end());
 
         _params = combined;
 
         // Update the packet length parameter.
-        set_parameter(Constants::PNAME_PACKET_LENGTH, _params.size());
+        Content::set_parameter(Constants::PNAME_PACKET_LENGTH, _params.size());
     }
-
-    Packet::~Packet() {}
 
     std::vector<unsigned char>& Packet::get_byte_array()
     {
         _bytes.clear();
 
         // Add on the SOH and SEQ numbers.
-        _bytes.push_back(Packet::soh);
-        _bytes.push_back(Packet::seq);
+        _bytes.push_back(soh);
+        _bytes.push_back(seq);
 
         int checksum = 0;
         
-        checksum += Packet::seq;
+        checksum += seq;
 
-        for (int i = 0; i < _params.size(); i++)
+        for (const auto& _param : _params)
         {
-            unsigned char value = _params[i].second;
+            unsigned char value = _param.second;
             _bytes.push_back(value);
 
             // Calculate checksum
@@ -54,7 +52,7 @@ namespace Packets
 
         checksum %= Constants::CHECKSUM_MOD;
 
-        _bytes.push_back((unsigned char)checksum);
+        _bytes.push_back(static_cast<unsigned char>(checksum));
 
         return _bytes;
     }
@@ -66,7 +64,7 @@ namespace Packets
         std::vector<unsigned char> data = get_byte_array();
         serial.write(data);
 
-        Packet::increment_seq();
+        increment_seq();
     }
 
     std::vector<unsigned char> Packet::read()
@@ -80,15 +78,17 @@ namespace Packets
         {
             read_data = serial->read();
 
-            if (read_data.size() == 0)
+            if (read_data.empty())
             {
                 // No data could be read so try another packet.
 
                 // Force a deletion of the SerialDataTransfer object held by the unique pointer
                 // to ensure that there is not a serial port in use when we try to write the 
                 // next packet.
-                serial.release();
-                serial.reset();
+                if (serial.release())
+                {
+					serial.reset();
+                }
 
                 Packet::write();
 
@@ -100,7 +100,7 @@ namespace Packets
             }
         }
 
-        // If data has been read. We should send back an acknowledgememt (ACK) byte.
+        // If data has been read. We should send back an acknowledgement (ACK) byte.
         if (read_data.size() > 1)
         {
             serial->write_byte(Constants::ACK);
