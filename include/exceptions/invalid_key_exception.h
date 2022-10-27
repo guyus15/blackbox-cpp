@@ -10,9 +10,9 @@
 
 #include <exception>
 
-struct InvalidKeyException : public std::exception
+struct InvalidKeyException final : public std::exception
 {
-    const char *what() const throw()
+    [[nodiscard]] const char *what() const noexcept override
     {
         return "Invalid key exception";
     }
