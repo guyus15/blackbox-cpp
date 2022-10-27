@@ -37,3 +37,6 @@
 # Directories
 build/
 logs/
+/docs
+/.vs
+/.fleet
