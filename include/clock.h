@@ -9,10 +9,20 @@
 
 #include <chrono>
 
+/**
+ * @brief Handles timing within the application.
+ */
 class Clock
 {
     public:
-        Clock(bool start_true = false);
+        explicit Clock(bool start_true = false);
+
+		Clock(const Clock& clock) = default;
+		Clock(Clock&& clock) noexcept = default;
+
+		Clock& operator=(const Clock& clock) = default;
+		Clock& operator=(Clock&& clock) noexcept = default;
+
         ~Clock() = default;
 
         /**

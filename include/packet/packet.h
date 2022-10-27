@@ -24,12 +24,10 @@ namespace Packets
 
             explicit Packet(BaseHeader header, std::vector<std::pair<std::string, unsigned char>> p = std::vector<std::pair<std::string, unsigned char>>());
 
-            // Copy constructor and assignment
 			Packet(const Packet& packet) = default;
-			Packet& operator=(const Packet& packet) = default;
-
-			// Move constructor and assignment
 			Packet(Packet&& packet) noexcept = default;
+
+			Packet& operator=(const Packet& packet) = default;
 			Packet& operator=(Packet&& packet) noexcept = default;
 
             virtual ~Packet() = default;
