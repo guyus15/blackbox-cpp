@@ -12,8 +12,8 @@ namespace Packets
 {
     class IWritable
     {
-        public:
-            virtual void write() = 0;
+    public:
+    	virtual void write() = 0;
     };
 }
 

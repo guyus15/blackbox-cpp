@@ -12,10 +12,10 @@
 
 struct InvalidKeyException final : public std::exception
 {
-    [[nodiscard]] const char *what() const noexcept override
-    {
-        return "Invalid key exception";
-    }
+	[[nodiscard]] const char* what() const noexcept override
+	{
+		return "Invalid key exception";
+	}
 };
 
 #endif

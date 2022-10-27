@@ -7,26 +7,27 @@
 #include "packet/serial_data_transfer.h"
 #include "config.h"
 
-#include <cstdio>
 #include <cstdlib>
+#include <iostream>
+#include <string>
 
 namespace Packets
 {
     SerialDataTransfer::SerialDataTransfer()
     {
-        const char *com_port = Config::get_com_port().c_str();
+        const std::string& com_port = Config::get_com_port();
         const int baudrate = Config::get_baudrate();
-        enum SerialDataBits databits = Config::get_bytesize();
-        enum SerialParity parity = Config::get_parity();
-        enum SerialStopBits stopbits = Config::get_stopbits();
+        const enum SerialDataBits databits = Config::get_bytesize();
+        const enum SerialParity parity = Config::get_parity();
+        const enum SerialStopBits stopbits = Config::get_stopbits();
 
-        if (_serial.openDevice(com_port,
+        if (_serial.openDevice(com_port.c_str(),
                                 baudrate,
                                 databits,
                                 parity,
                                 stopbits) != 1) 
         {
-            fprintf(stderr, "Error: There has been an error opening serial device.\n");
+            std::cerr << "Error: There has been an error opening the serial device." << std::endl;
             exit(EXIT_FAILURE);
         }
     }
@@ -39,7 +40,7 @@ namespace Packets
         }
     }
 
-    void SerialDataTransfer::write(std::vector<unsigned char>& data)
+    void SerialDataTransfer::write(const std::vector<unsigned char>& data)
     {
         for (const auto& byte : data)
         {
@@ -47,7 +48,7 @@ namespace Packets
         }
     }
 
-    void SerialDataTransfer::write_byte(unsigned char value)
+    void SerialDataTransfer::write_byte(const unsigned char value)
     {
          _serial.writeChar(value);
     }

@@ -11,7 +11,6 @@
 #include "testing/clove-unit.h"
 
 #include <ostream>
-#include <sstream>
 
 // Test 1
 CLOVE_TEST(test_check_exists_when_exists)
@@ -26,9 +25,9 @@ CLOVE_TEST(test_check_exists_when_exists)
         {"some string3", '\x30'},
     };
 
-    Packets::Content test_content{test_vector}; 
+    const Packets::Content test_content{test_vector}; 
 
-    CLOVE_INT_EQ(test_content.check_exists("some string1"), 1);
+    CLOVE_INT_EQ(test_content.check_exists("some string1"), 1)
 }
 
 // Test 2
@@ -44,9 +43,9 @@ CLOVE_TEST(test_check_when_no_exist)
         {"some string3", '\x30'},
     };
 
-    Packets::Content test_content{test_vector};
+    const Packets::Content test_content{test_vector};
 
-    CLOVE_INT_EQ(test_content.check_exists("some non-existent value"), 0);
+	CLOVE_INT_EQ(test_content.check_exists("some non-existent value"), 0)
 }
 
 // Test 3
@@ -64,12 +63,12 @@ CLOVE_TEST(test_get_byte_array)
 
     Packets::Content test_content{test_vector};
 
-    std::vector<unsigned char> expected_values{'\x10', '\x20', '\x30'};
-    std::vector<unsigned char> actual_value = test_content.get_byte_array();
+    const std::vector<unsigned char> expected_values{'\x10', '\x20', '\x30'};
+    const std::vector<unsigned char> actual_value = test_content.get_byte_array();
 
-    for (int i = 0; i < expected_values.size(); i++)
+    for (size_t i = 0; i < expected_values.size(); i++)
     {
-        CLOVE_CHAR_EQ(expected_values[i], actual_value[i]);
+        CLOVE_CHAR_EQ(expected_values[i], actual_value[i])
     }
 }
 
@@ -88,9 +87,9 @@ CLOVE_TEST(test_get_parameter_valid_key)
 
     Packets::Content test_content{test_vector};
 
-    std::string parameter = "some string1";
+    const std::string parameter = "some string1";
 
-    CLOVE_CHAR_EQ(test_content.get_parameter(parameter), '\x10');
+    CLOVE_CHAR_EQ(test_content.get_parameter(parameter), '\x10')
 }
 
 // Test 5
@@ -108,19 +107,19 @@ CLOVE_TEST(test_get_parameter_invalid_key)
 
     Packets::Content test_content{test_vector};
 
-    std::string parameter = "non-existent parameter";
+    const std::string parameter = "non-existent parameter";
 
     bool exception_thrown = false;
     try
     {
         test_content.get_parameter(parameter);
     }
-    catch(const InvalidKeyException& e)
+    catch([[maybe_unused]] const InvalidKeyException& e)
     {
         exception_thrown = true;
     }
     
-    CLOVE_INT_EQ(exception_thrown, 1);
+    CLOVE_INT_EQ(exception_thrown, 1)
 }
 
 // Test 6
@@ -138,11 +137,11 @@ CLOVE_TEST(test_set_parameter_valid_key)
 
     Packets::Content test_content{test_vector};
 
-    std::string parameter = "some string1";
+    const std::string parameter = "some string1";
 
     test_content.set_parameter(parameter, '\xee');
 
-    CLOVE_CHAR_EQ(test_content.get_parameter(parameter), '\xee');
+    CLOVE_CHAR_EQ(test_content.get_parameter(parameter), '\xee')
 }
 
 // Test 7
@@ -160,19 +159,19 @@ CLOVE_TEST(test_set_parameter_invalid_key)
 
     Packets::Content test_content{test_vector};
 
-    std::string parameter = "non-existent parameter";
+    const std::string parameter = "non-existent parameter";
 
     bool exception_thrown = false;
     try
     {
         test_content.set_parameter(parameter, '\xee');
     }
-    catch(const InvalidKeyException& e)
+    catch([[maybe_unused]] const InvalidKeyException& e)
     {
         exception_thrown = true;
     }
     
-    CLOVE_INT_EQ(exception_thrown, 1);
+    CLOVE_INT_EQ(exception_thrown, 1)
 }
 
 // Test 8
@@ -190,14 +189,14 @@ CLOVE_TEST(test_get_parameters)
 
     Packets::Content test_content{test_vector};
 
-    auto parameters = test_content.get_parameters();
+    const auto parameters = test_content.get_parameters();
 
-    CLOVE_STRING_EQ(parameters[0].first.c_str(), "some string1");
-    CLOVE_CHAR_EQ(parameters[0].second, '\x10');
+    CLOVE_STRING_EQ(parameters[0].first.c_str(), "some string1")
+    CLOVE_CHAR_EQ(parameters[0].second, '\x10')
 
-    CLOVE_STRING_EQ(parameters[1].first.c_str(), "some string2");
-    CLOVE_CHAR_EQ(parameters[1].second, '\x20');
+    CLOVE_STRING_EQ(parameters[1].first.c_str(), "some string2")
+    CLOVE_CHAR_EQ(parameters[1].second, '\x20')
 
-    CLOVE_STRING_EQ(parameters[2].first.c_str(), "some string3");
-    CLOVE_CHAR_EQ(parameters[2].second, '\x30');
+    CLOVE_STRING_EQ(parameters[2].first.c_str(), "some string3")
+    CLOVE_CHAR_EQ(parameters[2].second, '\x30')
 }

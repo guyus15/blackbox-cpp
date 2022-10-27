@@ -13,39 +13,45 @@
 
 namespace Packets
 {
-    /**
-     * @brief Abstracts reading and writing across a serial communication port.
-     */
-    class SerialDataTransfer
-    {
-        public:
-            SerialDataTransfer();
-            ~SerialDataTransfer();
+	/**
+	 * @brief Abstracts reading and writing across a serial communication port.
+	 */
+	class SerialDataTransfer
+	{
+	public:
+		SerialDataTransfer();
+		~SerialDataTransfer();
 
-            /**
-             * @brief Writes data across a serial communication port.
-             * 
-             * @param data The data to be written.
-             */
-            void write(std::vector<unsigned char>& data);
+		SerialDataTransfer(const SerialDataTransfer& s) = default;
+		SerialDataTransfer(SerialDataTransfer&& s) noexcept = default;
 
-            /**
-             * @brief Writes a single byte of data across a serial communication port.
-             * 
-             * @param value The byte of data to be written.
-             */
-            void write_byte(unsigned char value);
+		SerialDataTransfer& operator=(const SerialDataTransfer& s) = default;
+		SerialDataTransfer& operator=(SerialDataTransfer&& s) noexcept = default;
 
-            /**
-             * @brief Reads data from a serial communication port.
-             * 
-             * @return The data (if any) read from the serial communication port.
-             */
-            std::vector<unsigned char> read();
+		/**
+		 * @brief Writes data across a serial communication port.
+		 *
+		 * @param data The data to be written.
+		 */
+		void write(const std::vector<unsigned char>& data);
 
-        private:
-            serialib _serial;
-    };
+		/**
+		 * @brief Writes a single byte of data across a serial communication port.
+		 *
+		 * @param value The byte of data to be written.
+		 */
+		void write_byte(unsigned char value);
+
+		/**
+		 * @brief Reads data from a serial communication port.
+		 *
+		 * @return The data (if any) read from the serial communication port.
+		 */
+		std::vector<unsigned char> read();
+
+	private:
+		serialib _serial;
+	};
 }
 
 #endif

@@ -23,9 +23,9 @@ Logger::Logger()
     Logger::create_log_dir();
 }
 
-void Logger::create_log_dir()
+void Logger::create_log_dir() const
 {
-    std::string configured_path = Config::get_log_dir();
+	const std::string configured_path = Config::get_log_dir();
     const std::filesystem::path directory_path{configured_path};
 
     if (!check_directory_exists(directory_path))
@@ -38,7 +38,7 @@ void Logger::create_log_dir()
     }
 }
 
-void Logger::write_log(std::string entry, std::string logfile, bool prepend_date)
+void Logger::write_log(std::string entry, const std::string& logfile, const bool prepend_date) const
 {
     // Don't write to the log file if logging is has not been enabled.
     if (!Config::get_log_enabled())
@@ -49,18 +49,18 @@ void Logger::write_log(std::string entry, std::string logfile, bool prepend_date
     // Pre-pend a timestamp onto the entry.
     if (prepend_date)
     {
-        auto current = std::chrono::system_clock::now();
-        std::time_t current_time = std::chrono::system_clock::to_time_t(current);
+	    const auto current = std::chrono::system_clock::now();
+	    const std::time_t current_time = std::chrono::system_clock::to_time_t(current);
 
         std::string time_string = std::ctime(&current_time);
 
         // Remove new line characters
-        std::regex newline_regex{"[\r\n]+"};
+	    const std::regex newline_regex{"[\r\n]+"};
 
         entry = std::regex_replace(entry, newline_regex, "");
         time_string = std::regex_replace(time_string, newline_regex, "");
 
-        std::string new_entry = time_string + "," + entry + "\n";
+	    const std::string new_entry = time_string + "," + entry + "\n";
         entry = new_entry;
     }
 
@@ -72,12 +72,10 @@ void Logger::write_log(std::string entry, std::string logfile, bool prepend_date
     #endif
 }
 
-void Logger::write_headers(std::vector<std::string> headers, const std::string logfile)
+void Logger::write_headers(const std::vector<std::string>& headers, const std::string& logfile) const
 {
-    std::filesystem::path file{logfile};
-
-    // Only write header to the file if it does not exist.
-    if (std::filesystem::exists(file))
+	// Only write header to the file if it does not exist.
+    if (const std::filesystem::path file{logfile}; std::filesystem::exists(file))
     {
         std::cout << "File already exists. Not adding header." << std::endl;
         return;
@@ -103,11 +101,11 @@ void Logger::write_headers(std::vector<std::string> headers, const std::string l
     write_log(csv_string, logfile, false);
 }
 
-void Logger::write_log_windows(const std::string& entry, const std::string logfile)
+void Logger::write_log_windows(const std::string& entry, const std::string& logfile)
 {
     std::cout << "Writing on Windows..." << std::endl;
-    
-    std::string log_path = Config::get_log_dir() + "/" + logfile;
+
+    const std::string log_path = Config::get_log_dir() + "/" + logfile;
 
     std::ofstream file;
 
@@ -116,16 +114,16 @@ void Logger::write_log_windows(const std::string& entry, const std::string logfi
     file.close();
 }
     
-void Logger::write_log_linux(const std::string& entry, const std::string logfile)
+void Logger::write_log_linux(const std::string& entry, const std::string& logfile)
 {
-    // This is a separate implementation to reserve a differenta behaviour for Linux in the 
+    // This is a separate implementation to reserve a different behaviour for Linux in the 
     // future. For example, we could do a check to see if the user has a USB connected, if
     // so, the logs can be written there instead.
     // Maybe something could also be done with status LEDs and other visual hardware.
 
     std::cout << "Writing on Linux..." << std::endl;
     
-    std::string log_path = Config::get_log_dir() + "/" + logfile;
+    const std::string log_path = Config::get_log_dir() + "/" + logfile;
 
     std::ofstream file;
 

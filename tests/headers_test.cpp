@@ -21,12 +21,12 @@ CLOVE_TEST(test_mx5_header_contents)
     // MX Speak 5 packet header, ID of 0.
     Packets::LocalHeaderMX5 test_header{Packets::PacketID::INVALID};
 
-    std::vector<unsigned char> expected_values {0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-    std::vector<unsigned char> actual_values = test_header.get_byte_array();
+    const std::vector<unsigned char> expected_values {0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+    const std::vector<unsigned char> actual_values = test_header.get_byte_array();
 
-    for (int i = 0; i < expected_values.size(); i++)
+    for (size_t i = 0; i < expected_values.size(); i++)
     {
-        CLOVE_CHAR_EQ(expected_values[i], actual_values[i]);
+        CLOVE_CHAR_EQ(expected_values[i], actual_values[i])
     }
 }
 
@@ -39,12 +39,12 @@ CLOVE_TEST(test_mx6_header_contents)
     // MX Speak 5 packet header, ID of 0.
     Packets::LocalHeaderMX6 test_header{Packets::PacketID::INVALID};
 
-    std::vector<unsigned char> expected_values {0x09, 0xe4, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-    std::vector<unsigned char> actual_values = test_header.get_byte_array();
+    const std::vector<unsigned char> expected_values {0x09, 0xe4, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+    const std::vector<unsigned char> actual_values = test_header.get_byte_array();
 
-    for (int i = 0; i < expected_values.size(); i++)
+    for (size_t i = 0; i < expected_values.size(); i++)
     {
-        CLOVE_CHAR_EQ(expected_values[i], actual_values[i]);
+        CLOVE_CHAR_EQ(expected_values[i], actual_values[i])
     }
 }
 
@@ -57,7 +57,7 @@ CLOVE_TEST(test_mx5_header_parameters)
     // MX Speak 5 packet header, ID of 0.
     Packets::LocalHeaderMX5 test_header{Packets::PacketID::INVALID};
 
-    std::vector<std::pair<std::string, unsigned char>> expected_values
+    const std::vector<std::pair<std::string, unsigned char>> expected_values
     {
         {"hpacket_length",               0x09},
         {"hnetwork_node",                0x00},
@@ -70,12 +70,12 @@ CLOVE_TEST(test_mx5_header_parameters)
         {"hpacket_id",                   0x00}
     };
 
-    std::vector<std::pair<std::string, unsigned char>> actual_values = test_header.get_parameters();
+    const std::vector<std::pair<std::string, unsigned char>> actual_values = test_header.get_parameters();
 
-    for (int i = 0; i < expected_values.size(); i++)
+    for (size_t i = 0; i < expected_values.size(); i++)
     {
-        CLOVE_STRING_EQ(expected_values[i].first.c_str(), actual_values[i].first.c_str());
-        CLOVE_CHAR_EQ(expected_values[i].second, actual_values[i].second);
+        CLOVE_STRING_EQ(expected_values[i].first.c_str(), actual_values[i].first.c_str())
+        CLOVE_CHAR_EQ(expected_values[i].second, actual_values[i].second)
     }   
 }
 
@@ -88,7 +88,7 @@ CLOVE_TEST(test_mx6_header_parameters)
     // MX Speak 6 packet header, ID of 0.
     Packets::LocalHeaderMX6 test_header{Packets::PacketID::INVALID};
 
-    std::vector<std::pair<std::string, unsigned char>> expected_values
+    const std::vector<std::pair<std::string, unsigned char>> expected_values
     {
         {"hpacket_length",               0x09},
         {"hmx_speak_signature",          0xe4},
@@ -103,11 +103,11 @@ CLOVE_TEST(test_mx6_header_parameters)
         {"hreserved",                    0x00}
     };
 
-    std::vector<std::pair<std::string, unsigned char>> actual_values = test_header.get_parameters();
+    const std::vector<std::pair<std::string, unsigned char>> actual_values = test_header.get_parameters();
 
-    for (int i = 0; i < expected_values.size(); i++)
+    for (size_t i = 0; i < expected_values.size(); i++)
     {
-        CLOVE_STRING_EQ(expected_values[i].first.c_str(), actual_values[i].first.c_str());
-        CLOVE_CHAR_EQ(expected_values[i].second, actual_values[i].second);
+        CLOVE_STRING_EQ(expected_values[i].first.c_str(), actual_values[i].first.c_str())
+        CLOVE_CHAR_EQ(expected_values[i].second, actual_values[i].second)
     }
 }
