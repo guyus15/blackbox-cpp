@@ -18,7 +18,7 @@ namespace Packets
     class BaseHeader : public Content
     {
         public:
-            BaseHeader(PacketID packet_id = PacketID::INVALID,
+            explicit BaseHeader(PacketID packet_id = PacketID::INVALID,
             std::vector<std::pair<std::string, unsigned char>> p = std::vector<std::pair<std::string, unsigned char>>());
     };
 
@@ -26,10 +26,10 @@ namespace Packets
      * @brief An MX Speak 5 Local Header, which is used when connected to the panel's COM2
      * serial port.
      */
-    class LocalHeaderMX5 : public BaseHeader
+    class LocalHeaderMX5 final : public BaseHeader
     {
         public:
-            LocalHeaderMX5(PacketID packet_id, 
+            explicit LocalHeaderMX5(PacketID packet_id, 
             std::vector<std::pair<std::string, unsigned char>> p = std::vector<std::pair<std::string, unsigned char>>());
     };
 
@@ -37,10 +37,10 @@ namespace Packets
      * @brief An MX Speak 6 Local Header, which is used when connected to the panel's COM2
      * serial port.
      */
-    class LocalHeaderMX6 : public BaseHeader
+    class LocalHeaderMX6 final : public BaseHeader
     {
         public:
-            LocalHeaderMX6(PacketID packet_id,
+            explicit LocalHeaderMX6(PacketID packet_id,
             std::vector<std::pair<std::string, unsigned char>> p = std::vector<std::pair<std::string, unsigned char>>());
     };
 }
