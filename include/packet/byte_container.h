@@ -13,7 +13,10 @@
 
 namespace Packets
 {
-    class IByteContainer
+	/**
+	 * @brief Interface for byte container objects.
+	 */
+	class IByteContainer
     {
     public:
     	virtual std::vector<unsigned char>& get_byte_array() = 0;

@@ -10,6 +10,9 @@
 
 #include <exception>
 
+/**
+ * @brief A struct representing an invalid key exception.
+ */
 struct InvalidKeyException final : public std::exception
 {
 	[[nodiscard]] const char* what() const noexcept override

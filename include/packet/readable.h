@@ -11,7 +11,10 @@
 
 namespace Packets
 {
-    class IReadable
+	/**
+	 * @bried Interface for readable objects.
+	 */
+	class IReadable
     {
     public:
 		virtual std::vector<unsigned char> read() = 0;
