@@ -12,7 +12,7 @@
 
 namespace Packets
 {
-    std::unordered_map<unsigned char, std::string> device_codes
+	inline std::unordered_map<unsigned char, std::string> device_codes
     {
         {0x00, "IF800Ex IS INT"},            // 0
         {0x02, "SAM800"},                    // 2

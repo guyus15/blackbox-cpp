@@ -13,8 +13,8 @@ namespace Packets
 {
     class IReadable
     {
-        public:
-            virtual std::vector<unsigned char> read() = 0;
+    public:
+		virtual std::vector<unsigned char> read() = 0;
     };
 }
 

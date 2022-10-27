@@ -15,11 +15,11 @@ namespace Packets
 {
     class IByteContainer
     {
-        public:
-            virtual std::vector<unsigned char>& get_byte_array() = 0;
-            virtual void set_parameter(std::string key, unsigned char value) = 0;
-            virtual unsigned char get_parameter(std::string key) = 0;
-            virtual std::vector<std::pair<std::string, unsigned char>>& get_parameters() = 0;
+    public:
+    	virtual std::vector<unsigned char>& get_byte_array() = 0;
+    	virtual void set_parameter(std::string key, unsigned char value) = 0;
+    	virtual unsigned char get_parameter(std::string key) = 0;
+    	virtual std::vector<std::pair<std::string, unsigned char>>& get_parameters() = 0;
     };
 }
 

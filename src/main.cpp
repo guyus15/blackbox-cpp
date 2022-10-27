@@ -5,7 +5,6 @@
  */
 
 #include "packet/packet_types.h"
-#include "packet/serial_data_transfer.h"
 #include "clock.h"
 #include "config.h"
 #include "constants.h"
@@ -15,22 +14,27 @@
 #include <vector>
 #include <memory>
 
-void send_test_packet(Logger& logger, std::string& logfile);
+// These could be represented as an unordered_map as as the point polling does not necessarily need to be
+// in order, but it makes sense from a logging perspective to put log points in order.
 std::vector<std::pair<int, int>> poll_points();
+
+void send_test_packet(const Logger& logger, const std::string& logfile);
 
 int main()
 {
-    Logger logger;
+	const Logger logger;
     Clock clock{true};
 
-    std::string logfile = Config::get_log_file();
+    const std::string logfile = Config::get_log_file();
 
     send_test_packet(logger, logfile);
 
-    std::vector<std::pair<int, int>> point_records = poll_points();
+    const std::vector<std::pair<int, int>> point_records = poll_points();
 
+    // While this could be const, there could be situations in the future when we can set
+    // the duration of which the logger runs, in which case this will be changed.
     bool should_run = true;
-    float ping_time_period = Config::get_ping_time_period();
+    const float ping_time_period = Config::get_ping_time_period();
 
     while (should_run)
     {
@@ -39,10 +43,10 @@ int main()
             continue;
         }
 
-        for (const auto& point_record : point_records)
+        for (const auto& [fst, snd] : point_records)
         {
-            int loop_number = point_record.first;
-            int point_number = point_record.second;
+	        const int loop_number = fst;
+	        const int point_number = snd;
 
             std::cout << "Loop: " << loop_number << "\nPoint: " << point_number << std::endl;
 
@@ -50,7 +54,7 @@ int main()
 
             packet.write();
 
-            std::unique_ptr<Packets::Types::PointInformationReplyMX5> reply{packet.read()};
+	        const std::unique_ptr<Packets::Types::PointInformationReplyMX5> reply{packet.read()};
 
             std::string entry = reply->get_as_csv();
 
@@ -68,18 +72,17 @@ int main()
  * It will also write headers to the selected log file if they are not already there.
  * 
  */
-void send_test_packet(Logger& logger, std::string& logfile)
+void send_test_packet(const Logger& logger, const std::string& logfile)
 {
     // Point information request for point 0.
     Packets::Types::PointInformationRequestMX5 test_packet{0, 1};
 
     test_packet.write();
 
-    std::unique_ptr<Packets::Types::PointInformationReplyMX5> reply{test_packet.read()};
-
     // Log file headers  (only added once)
     {
-        std::vector<std::string> headers = reply->get_headers();
+	    const std::unique_ptr<Packets::Types::PointInformationReplyMX5> reply{test_packet.read()};
+	    const std::vector<std::string> headers = reply->get_headers();
 
         logger.write_headers(headers, logfile);
     }
@@ -98,7 +101,7 @@ std::vector<std::pair<int, int>> poll_points()
 
     bool should_poll_points = true;
 
-    float poll_time_period = Config::get_poll_time_period();
+    const float poll_time_period = Config::get_poll_time_period();
 
     int current_point_number = 0;
     int current_loop_number = 1;
@@ -113,8 +116,7 @@ std::vector<std::pair<int, int>> poll_points()
 
             packet.write();
 
-            std::unique_ptr<Packets::Types::PointInformationReplyMX5> reply{packet.read()};
-
+            const std::unique_ptr<Packets::Types::PointInformationReplyMX5> reply{packet.read()};
             if (reply->reply_successful())
             {
                 valid_points.push_back({current_loop_number, current_point_number});

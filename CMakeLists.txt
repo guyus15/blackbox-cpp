@@ -25,17 +25,17 @@ set(TARGET_SOURCES src/main.cpp
 
 if (TEST)
     set(TEST_SOURCES tests/run_tests.cpp
-                    tests/content_test.cpp
-                    tests/headers_test.cpp
-                    tests/packet_test.cpp
-                    tests/config_test.cpp
-                    src/packet/content.cpp
-                    src/packet/headers.cpp
-                    src/packet/packet.cpp
-                    src/packet/serial_data_transfer.cpp
-                    src/serial/serialib.cpp
-                    src/config.cpp
-                    )
+                     tests/content_test.cpp
+                     tests/headers_test.cpp
+                     tests/packet_test.cpp
+                     tests/config_test.cpp
+                     src/packet/content.cpp
+                     src/packet/headers.cpp
+                     src/packet/packet.cpp
+                     src/packet/serial_data_transfer.cpp
+                     src/serial/serialib.cpp
+                     src/config.cpp
+                     )
                     
     add_executable(tests ${TEST_SOURCES})
 endif()

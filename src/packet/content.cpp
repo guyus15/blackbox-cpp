@@ -7,80 +7,67 @@
 #include "packet/content.h"
 #include "exceptions/invalid_key_exception.h"
 
-#include <cstdio>
-#include <cstdlib>
+#include <algorithm>
+#include <iostream>
 
 namespace Packets
 {
-    Content::Content()
-    : _params{}, _bytes{}
-    {}
-
     Content::Content(std::vector<std::pair<std::string, unsigned char>>& params)
     : _params{params}, _bytes{}
     {
-        get_byte_array();
+	    Content::get_byte_array();
     }
 
-    bool Content::check_exists(std::string key)
+    bool Content::check_exists(const std::string& key) const
     {
-        for (const auto& pairs : _params)
-        {
-            std::string k = pairs.first;
-
-            if (key == k)
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return std::any_of(_params.begin(), _params.end(), 
+            [key](const std::pair<std::string, unsigned char>& pairs) { return key == pairs.first; });
     }
 
     std::vector<unsigned char>& Content::get_byte_array()
     {
-        for (const auto& pairs : _params)
+        for (const auto& [fst, snd] : _params)
         {
-            unsigned char value = pairs.second;
+            unsigned char value = snd;
             _bytes.push_back(value);
         }
 
         return _bytes;
     } 
 
-    void Content::set_parameter(std::string key, unsigned char value)
+    void Content::set_parameter(const std::string key, const unsigned char value)
     {
         if (!check_exists(key))
         {
-            fprintf(stderr, "'%s' can not be found in the content parameters.\n", key.c_str());
+            std::cerr << "'" << key <<"' can not be found in the content parameters" << std::endl;
             throw InvalidKeyException();
         }
 
-        for (int i = 0; i < _params.size(); i++)
+        for (auto& [fst, snd] : _params)
         {
-            if (_params[i].first == key)
+            if (fst == key)
             {
-                _params[i].second = value;
+	            snd = value;
                 break;
             }
         }
     }
 
-    unsigned char Content::get_parameter(std::string key)
+    unsigned char Content::get_parameter(const std::string key)
     {
         if (!check_exists(key))
         {
-            fprintf(stderr, "'%s' can not be found in the content parameters.\n", key.c_str());
+			std::cerr << "'" << key <<"' can not be found in the content parameters" << std::endl;
             throw InvalidKeyException();
         }
 
         unsigned char param = 0;
 
-        for (const auto& pair : _params)
+        for (const auto& [fst, snd] : _params)
         {
-            if (pair.first == key)
+            if (fst == key)
             {
-                param = pair.second;
+                param = snd;
                 break;
             }
         }
@@ -95,9 +82,9 @@ namespace Packets
 
     std::ostream& operator<<(std::ostream& os, Content const& content)
     {
-        for (const auto& pair : content._params)
+        for (const auto& [fst, snd] : content._params)
         {
-            os << pair.first << ": " << std::hex << (int)pair.second << std::endl;
+            os << fst << ": " << std::hex << static_cast<int>(snd) << std::endl;
         }       
 
         return os;

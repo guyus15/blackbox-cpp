@@ -6,12 +6,12 @@
 
 #include "clock.h"
 
-Clock::Clock(bool start_true)
+Clock::Clock(const bool start_true)
 : _start_time{std::chrono::system_clock::now()}, _start_true{start_true}
 {
 }
 
-bool Clock::time_elapsed(float seconds)
+bool Clock::time_elapsed(const float seconds)
 {
     if (_start_true)
     {
@@ -19,8 +19,8 @@ bool Clock::time_elapsed(float seconds)
         return true;
     }
 
-    auto current_time = std::chrono::system_clock::now();
-    std::chrono::duration<double> elapsed_seconds = current_time - _start_time;
+    const auto current_time = std::chrono::system_clock::now();
+    const std::chrono::duration<float> elapsed_seconds = current_time - _start_time;
 
     if (elapsed_seconds.count() >= seconds)
     {

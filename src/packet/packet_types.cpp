@@ -13,7 +13,6 @@
 #include "constants.h"
 #include "config.h"
 
-#include <iostream>
 #include <sstream>
 
 namespace Packets::Types
@@ -22,12 +21,12 @@ namespace Packets::Types
      * PointInformationRequestMX5
      */
 
-    PointInformationRequestMX5::PointInformationRequestMX5(int point_number, int loop_number)
+    PointInformationRequestMX5::PointInformationRequestMX5(const int point_number, const int loop_number)
     : _point_number{point_number}, _loop_number{loop_number}
     {
-        LocalHeaderMX5 header{PacketID::POINT_INFO_REQUEST};
-    
-        std::vector<std::pair<std::string, unsigned char>> parameters
+	    const LocalHeaderMX5 header{PacketID::POINT_INFO_REQUEST};
+
+        const std::vector<std::pair<std::string, unsigned char>> parameters
         {
             {"pnode",                     0x00},  // D+0
             {"pchannel",                  0x00},  // D+1
@@ -79,7 +78,7 @@ namespace Packets::Types
             {"psearch_type",              0x0a}   // D+47
         };
 
-        _packet = new Packet{header, parameters};
+        _packet = new Packet{BaseHeader(header), parameters};
     }
 
     PointInformationRequestMX5::~PointInformationRequestMX5()
@@ -92,11 +91,11 @@ namespace Packets::Types
         _packet->write();
     }
 
-    PointInformationReplyMX5 *PointInformationRequestMX5::read()
+    PointInformationReplyMX5 *PointInformationRequestMX5::read() const
     {
-        std::vector<unsigned char> read_data = _packet->read();
+	    const std::vector<unsigned char> read_data = _packet->read();
 
-        PointInformationReplyMX5 *reply_packet = new PointInformationReplyMX5{read_data};
+        auto* reply_packet = new PointInformationReplyMX5{read_data};
 
         return reply_packet;
     }
@@ -106,12 +105,12 @@ namespace Packets::Types
      * PointInformationRequestMX6
      */
 
-    PointInformationRequestMX6::PointInformationRequestMX6(int point_number, int loop_number)
+    PointInformationRequestMX6::PointInformationRequestMX6(const int point_number, const int loop_number)
     : _point_number{point_number}, _loop_number{loop_number}
     {
-        LocalHeaderMX6 header{PacketID::POINT_INFO_REQUEST};
+	    const LocalHeaderMX6 header{PacketID::POINT_INFO_REQUEST};
 
-        std::vector<std::pair<std::string, unsigned char>> parameters
+	    const std::vector<std::pair<std::string, unsigned char>> parameters
         {
             {"pnode",                     0x00},  // D+0
             {"pchannel",                  0x00},  // D+1
@@ -163,7 +162,7 @@ namespace Packets::Types
             {"psearch_type",              0x0a}   // D+47
         };
 
-        _packet = new Packet{header, parameters};
+        _packet = new Packet{BaseHeader(header), parameters};
     }
 
     PointInformationRequestMX6::~PointInformationRequestMX6()
@@ -176,7 +175,7 @@ namespace Packets::Types
         _packet->write();
     }
 
-    std::vector<unsigned char> PointInformationRequestMX6::read()
+    std::vector<unsigned char> PointInformationRequestMX6::read() const
     {
         return _packet->read();
     }
@@ -253,13 +252,13 @@ namespace Packets::Types
     std::string PointInformationReplyMX5::get_as_csv()
     {
         std::stringstream csv_stream;
-        
-        std::vector<unsigned char> byte_array = get_byte_array();
+
+        const std::vector<unsigned char> byte_array = get_byte_array();
 
         if (Config::get_log_verbose_mode())
         {
-            // Store more comprehensisble decoded packets in CSV file.
-            std::vector<std::string> decoded = Packets::Decoding::MX5::decode_point_information_reply(byte_array);
+            // Store more comprehensible decoded packets in CSV file.
+            const std::vector<std::string> decoded = Packets::Decoding::MX5::decode_point_information_reply(byte_array);
 
             for (const auto& value : decoded)
             {
@@ -270,7 +269,7 @@ namespace Packets::Types
             // Store raw hexadecimal byte values in CSV file.
             for (const auto& value : byte_array)
             {
-                csv_stream << std::hex << (int)value << ",";
+                csv_stream << std::hex << static_cast<int>(value) << ",";
             }
         }
 
