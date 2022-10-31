@@ -12,6 +12,14 @@ Black box recorder and data logger, written in C++.
 - Build project with selected build tool
 - Make sure `config.json` is present in the same directory as the resulting executable
 
+### Additional CMake Options
+There are a few options available to configure the build. These can be used in the command line with the prefex `-D`:
+- `TEST` - Enables the building of tests as an executable alongside the main executable.
+- `ENABLE_INFO_OUTPUT` - Enables verbose info output. By default this is set to `OFF`, so only
+  error messages are output.
+- `ENABLE_PROFILING` - Enables profiling across the project. This will output profiling results to a 
+  JSON file which can be inserted into `chrome://tracing` in most browsers.
+
 ## Usage
 Usage of the **blackbox** is very simple:
 1. Connect serial cable from one of your computer's COM ports to panel's COM2 port.
