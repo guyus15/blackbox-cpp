@@ -6,6 +6,7 @@
 
 #include "config.h"
 #include "logger.h"
+#include "output.h"
 
 #include "profiling/instrumentation.h"
 
@@ -31,11 +32,11 @@ void Logger::create_log_dir() const
 
 	if (const std::filesystem::path directory_path{configured_path}; !exists(directory_path))
     {
-        std::cout << "Directory does not exist. Creating..." << std::endl;
+		BX_LOG_INFO("Directory does not exist. Creating...");
         std::filesystem::create_directory(directory_path);
     } else
     {
-        std::cout << "Directory already exists." << std::endl;
+        BX_LOG_INFO("Directory already exists.");
     }
 }
 
@@ -82,11 +83,11 @@ void Logger::write_headers(const std::vector<std::string>& headers, const std::s
 	// Only write header to the file if it does not exist.
     if (const std::filesystem::path file{logfile}; std::filesystem::exists(file))
     {
-        std::cout << "File already exists. Not adding header." << std::endl;
+        BX_LOG_INFO("File already exists. Not adding header.");
         return;
     }   
 
-    std::cout << "File does not exist. Writing header." << std::endl;
+    BX_LOG_INFO("File does not exist. Writing header.");
 
     std::stringstream csv_stream{};
 
@@ -110,7 +111,7 @@ void Logger::write_log_windows(const std::string& entry, const std::string& logf
 {
     BX_PROFILE_FUNCTION();
 
-    std::cout << "Writing on Windows..." << std::endl;
+    BX_LOG_INFO("Writing on Windows...");
 
     const std::string log_path = Config::get_log_dir() + "/" + logfile;
 
@@ -130,7 +131,7 @@ void Logger::write_log_linux(const std::string& entry, const std::string& logfil
     // so, the logs can be written there instead.
     // Maybe something could also be done with status LEDs and other visual hardware.
 
-    std::cout << "Writing on Linux..." << std::endl;
+    BX_LOG_INFO("Writing on Linux...");
     
     const std::string log_path = Config::get_log_dir() + "/" + logfile;
 

@@ -10,11 +10,11 @@
 #include "config.h"
 #include "constants.h"
 #include "logger.h"
+#include "output.h"
 
 #include <iostream>
 #include <vector>
 #include <memory>
-#include <thread>
 
 // These could be represented as an unordered_map as as the point polling does not necessarily need to be
 // in order, but it makes sense from a logging perspective to put log points in order.
@@ -25,6 +25,8 @@ void send_test_packet(const Logger& logger, const std::string& logfile);
 int main()
 {
     BX_PROFILE_BEGIN_SESSION("Set up");
+
+    BX_LOG_INFO("Blackbox - Point Information Data Logger");
 
     const Logger logger;
     Clock clock{true};
@@ -55,6 +57,8 @@ int main()
 
             std::cout << "Loop: " << loop_number << "\nPoint: " << point_number << std::endl;
 
+            BX_LOG_INFO("Loop: {0}\nPoint: {1}\n", loop_number, point_number);
+
             Packets::Types::PointInformationRequestMX5 packet{point_number, loop_number};
 
             packet.write();
@@ -63,7 +67,7 @@ int main()
 
             std::string entry = reply->get_as_csv();
 
-            std::cout << entry << std::endl; 
+            BX_LOG_INFO(entry);
 
             logger.write_log(entry, logfile);
         }
@@ -119,7 +123,7 @@ std::vector<std::pair<int, int>> poll_points()
     {
         if (clock.time_elapsed(poll_time_period))
         {
-            std::cout << "Polling point " << current_point_number << " on loop " << current_loop_number << "..." << std::endl;
+            BX_LOG_INFO("Polling point {0} on loop {1}...", current_point_number, current_loop_number);
 
             Packets::Types::PointInformationRequestMX5 packet{current_point_number, current_loop_number};
 

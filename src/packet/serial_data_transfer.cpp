@@ -6,6 +6,7 @@
 
 #include "packet/serial_data_transfer.h"
 #include "config.h"
+#include "output.h"
 
 #include "profiling/instrumentation.h"
 
@@ -31,7 +32,7 @@ namespace Packets
                                 parity,
                                 stopbits) != 1) 
         {
-            std::cerr << "Error: There has been an error opening the serial device." << std::endl;
+            BX_LOG_ERROR("There has been an error opening the serial device.");
             exit(EXIT_FAILURE);
         }
     }

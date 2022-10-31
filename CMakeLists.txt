@@ -41,9 +41,15 @@ if (TEST)
     add_executable(tests ${TEST_SOURCES})
 endif()
                  
+include_directories(include/
+                    libs/spdlog/include
+                    )
+
 add_executable(blackbox ${TARGET_SOURCES})
                  
-include_directories(include/)
+add_subdirectory(libs/spdlog)
+target_link_libraries(${PROJECT_NAME} PRIVATE spdlog::spdlog)
+
 
 # Copy the configuration file into the build output directory.
 add_custom_target(copy_config ALL
