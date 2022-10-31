@@ -15,8 +15,6 @@
 #include <regex>
 #include <sstream>
 
-static bool check_directory_exists(const std::filesystem::path& path);
-
 Logger::Logger()
 {
     // Create the log directory if it doesn't exist.
@@ -26,9 +24,8 @@ Logger::Logger()
 void Logger::create_log_dir() const
 {
 	const std::string configured_path = Config::get_log_dir();
-    const std::filesystem::path directory_path{configured_path};
 
-    if (!check_directory_exists(directory_path))
+	if (const std::filesystem::path directory_path{configured_path}; !exists(directory_path))
     {
         std::cout << "Directory does not exist. Creating..." << std::endl;
         std::filesystem::create_directory(directory_path);
@@ -130,16 +127,4 @@ void Logger::write_log_linux(const std::string& entry, const std::string& logfil
     file.open(log_path, std::ios_base::app);
     file << entry;
     file.close();
-}
-
-/**
- * @brief Determines if a directory exists or not.
- * 
- * @param path The path to a directory.
- * @return true If the directory exists.
- * @return false If a directory does not exist.
- */
-static bool check_directory_exists(const std::filesystem::path& path)
-{
-    return std::filesystem::exists(path);
 }
