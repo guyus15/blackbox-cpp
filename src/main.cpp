@@ -67,7 +67,7 @@ int main()
 
             std::string entry = reply->get_as_csv();
 
-            BX_LOG_INFO(entry);
+            BX_LOG_INFO("{0}", entry);
 
             logger.write_log(entry, logfile);
         }
@@ -132,7 +132,7 @@ std::vector<std::pair<int, int>> poll_points()
             const std::unique_ptr<Packets::Types::PointInformationReplyMX5> reply{packet.read()};
             if (reply->reply_successful())
             {
-                valid_points.push_back({current_loop_number, current_point_number});
+                valid_points.emplace_back(current_loop_number, current_point_number);
             }
 
             current_point_number++;

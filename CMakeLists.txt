@@ -9,6 +9,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ./out)
 
 # Off by default
 option (TEST "Build tests" OFF)
+option (ENABLE_INFO_OUTPUT "Enable verbose info output" OFF)
+option (ENABLE_PROFILING "Enable profiling" OFF)
 
 set(TARGET_SOURCES src/main.cpp
                    src/packet/content.cpp
@@ -41,6 +43,14 @@ if (TEST)
     add_executable(tests ${TEST_SOURCES})
 endif()
                  
+if (ENABLE_INFO_OUTPUT)
+    add_compile_definitions(OUTPUT_LEVEL_INFO)
+endif()
+
+if (ENABLE_PROFILING)
+    add_compile_definitions(BX_PROFILING)
+endif()
+
 include_directories(include/
                     libs/spdlog/include
                     )

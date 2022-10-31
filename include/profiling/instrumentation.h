@@ -75,8 +75,6 @@ private:
     bool m_stopped;
 };
 
-#define BX_PROFILING
-
 #ifdef BX_PROFILING
 #define BX_PROFILE_SCOPE(name) InstrumentationTimer timer##__LINE__{name}
 #define BX_PROFILE_FUNCTION() BX_PROFILE_SCOPE(__FUNCSIG__)
