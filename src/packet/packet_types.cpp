@@ -12,8 +12,10 @@
 
 #include "constants.h"
 #include "config.h"
+#include "profiling/instrumentation.h"
 
 #include <sstream>
+
 
 namespace Packets::Types
 {
@@ -83,16 +85,22 @@ namespace Packets::Types
 
     PointInformationRequestMX5::~PointInformationRequestMX5()
     {
+        BX_PROFILE_FUNCTION();
+
         delete _packet;
     }
 
     void PointInformationRequestMX5::write()
     {
+        BX_PROFILE_FUNCTION();
+
         _packet->write();
     }
 
     PointInformationReplyMX5 *PointInformationRequestMX5::read() const
     {
+        BX_PROFILE_FUNCTION();
+
 	    const std::vector<unsigned char> read_data = _packet->read();
 
         auto* reply_packet = new PointInformationReplyMX5{read_data};
@@ -167,16 +175,22 @@ namespace Packets::Types
 
     PointInformationRequestMX6::~PointInformationRequestMX6()
     {
+        BX_PROFILE_FUNCTION();
+
         delete _packet;
     }
 
     void PointInformationRequestMX6::write()
     {
+        BX_PROFILE_FUNCTION();
+
         _packet->write();
     }
 
     std::vector<unsigned char> PointInformationRequestMX6::read() const
     {
+        BX_PROFILE_FUNCTION();
+
         return _packet->read();
     }
 
@@ -188,6 +202,8 @@ namespace Packets::Types
     PointInformationReplyMX5::PointInformationReplyMX5(std::vector<unsigned char> data)
     : Content{}
     {
+        BX_PROFILE_FUNCTION();
+
         _params.emplace_back(Constants::PNAME_SOH,                            data[Constants::PIRMX5_SOH_INDEX]);
         _params.emplace_back(Constants::PNAME_SEQ,                            data[Constants::PIRMX5_SEQ_INDEX]);
         _params.emplace_back(Constants::PNAME_PACKET_LENGTH,                  data[Constants::PIRMX5_PACKET_LENGTH_INDEX]);
@@ -246,11 +262,15 @@ namespace Packets::Types
 
     bool PointInformationReplyMX5::reply_successful()
     {
+        BX_PROFILE_FUNCTION();
+
         return get_parameter(Constants::PNAME_REPLY_STATUS) == 0;
     }
 
     std::string PointInformationReplyMX5::get_as_csv()
     {
+        BX_PROFILE_FUNCTION();
+
         std::stringstream csv_stream;
 
         const std::vector<unsigned char> byte_array = get_byte_array();
@@ -283,6 +303,8 @@ namespace Packets::Types
 
     std::vector<std::string> PointInformationReplyMX5::get_headers()
     {
+        BX_PROFILE_FUNCTION();
+
         std::vector<std::string> headers
         {
             Constants::PNAME_REPLY_STATUS,

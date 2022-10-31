@@ -110,8 +110,6 @@ void InstrumentationTimer::stop()
     const long long start = std::chrono::time_point_cast<std::chrono::microseconds>(m_start_timepoint).time_since_epoch().count();
     const long long end = std::chrono::time_point_cast<std::chrono::microseconds>(end_timepoint).time_since_epoch().count();
 
-    std::cout << m_name << ": " << (end - start) << "ms" << std::endl;
-
     const size_t thread_id = std::hash<std::thread::id>{}(std::this_thread::get_id());
 
     Instrumentor::write_profile({m_name, start, end, thread_id});

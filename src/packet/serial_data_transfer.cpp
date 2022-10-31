@@ -7,6 +7,8 @@
 #include "packet/serial_data_transfer.h"
 #include "config.h"
 
+#include "profiling/instrumentation.h"
+
 #include <cstdlib>
 #include <iostream>
 #include <string>
@@ -15,6 +17,8 @@ namespace Packets
 {
     SerialDataTransfer::SerialDataTransfer()
     {
+        BX_PROFILE_FUNCTION();
+
         const std::string& com_port = Config::get_com_port();
         const int baudrate = Config::get_baudrate();
         const enum SerialDataBits databits = Config::get_bytesize();
@@ -34,6 +38,8 @@ namespace Packets
 
     SerialDataTransfer::~SerialDataTransfer()
     {
+        BX_PROFILE_FUNCTION();
+
         if (_serial.isDeviceOpen())
         {
             _serial.closeDevice();
@@ -42,6 +48,8 @@ namespace Packets
 
     void SerialDataTransfer::write(const std::vector<unsigned char>& data)
     {
+        BX_PROFILE_FUNCTION();
+
         for (const auto& byte : data)
         {
             _serial.writeChar(byte);
@@ -50,11 +58,15 @@ namespace Packets
 
     void SerialDataTransfer::write_byte(const unsigned char value)
     {
+        BX_PROFILE_FUNCTION();
+
          _serial.writeChar(value);
     }
 
     std::vector<unsigned char> SerialDataTransfer::read()
     {
+        BX_PROFILE_FUNCTION();
+
         bool ack_acquired = false;
         char ack = 0;
 

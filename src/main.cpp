@@ -5,6 +5,7 @@
  */
 
 #include "packet/packet_types.h"
+#include "profiling/instrumentation.h"
 #include "clock.h"
 #include "config.h"
 #include "constants.h"
@@ -13,6 +14,7 @@
 #include <iostream>
 #include <vector>
 #include <memory>
+#include <thread>
 
 // These could be represented as an unordered_map as as the point polling does not necessarily need to be
 // in order, but it makes sense from a logging perspective to put log points in order.
@@ -22,11 +24,12 @@ void send_test_packet(const Logger& logger, const std::string& logfile);
 
 int main()
 {
+    BX_PROFILE_BEGIN_SESSION("Set up");
+
     const Logger logger;
     Clock clock{true};
 
     const std::string logfile = Config::get_log_file();
-
     send_test_packet(logger, logfile);
 
     const std::vector<std::pair<int, int>> point_records = poll_points();
@@ -35,6 +38,8 @@ int main()
     // the duration of which the logger runs, in which case this will be changed.
     bool should_run = true;
     const float ping_time_period = Config::get_ping_time_period();
+
+    BX_PROFILE_END_SESSION();
 
     while (should_run)
     {
@@ -74,6 +79,8 @@ int main()
  */
 void send_test_packet(const Logger& logger, const std::string& logfile)
 {
+    BX_PROFILE_FUNCTION();
+
     // Point information request for point 0.
     Packets::Types::PointInformationRequestMX5 test_packet{0, 1};
 
@@ -95,6 +102,8 @@ void send_test_packet(const Logger& logger, const std::string& logfile)
  */
 std::vector<std::pair<int, int>> poll_points()
 {
+    BX_PROFILE_FUNCTION();
+
     std::vector<std::pair<int, int>> valid_points{};
 
     Clock clock{true};

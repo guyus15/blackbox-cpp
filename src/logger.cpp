@@ -4,8 +4,10 @@
  * @author G. Chamberlain-Webber
  */
 
-#include "logger.h"
 #include "config.h"
+#include "logger.h"
+
+#include "profiling/instrumentation.h"
 
 #include <chrono>
 #include <ctime>
@@ -23,6 +25,8 @@ Logger::Logger()
 
 void Logger::create_log_dir() const
 {
+    BX_PROFILE_FUNCTION();
+
 	const std::string configured_path = Config::get_log_dir();
 
 	if (const std::filesystem::path directory_path{configured_path}; !exists(directory_path))
@@ -37,6 +41,8 @@ void Logger::create_log_dir() const
 
 void Logger::write_log(std::string entry, const std::string& logfile, const bool prepend_date) const
 {
+    BX_PROFILE_FUNCTION();
+
     // Don't write to the log file if logging is has not been enabled.
     if (!Config::get_log_enabled())
     {
@@ -71,6 +77,8 @@ void Logger::write_log(std::string entry, const std::string& logfile, const bool
 
 void Logger::write_headers(const std::vector<std::string>& headers, const std::string& logfile) const
 {
+    BX_PROFILE_FUNCTION();
+
 	// Only write header to the file if it does not exist.
     if (const std::filesystem::path file{logfile}; std::filesystem::exists(file))
     {
@@ -100,6 +108,8 @@ void Logger::write_headers(const std::vector<std::string>& headers, const std::s
 
 void Logger::write_log_windows(const std::string& entry, const std::string& logfile)
 {
+    BX_PROFILE_FUNCTION();
+
     std::cout << "Writing on Windows..." << std::endl;
 
     const std::string log_path = Config::get_log_dir() + "/" + logfile;
@@ -113,6 +123,8 @@ void Logger::write_log_windows(const std::string& entry, const std::string& logf
     
 void Logger::write_log_linux(const std::string& entry, const std::string& logfile)
 {
+    BX_PROFILE_FUNCTION();
+
     // This is a separate implementation to reserve a different behaviour for Linux in the 
     // future. For example, we could do a check to see if the user has a USB connected, if
     // so, the logs can be written there instead.

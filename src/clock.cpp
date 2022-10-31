@@ -6,6 +6,8 @@
 
 #include "clock.h"
 
+#include "profiling/instrumentation.h"
+
 Clock::Clock(const bool start_true)
 : _start_time{std::chrono::system_clock::now()}, _start_true{start_true}
 {
@@ -13,6 +15,8 @@ Clock::Clock(const bool start_true)
 
 bool Clock::time_elapsed(const float seconds)
 {
+    BX_PROFILE_FUNCTION();
+
     if (_start_true)
     {
         _start_true = false;

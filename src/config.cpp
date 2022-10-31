@@ -9,7 +9,7 @@
 #include "tao/json/value.hpp"
 #include "tao/json/from_file.hpp"
 
-#include <iostream>
+#include "profiling/instrumentation.h"
 
 namespace Config
 {
@@ -17,6 +17,8 @@ namespace Config
 
     bool get_log_enabled()
     {
+        BX_PROFILE_FUNCTION();
+
         const bool enabled = config.at("logging").at("enabled").as<bool>();
 
         return enabled;
@@ -24,6 +26,8 @@ namespace Config
 
     std::string get_log_dir()
     {
+        BX_PROFILE_FUNCTION();
+
         const std::string directory = config.at("logging").at("directory").as<std::string>();
 
         return directory;
@@ -31,6 +35,8 @@ namespace Config
 
     std::string get_log_file()
     {
+        BX_PROFILE_FUNCTION();
+
         const std::string logfile = config.at("logging").at("logfile").as<std::string>();
 
         return logfile;
@@ -38,6 +44,8 @@ namespace Config
 
     bool get_log_verbose_mode()
     {
+        BX_PROFILE_FUNCTION();
+
         const bool verbose_mode = config.at("logging").at("verbose-logging").as<bool>();
 
         return verbose_mode;
@@ -45,6 +53,8 @@ namespace Config
 
     std::string get_com_port()
     {
+        BX_PROFILE_FUNCTION();
+
         #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
         const std::string com_port = config.at("serial").at("com").at("windows").as<std::string>();
         #else
@@ -56,6 +66,8 @@ namespace Config
 
     int get_baudrate()
     {
+        BX_PROFILE_FUNCTION();
+
         const int baudrate = config.at("serial").at("baudrate").as<int>();
 
         return baudrate;
@@ -63,6 +75,8 @@ namespace Config
 
     int get_timeout()
     {
+        BX_PROFILE_FUNCTION();
+
         const int timeout = config.at("serial").at("timeout").as<int>();
 
         return timeout;
@@ -70,6 +84,8 @@ namespace Config
 
     enum SerialDataBits get_bytesize()
     {
+        BX_PROFILE_FUNCTION();
+
         const int bytesize = config.at("serial").at("bytesize").as<int>();
 
         // Set data bits size to 8 by default.
@@ -101,6 +117,8 @@ namespace Config
 
     enum SerialParity get_parity()
     {
+        BX_PROFILE_FUNCTION();
+
         const std::string parity = config.at("serial").at("parity").as<std::string>();
 
         // Set parity to none by default.
@@ -132,6 +150,8 @@ namespace Config
 
     enum SerialStopBits get_stopbits()
     {
+        BX_PROFILE_FUNCTION();
+
         const float stopbits = config.at("serial").at("stopbits").as<float>();
 
         // One stopbit by default.
@@ -157,6 +177,8 @@ namespace Config
 
     float get_poll_time_period()
     {
+        BX_PROFILE_FUNCTION();
+
         const float polling_time_period = config.at("timing").at("poll-time-period").as<float>();
 
         return polling_time_period;
@@ -164,6 +186,8 @@ namespace Config
 
     float get_ping_time_period()
     {
+        BX_PROFILE_FUNCTION();
+
         const float ping_time_period = config.at("timing").at("ping-time-period").as<float>();
 
         return ping_time_period;
