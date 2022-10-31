@@ -22,7 +22,7 @@ void send_test_packet(const Logger& logger, const std::string& logfile);
 
 int main()
 {
-	const Logger logger;
+    const Logger logger;
     Clock clock{true};
 
     const std::string logfile = Config::get_log_file();
@@ -45,8 +45,8 @@ int main()
 
         for (const auto& [fst, snd] : point_records)
         {
-	        const int loop_number = fst;
-	        const int point_number = snd;
+            const int loop_number = fst;
+            const int point_number = snd;
 
             std::cout << "Loop: " << loop_number << "\nPoint: " << point_number << std::endl;
 
@@ -54,7 +54,7 @@ int main()
 
             packet.write();
 
-	        const std::unique_ptr<Packets::Types::PointInformationReplyMX5> reply{packet.read()};
+            const std::unique_ptr<Packets::Types::PointInformationReplyMX5> reply{packet.read()};
 
             std::string entry = reply->get_as_csv();
 
@@ -81,8 +81,8 @@ void send_test_packet(const Logger& logger, const std::string& logfile)
 
     // Log file headers  (only added once)
     {
-	    const std::unique_ptr<Packets::Types::PointInformationReplyMX5> reply{test_packet.read()};
-	    const std::vector<std::string> headers = reply->get_headers();
+        const std::unique_ptr<Packets::Types::PointInformationReplyMX5> reply{test_packet.read()};
+        const std::vector<std::string> headers = reply->get_headers();
 
         logger.write_headers(headers, logfile);
     }

@@ -17,7 +17,7 @@ namespace Packets
     unsigned char Packet::seq = 0x01;
 
     Packet::Packet(BaseHeader header, std::vector<std::pair<std::string, unsigned char>> p)
-    : Content{p}
+		: Content{p}
     {
         // Combine the header with the existing parameters.
         std::vector combined {header.get_parameters()};
@@ -26,7 +26,7 @@ namespace Packets
         _params = combined;
 
         // Update the packet length parameter.
-        Content::set_parameter(Constants::PNAME_PACKET_LENGTH, _params.size());
+        Content::set_parameter(Constants::PNAME_PACKET_LENGTH, static_cast<unsigned char>(_params.size()));
     }
 
     std::vector<unsigned char>& Packet::get_byte_array()
@@ -41,9 +41,9 @@ namespace Packets
         
         checksum += seq;
 
-        for (const auto& _param : _params)
+        for (const auto& [fst, snd] : _params)
         {
-            unsigned char value = _param.second;
+            unsigned char value = snd;
             _bytes.push_back(value);
 
             // Calculate checksum
@@ -61,7 +61,7 @@ namespace Packets
     {
         SerialDataTransfer serial;
 
-        std::vector<unsigned char> data = get_byte_array();
+        const std::vector<unsigned char> data = get_byte_array();
         serial.write(data);
 
         increment_seq();
