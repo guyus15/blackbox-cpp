@@ -10,6 +10,9 @@
 #include <string>
 #include <vector>
 
+/**
+ * @brief Manages logging utility functions.
+ */
 class Logger
 {
 public:

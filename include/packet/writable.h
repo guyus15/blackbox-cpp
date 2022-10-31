@@ -10,7 +10,10 @@
 
 namespace Packets
 {
-    class IWritable
+	/**
+	 * @brief Interface for writable objects.
+	 */
+	class IWritable
     {
     public:
     	virtual void write() = 0;
