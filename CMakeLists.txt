@@ -21,6 +21,7 @@ set(TARGET_SOURCES src/main.cpp
                    src/config.cpp
                    src/logger.cpp
                    src/clock.cpp
+                   src/profiling/instrumentation.cpp
                    )
 
 if (TEST)

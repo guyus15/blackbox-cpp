@@ -201,6 +201,11 @@ namespace Constants
     constexpr int PIRMX6_CLIENT_ID2_INDEX                   = 54;
     constexpr int PIRMX6_POSITION_IN_POINTS_TOTAL1_INDEX    = 55;
     constexpr int PIRMX6_POSITION_IN_POINTS_TOTAL2_INDEX    = 56;
+
+    namespace Profiling
+    {
+	    const std::string RESULTS_FILE = "profile-results.json";
+    }
 }
 
 #endif
