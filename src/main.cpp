@@ -16,10 +16,11 @@
 #include <vector>
 #include <memory>
 
+#define MX6_DEBUG_FLAG
+
 // These could be represented as an unordered_map as as the point polling does not necessarily need to be
 // in order, but it makes sense from a logging perspective to put log points in order.
 std::vector<std::pair<int, int>> poll_points();
-
 void send_test_packet(const Logger& logger, const std::string& logfile);
 
 int main()
@@ -27,6 +28,25 @@ int main()
     BX_PROFILE_BEGIN_SESSION("Set up");
 
     BX_LOG_INFO("Blackbox - Point Information Data Logger");
+
+    /*
+    BX_LOG_ERROR("Sending MX5 request packet...");
+
+    Packets::Types::PointInformationRequestMX5 packet_mx5{4, 1};
+    packet_mx5.write();
+	const auto reply_mx5 = std::make_unique<Packets::Types::PointInformationReplyMX5>(packet_mx5.read());
+
+	BX_LOG_ERROR("Sending MX6 request packet...");
+
+    Packets::Types::PointInformationRequestMX6 packet_mx6{4, 1};
+    packet_mx6.write();
+	const auto reply_mx6 = std::make_unique<Packets::Types::PointInformationReplyMX6>(packet_mx6.read());
+
+    BX_LOG_ERROR("Reply received");
+    
+    return 0;
+	*/
+
 
     const Logger logger;
     Clock clock{true};
@@ -59,13 +79,21 @@ int main()
 
             BX_LOG_INFO("Loop: {0}\nPoint: {1}\n", loop_number, point_number);
 
+#if defined(MX6_DEBUG_FLAG)
+            Packets::Types::PointInformationRequestMX6 packet{point_number, loop_number};
+#else
             Packets::Types::PointInformationRequestMX5 packet{point_number, loop_number};
+#endif
 
             packet.write();
 
-            const std::unique_ptr<Packets::Types::PointInformationReplyMX5> reply{packet.read()};
+#if defined(MX6_DEBUG_FLAG)
+            const auto reply = std::make_unique<Packets::Types::PointInformationReplyMX6>(packet.read());
+#else
+            const auto reply = std::make_unique<Packets::Types::PointInformationReplyMX5>(packet.read());
+#endif
 
-            std::string entry = reply->get_as_csv();
+            const std::string entry = reply->get_as_csv();
 
             BX_LOG_INFO("{0}", entry);
 
@@ -86,16 +114,23 @@ void send_test_packet(const Logger& logger, const std::string& logfile)
     BX_PROFILE_FUNCTION();
 
     // Point information request for point 0.
+#if defined(MX6_DEBUG_FLAG)
+    Packets::Types::PointInformationRequestMX6 test_packet{0, 1};
+#else
     Packets::Types::PointInformationRequestMX5 test_packet{0, 1};
+#endif
 
     test_packet.write();
 
     // Log file headers  (only added once)
     {
-        const std::unique_ptr<Packets::Types::PointInformationReplyMX5> reply{test_packet.read()};
-        const std::vector<std::string> headers = reply->get_headers();
+#if defined(MX6_DEBUG_FLAG)
+        const auto reply = std::make_unique<Packets::Types::PointInformationReplyMX6>(test_packet.read());
+#else
+        const auto reply = std::make_unique<Packets::Types::PointInformationReplyMX5>(test_packet.read());
+#endif
 
-        logger.write_headers(headers, logfile);
+        logger.write_headers(Packets::get_headers(), logfile);
     }
 }
 
@@ -125,11 +160,20 @@ std::vector<std::pair<int, int>> poll_points()
         {
             BX_LOG_INFO("Polling point {0} on loop {1}...", current_point_number, current_loop_number);
 
+#if defined(MX6_DEBUG_FLAG)
+            Packets::Types::PointInformationRequestMX6 packet{current_point_number, current_loop_number};
+#else
             Packets::Types::PointInformationRequestMX5 packet{current_point_number, current_loop_number};
+#endif
 
             packet.write();
 
-            const std::unique_ptr<Packets::Types::PointInformationReplyMX5> reply{packet.read()};
+#if defined(MX6_DEBUG_FLAG)
+            const auto reply = std::make_unique<Packets::Types::PointInformationReplyMX6>(packet.read());
+#else
+            const auto reply = std::make_unique<Packets::Types::PointInformationReplyMX5>(packet.read());
+#endif
+
             if (reply->reply_successful())
             {
                 valid_points.emplace_back(current_loop_number, current_point_number);
