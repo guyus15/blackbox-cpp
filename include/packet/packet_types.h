@@ -41,9 +41,9 @@ namespace Packets::Types
 		 * @brief Reads contents of a packet from a serial communication port by
 		 * calling the underlying packet read method.
 		 *
-		 * @return std::vector<unsigned char> The data in the form of a PointInformationReplyMX5.
+		 * @return std::vector<unsigned char> The read data.
 		 */
-		[[nodiscard]] PointInformationReplyMX5* read() const;
+		[[nodiscard]] std::vector<unsigned char> read() const;
 
 	private:
 		Packet* _packet;
@@ -116,14 +116,48 @@ namespace Packets::Types
 		 * @return std::string The CSV format point information reply.
 		 */
 		std::string get_as_csv();
+	};
+
+	/**
+	 * @brief A class representing a point information reply (MX6).
+	 */
+	class PointInformationReplyMX6 final : public Content
+	{
+	public:
+		explicit PointInformationReplyMX6(std::vector<unsigned char> data);
+		~PointInformationReplyMX6() override = default;
+
+		PointInformationReplyMX6(const PointInformationReplyMX6& p) = default;
+		PointInformationReplyMX6(PointInformationReplyMX6&& p) noexcept = default;
+
+		PointInformationReplyMX6& operator=(const PointInformationReplyMX6& p) = default;
+		PointInformationReplyMX6& operator=(PointInformationReplyMX6&& p) noexcept = default;
 
 		/**
-		 * @brief Gets the headers required for writing to a log file.
+		 * @brief Returns the reply status of the point information reply.
 		 *
-		 * @return std::vector<std::string> The headers.
+		 * @return true The reply has been successful.
+		 * @return false The reply has not been successful.
 		 */
-		static std::vector<std::string> get_headers();
+		bool reply_successful();
+
+		/**
+		 * @brief Gets the point information reply in a CSV format.
+		 *
+		 * @return std::string The CSV format point information reply.
+		 */
+		std::string get_as_csv();
 	};
+}
+
+namespace Packets
+{
+	/**
+	* @brief Gets the headers required for writing to a log file.
+	*
+	* @return std::vector<std::string> The headers.
+	*/
+	std::vector<std::string> get_headers();
 }
 
 #endif

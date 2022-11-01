@@ -51,8 +51,7 @@ namespace Packets
             {Constants::PNAME_SOURCE_CHANNEL_ADDRESS,      0x00},
             {Constants::PNAME_SOURCE_TASK,                 0x00},
             {Constants::PNAME_MARKER,                      0x00},
-            {Constants::PNAME_PACKET_ID,                   static_cast<unsigned char>(packet_id)},
-            {Constants::PNAME_RESERVED,                    0x00}
+            {Constants::PNAME_PACKET_ID,                   static_cast<unsigned char>( packet_id)}
         };
 
         _params = params;

@@ -170,7 +170,7 @@ namespace Constants
     constexpr int PIRMX6_GROUP1_INDEX                       = 23;
     constexpr int PIRMX6_GROUP2_INDEX                       = 24;
     constexpr int PIRMX6_AREA_TYPE_INDEX                    = 25;
-    constexpr int IRMX6_AREA_NUMBER_INDEX                   = 26;
+    constexpr int PIRMX6_AREA_NUMBER_INDEX                   = 26;
     constexpr int PIRMX6_SECTOR_ID_INDEX                    = 27;
     constexpr int PIRMX6_LOOP_TYPE_INDEX                    = 28;
     constexpr int PIRMX6_RAW_IDENTITY_INDEX                 = 29;
