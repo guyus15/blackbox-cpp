@@ -7,9 +7,20 @@
       "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${projectDir}\\build\\${name}",
       "installRoot": "${projectDir}\\out\\install\\${name}",
-      "cmakeCommandArgs": "-DTEST=ON",
       "buildCommandArgs": "",
-      "ctestCommandArgs": ""
+      "ctestCommandArgs": "",
+      "variables": [
+        {
+          "name": "TEST",
+          "value": "true",
+          "type": "BOOL"
+        },
+        {
+          "name": "ENABLE_INFO_OUTPUT",
+          "value": "False",
+          "type": "BOOL"
+        }
+      ]
     }
   ]
 }

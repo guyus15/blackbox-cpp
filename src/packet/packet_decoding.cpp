@@ -5,13 +5,15 @@
  */
 
 #include "packet/packet_decoding.h"
-
 #include "packet/device_codes.h"
 #include "constants.h"
+
+#include "profiling/instrumentation.h"
 
 #include <unordered_map>
 #include <sstream>
 #include <iostream>
+
 
 namespace Packets::Decoding
 {
@@ -168,6 +170,8 @@ namespace Packets::Decoding
     {
         std::vector<std::string> decode_point_information_reply(const std::vector<unsigned char>& data)
         {
+        	BX_PROFILE_FUNCTION();
+
             for (const auto& byte : data)
             {
                 std::cout << static_cast<int>(byte) << ",";

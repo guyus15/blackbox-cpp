@@ -5,10 +5,12 @@
  */
 
 #include "packet/packet_types.h"
+#include "profiling/instrumentation.h"
 #include "clock.h"
 #include "config.h"
 #include "constants.h"
 #include "logger.h"
+#include "output.h"
 
 #include <iostream>
 #include <vector>
@@ -22,11 +24,14 @@ void send_test_packet(const Logger& logger, const std::string& logfile);
 
 int main()
 {
+    BX_PROFILE_BEGIN_SESSION("Set up");
+
+    BX_LOG_INFO("Blackbox - Point Information Data Logger");
+
     const Logger logger;
     Clock clock{true};
 
     const std::string logfile = Config::get_log_file();
-
     send_test_packet(logger, logfile);
 
     const std::vector<std::pair<int, int>> point_records = poll_points();
@@ -35,6 +40,8 @@ int main()
     // the duration of which the logger runs, in which case this will be changed.
     bool should_run = true;
     const float ping_time_period = Config::get_ping_time_period();
+
+    BX_PROFILE_END_SESSION();
 
     while (should_run)
     {
@@ -50,6 +57,8 @@ int main()
 
             std::cout << "Loop: " << loop_number << "\nPoint: " << point_number << std::endl;
 
+            BX_LOG_INFO("Loop: {0}\nPoint: {1}\n", loop_number, point_number);
+
             Packets::Types::PointInformationRequestMX5 packet{point_number, loop_number};
 
             packet.write();
@@ -58,7 +67,7 @@ int main()
 
             std::string entry = reply->get_as_csv();
 
-            std::cout << entry << std::endl; 
+            BX_LOG_INFO("{0}", entry);
 
             logger.write_log(entry, logfile);
         }
@@ -74,6 +83,8 @@ int main()
  */
 void send_test_packet(const Logger& logger, const std::string& logfile)
 {
+    BX_PROFILE_FUNCTION();
+
     // Point information request for point 0.
     Packets::Types::PointInformationRequestMX5 test_packet{0, 1};
 
@@ -95,6 +106,8 @@ void send_test_packet(const Logger& logger, const std::string& logfile)
  */
 std::vector<std::pair<int, int>> poll_points()
 {
+    BX_PROFILE_FUNCTION();
+
     std::vector<std::pair<int, int>> valid_points{};
 
     Clock clock{true};
@@ -110,7 +123,7 @@ std::vector<std::pair<int, int>> poll_points()
     {
         if (clock.time_elapsed(poll_time_period))
         {
-            std::cout << "Polling point " << current_point_number << " on loop " << current_loop_number << "..." << std::endl;
+            BX_LOG_INFO("Polling point {0} on loop {1}...", current_point_number, current_loop_number);
 
             Packets::Types::PointInformationRequestMX5 packet{current_point_number, current_loop_number};
 
@@ -119,7 +132,7 @@ std::vector<std::pair<int, int>> poll_points()
             const std::unique_ptr<Packets::Types::PointInformationReplyMX5> reply{packet.read()};
             if (reply->reply_successful())
             {
-                valid_points.push_back({current_loop_number, current_point_number});
+                valid_points.emplace_back(current_loop_number, current_point_number);
             }
 
             current_point_number++;

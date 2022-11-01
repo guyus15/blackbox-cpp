@@ -9,6 +9,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ./out)
 
 # Off by default
 option (TEST "Build tests" OFF)
+option (ENABLE_INFO_OUTPUT "Enable verbose info output" OFF)
+option (ENABLE_PROFILING "Enable profiling" OFF)
 
 set(TARGET_SOURCES src/main.cpp
                    src/packet/content.cpp
@@ -21,6 +23,7 @@ set(TARGET_SOURCES src/main.cpp
                    src/config.cpp
                    src/logger.cpp
                    src/clock.cpp
+                   src/profiling/instrumentation.cpp
                    )
 
 if (TEST)
@@ -35,14 +38,29 @@ if (TEST)
                      src/packet/serial_data_transfer.cpp
                      src/serial/serialib.cpp
                      src/config.cpp
+                     src/profiling/instrumentation.cpp
                      )
                     
     add_executable(tests ${TEST_SOURCES})
 endif()
                  
+if (ENABLE_INFO_OUTPUT)
+    add_compile_definitions(OUTPUT_LEVEL_INFO)
+endif()
+
+if (ENABLE_PROFILING)
+    add_compile_definitions(BX_PROFILING)
+endif()
+
+include_directories(include/
+                    libs/spdlog/include
+                    )
+
 add_executable(blackbox ${TARGET_SOURCES})
                  
-include_directories(include/)
+add_subdirectory(libs/spdlog)
+target_link_libraries(${PROJECT_NAME} PRIVATE spdlog::spdlog)
+
 
 # Copy the configuration file into the build output directory.
 add_custom_target(copy_config ALL

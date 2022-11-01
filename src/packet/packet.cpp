@@ -8,8 +8,10 @@
 #include "packet/serial_data_transfer.h"
 
 #include "constants.h"
+#include "profiling/instrumentation.h"
 
 #include <memory>
+
 
 namespace Packets
 {
@@ -31,6 +33,8 @@ namespace Packets
 
     std::vector<unsigned char>& Packet::get_byte_array()
     {
+        BX_PROFILE_FUNCTION();
+
         _bytes.clear();
 
         // Add on the SOH and SEQ numbers.
@@ -59,6 +63,8 @@ namespace Packets
 
     void Packet::write()
     {
+        BX_PROFILE_FUNCTION();
+
         SerialDataTransfer serial;
 
         const std::vector<unsigned char> data = get_byte_array();
@@ -69,6 +75,8 @@ namespace Packets
 
     std::vector<unsigned char> Packet::read()
     {
+        BX_PROFILE_FUNCTION();
+
         std::unique_ptr<SerialDataTransfer> serial{new SerialDataTransfer};
 
         bool has_data = false;
@@ -111,6 +119,8 @@ namespace Packets
 
     void Packet::increment_seq()
     {
+        BX_PROFILE_FUNCTION();
+
         seq++;
                 
         // Wrap round if SEQ exceeds the constant value.
