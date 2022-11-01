@@ -38,6 +38,7 @@ if (TEST)
                      src/packet/serial_data_transfer.cpp
                      src/serial/serialib.cpp
                      src/config.cpp
+                     src/profiling/instrumentation.cpp
                      )
                     
     add_executable(tests ${TEST_SOURCES})
