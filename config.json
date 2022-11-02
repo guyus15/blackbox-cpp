@@ -7,7 +7,7 @@
   },
   "serial": {
     "com": {
-      "windows": "COM8",
+      "windows": "COM3",
       "linux": "/dev/ttyUSB0"
     },
     "baudrate": 115200,
