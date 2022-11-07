@@ -10,6 +10,7 @@
 #include "tao/json/from_file.hpp"
 
 #include "profiling/instrumentation.h"
+#include "spdlog/spdlog.h"
 
 namespace Config
 {
@@ -28,7 +29,7 @@ namespace Config
     {
         BX_PROFILE_FUNCTION();
 
-        const std::string directory = config.at("logging").at("directory").as<std::string>();
+        std::string directory = config.at("logging").at("directory").as<std::string>();
 
         return directory;
     }
@@ -37,7 +38,7 @@ namespace Config
     {
         BX_PROFILE_FUNCTION();
 
-        const std::string logfile = config.at("logging").at("logfile").as<std::string>();
+        std::string logfile = config.at("logging").at("logfile").as<std::string>();
 
         return logfile;
     }
@@ -56,9 +57,9 @@ namespace Config
         BX_PROFILE_FUNCTION();
 
         #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
-        const std::string com_port = config.at("serial").at("com").at("windows").as<std::string>();
+        std::string com_port = config.at("serial").at("com").at("windows").as<std::string>();
         #else
-        const std::string com_port = config.at("serial").at("com").at("linux").as<std::string>();
+        std::string com_port = config.at("serial").at("com").at("linux").as<std::string>();
         #endif
 
         return com_port;
@@ -191,5 +192,26 @@ namespace Config
         const float ping_time_period = config.at("timing").at("ping-time-period").as<float>();
 
         return ping_time_period;
+    }
+
+    ProtocolVersion get_protocol_version()
+    {
+        BX_PROFILE_FUNCTION();
+
+        const std::string protocol_version = config.at("protocol-version").as<std::string>();
+
+        if (protocol_version == "MX5")
+        {
+            SPDLOG_INFO("Using protocol version: MX Speak Version 5");
+        	return ProtocolVersion::MX5;
+        }
+        else if (protocol_version == "MX6")
+        {
+            SPDLOG_INFO("Using protocol version: MX Speak Version 5");
+            return ProtocolVersion::MX6;
+        }
+
+        SPDLOG_WARN("Protocol version {0} is not recognised. Defaulting to MX Speak Version 5...");
+        return ProtocolVersion::MX5;
     }
 }

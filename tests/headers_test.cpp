@@ -36,10 +36,10 @@ CLOVE_TEST(test_mx6_header_contents)
     // This test ensures that after creating an MX Speak 6 packet header,
     // it contains the expected values.
 
-    // MX Speak 5 packet header, ID of 0.
+    // MX Speak 6 packet header, ID of 0.
     Packets::LocalHeaderMX6 test_header{Packets::PacketID::INVALID};
 
-    const std::vector<unsigned char> expected_values {0x09, 0xe4, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+    const std::vector<unsigned char> expected_values {0x0a, 0xe4, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
     const std::vector<unsigned char> actual_values = test_header.get_byte_array();
 
     for (size_t i = 0; i < expected_values.size(); i++)
@@ -90,7 +90,7 @@ CLOVE_TEST(test_mx6_header_parameters)
 
     const std::vector<std::pair<std::string, unsigned char>> expected_values
     {
-        {"hpacket_length",               0x09},
+        {"hpacket_length",               0x0a},
         {"hmx_speak_signature",          0xe4},
         {"hnetwork_node",                0x00},
         {"hchannel",                     0x00},
@@ -99,8 +99,7 @@ CLOVE_TEST(test_mx6_header_parameters)
         {"hsource_channel_address",      0x00},
         {"hsource_task",                 0x00},
         {"hmarker",                      0x00},
-        {"hpacket_id",                   0x00},
-        {"hreserved",                    0x00}
+        {"hpacket_id",                   0x00}
     };
 
     const std::vector<std::pair<std::string, unsigned char>> actual_values = test_header.get_parameters();

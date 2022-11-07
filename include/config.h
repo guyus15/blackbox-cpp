@@ -13,6 +13,12 @@
 
 namespace Config
 {
+	enum class ProtocolVersion
+	{
+		MX5 = 0,
+		MX6
+	};
+
 	/**
 	 * @brief Gets the logging enabled value from the configuration file.
 	 *
@@ -98,6 +104,14 @@ namespace Config
 	 * @return float The ping time period value from the configuration file.
 	 */
 	float get_ping_time_period();
+
+	/**
+	 * @brief Gets the target protocol version from the configuration file.
+	 *
+	 * @return ProtocolVersion The protocol version value from the configuration file. If the protocol
+	 * version cannot be found, MX Speak Version 5 is returned by default.
+	 */
+	ProtocolVersion get_protocol_version();
 }
 
 #endif
