@@ -5,6 +5,7 @@
  */
 
 #include "config.h"
+#include "output.h"
 
 #include "tao/json/value.hpp"
 #include "tao/json/from_file.hpp"
@@ -202,16 +203,14 @@ namespace Config
 
         if (protocol_version == "MX5")
         {
-            SPDLOG_INFO("Using protocol version: MX Speak Version 5");
         	return ProtocolVersion::MX5;
         }
-        else if (protocol_version == "MX6")
+        if (protocol_version == "MX6")
         {
-            SPDLOG_INFO("Using protocol version: MX Speak Version 5");
             return ProtocolVersion::MX6;
         }
 
-        SPDLOG_WARN("Protocol version {0} is not recognised. Defaulting to MX Speak Version 5...");
+        BX_LOG_WARNING("Protocol version '{0}' is not recognised. Defaulting to MX Speak Version 5...", protocol_version);
         return ProtocolVersion::MX5;
     }
 }

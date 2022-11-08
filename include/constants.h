@@ -15,7 +15,7 @@ namespace Constants
     // Panel information
     constexpr unsigned int POINT_PER_LOOP = 250;
     constexpr unsigned int MX5_MAX_LOOPS  = 8;
-    constexpr unsigned int MX6_MAX_LLOPS  = 32;
+    constexpr unsigned int MX6_MAX_LOOPS  = 32;
 
     // Packets
     constexpr unsigned char SOH          = 0x01;   // Start of header

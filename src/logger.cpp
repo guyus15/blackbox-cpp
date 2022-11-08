@@ -32,11 +32,11 @@ void Logger::create_log_dir() const
 
 	if (const std::filesystem::path directory_path{configured_path}; !exists(directory_path))
     {
-		BX_LOG_INFO("Directory does not exist. Creating...");
+		BX_LOG_INFO("Logging directory does not exist. Creating...");
         std::filesystem::create_directory(directory_path);
     } else
     {
-        BX_LOG_INFO("Directory already exists.");
+        BX_LOG_INFO("Logging directory already exists. Skipping...");
     }
 }
 
