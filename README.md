@@ -6,7 +6,7 @@
 Black box recorder and data logger, written in C++.
 
 ## Installation
-- `git --recurse-submodules clone https://github.com/guyus15/blackbox-cpp`
+- `git clone --recurse-submodules https://github.com/guyus15/blackbox-cpp`
 - `cd blackbox-cpp`
 - `cmake -S . -B build -G <generator of choice>`
 - Build project with selected build tool

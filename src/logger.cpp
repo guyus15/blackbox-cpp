@@ -80,31 +80,36 @@ void Logger::write_headers(const std::vector<std::string>& headers, const std::s
 {
     BX_PROFILE_FUNCTION();
 
+    std::string log_path = Config::get_log_dir() + "/" + logfile;
+
+    std::ifstream file(log_path);
+
 	// Only write header to the file if it does not exist.
-    if (const std::filesystem::path file{logfile}; std::filesystem::exists(file))
+    if (!file)
+    {
+        BX_LOG_INFO("File does not exist. Writing header.");
+
+        std::stringstream csv_stream{};
+
+        csv_stream << "datetime" << ",";
+
+        for (const auto& header : headers)
+        {
+            csv_stream << header << ",";
+        }
+
+        std::string csv_string = csv_stream.str();
+
+        // Remove last comma from end.
+        csv_string = csv_string.substr(0, csv_string.size() - 1);
+        csv_string = csv_string + "\n";
+
+        write_log(csv_string, logfile, false);     
+    }
+    else
     {
         BX_LOG_INFO("File already exists. Not adding header.");
-        return;
-    }   
-
-    BX_LOG_INFO("File does not exist. Writing header.");
-
-    std::stringstream csv_stream{};
-
-    csv_stream << "datetime" << ","; 
-
-    for (const auto& header : headers)
-    {
-        csv_stream << header << ",";
     }
-
-    std::string csv_string = csv_stream.str();
-
-    // Remove last comma from end.
-    csv_string = csv_string.substr(0, csv_string.size() - 1);
-    csv_string = csv_string + "\n";
-
-    write_log(csv_string, logfile, false);
 }
 
 void Logger::write_log_windows(const std::string& entry, const std::string& logfile)
