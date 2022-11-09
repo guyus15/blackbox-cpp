@@ -80,8 +80,12 @@ void Logger::write_headers(const std::vector<std::string>& headers, const std::s
 {
     BX_PROFILE_FUNCTION();
 
-	// Only write header to the file if it does not exist.
-    if (const std::filesystem::path file{logfile}; std::filesystem::exists(file))
+    std::string log_path = Config::get_log_dir() + "/" + logfile;
+
+    std::ifstream file(log_path);
+
+    // Only write header to the file if it does not exist.
+    if (!file)
     {
         BX_LOG_INFO("File does not exist. Writing header.");
 
