@@ -28,11 +28,11 @@ void Logger::create_log_dir() const
 {
     BX_PROFILE_FUNCTION();
 
-	const std::string configured_path = Config::get_log_dir();
+    const std::string configured_path = Config::get_log_dir();
 
-	if (const std::filesystem::path directory_path{configured_path}; !exists(directory_path))
+    if (const std::filesystem::path directory_path{configured_path}; !exists(directory_path))
     {
-		BX_LOG_INFO("Logging directory does not exist. Creating...");
+        BX_LOG_INFO("Logging directory does not exist. Creating...");
         std::filesystem::create_directory(directory_path);
     } else
     {
@@ -53,18 +53,18 @@ void Logger::write_log(std::string entry, const std::string& logfile, const bool
     // Pre-pend a timestamp onto the entry.
     if (prepend_date)
     {
-	    const auto current = std::chrono::system_clock::now();
-	    const std::time_t current_time = std::chrono::system_clock::to_time_t(current);
+        const auto current = std::chrono::system_clock::now();
+        const std::time_t current_time = std::chrono::system_clock::to_time_t(current);
 
         std::string time_string = std::ctime(&current_time);
 
         // Remove new line characters
-	    const std::regex newline_regex{"[\r\n]+"};
+        const std::regex newline_regex{"[\r\n]+"};
 
         entry = std::regex_replace(entry, newline_regex, "");
         time_string = std::regex_replace(time_string, newline_regex, "");
 
-	    const std::string new_entry = time_string + "," + entry + "\n";
+        const std::string new_entry = time_string + "," + entry + "\n";
         entry = new_entry;
     }
 
@@ -80,12 +80,8 @@ void Logger::write_headers(const std::vector<std::string>& headers, const std::s
 {
     BX_PROFILE_FUNCTION();
 
-    std::string log_path = Config::get_log_dir() + "/" + logfile;
-
-    std::ifstream file(log_path);
-
 	// Only write header to the file if it does not exist.
-    if (!file)
+    if (const std::filesystem::path file{logfile}; std::filesystem::exists(file))
     {
         BX_LOG_INFO("File does not exist. Writing header.");
 
