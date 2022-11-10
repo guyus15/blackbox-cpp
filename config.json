@@ -19,5 +19,6 @@
   "timing": {
     "poll-time-period": 0.05,
     "ping-time-period": 5
-  }
+  },
+  "protocol-version": "MX5"
 }

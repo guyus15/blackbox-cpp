@@ -42,7 +42,7 @@ namespace Packets
     {
 	    const std::vector<std::pair<std::string, unsigned char>> params
         {
-            {Constants::PNAME_PACKET_LENGTH,               0x09},
+            {Constants::PNAME_PACKET_LENGTH,               0x0a},
             {Constants::PNAME_MX6_SPEAKSIGNATURE,          0xe4},  // 228
             {Constants::PNAME_NETWORK_NODE,                0x00},
             {Constants::PNAME_CHANNEL,                     0x00},
@@ -51,8 +51,7 @@ namespace Packets
             {Constants::PNAME_SOURCE_CHANNEL_ADDRESS,      0x00},
             {Constants::PNAME_SOURCE_TASK,                 0x00},
             {Constants::PNAME_MARKER,                      0x00},
-            {Constants::PNAME_PACKET_ID,                   static_cast<unsigned char>(packet_id)},
-            {Constants::PNAME_RESERVED,                    0x00}
+            {Constants::PNAME_PACKET_ID,                   static_cast<unsigned char>( packet_id)}
         };
 
         _params = params;

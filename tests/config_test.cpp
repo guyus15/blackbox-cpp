@@ -126,3 +126,14 @@ CLOVE_TEST(test_get_log_verbose_mode)
 
     CLOVE_INT_EQ(expected_value, actual_value)
 }
+
+CLOVE_TEST(test_get_protocol_version)
+{
+	// This test ensures that the get_protocol_version() function will return the correct protocol version
+    // value from the configuration file.
+
+    constexpr auto expected_value = Config::ProtocolVersion::MX5;
+    const Config::ProtocolVersion actual_value = Config::get_protocol_version();
+
+    CLOVE_INT_EQ(static_cast<int>(expected_value), static_cast<int>(actual_value))
+}

@@ -15,7 +15,7 @@ namespace Constants
     // Panel information
     constexpr unsigned int POINT_PER_LOOP = 250;
     constexpr unsigned int MX5_MAX_LOOPS  = 8;
-    constexpr unsigned int MX6_MAX_LLOPS  = 32;
+    constexpr unsigned int MX6_MAX_LOOPS  = 32;
 
     // Packets
     constexpr unsigned char SOH          = 0x01;   // Start of header
@@ -170,7 +170,7 @@ namespace Constants
     constexpr int PIRMX6_GROUP1_INDEX                       = 23;
     constexpr int PIRMX6_GROUP2_INDEX                       = 24;
     constexpr int PIRMX6_AREA_TYPE_INDEX                    = 25;
-    constexpr int IRMX6_AREA_NUMBER_INDEX                   = 26;
+    constexpr int PIRMX6_AREA_NUMBER_INDEX                  = 26;
     constexpr int PIRMX6_SECTOR_ID_INDEX                    = 27;
     constexpr int PIRMX6_LOOP_TYPE_INDEX                    = 28;
     constexpr int PIRMX6_RAW_IDENTITY_INDEX                 = 29;
@@ -204,7 +204,7 @@ namespace Constants
 
     namespace Profiling
     {
-	    const std::string RESULTS_FILE = "profile-results.json";
+        const std::string RESULTS_FILE = "profile-results.json";
     }
 }
 
