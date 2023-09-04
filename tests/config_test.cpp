@@ -121,11 +121,15 @@ CLOVE_TEST(test_get_log_mode)
     // This test ensures that the get_log_mode() function will return the correct log mode
     // value from the configuration file.
 
-    const Config::LogMode actual_value = Config::get_log_mode();
+    const Config::LogMode log_mode = Config::get_log_mode();
 
-    CLOVE_INT_EQ(static_cast<int>(Config::LogMode), static_cast<int>(actual_value));
+    const int expected_value = static_cast<int>(Config::LogMode::Normal);
+    const int actual_value = static_cast<int>(log_mode);
+
+    CLOVE_INT_EQ(expected_value, actual_value);
 }
 
+// Test 10
 CLOVE_TEST(test_get_protocol_version)
 {
 	// This test ensures that the get_protocol_version() function will return the correct protocol version

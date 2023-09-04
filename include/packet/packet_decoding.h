@@ -25,7 +25,13 @@ namespace Packets::Decoding
 
 	namespace MX6
 	{
-
+		/**
+		 * @brief Decodes an MX^ Point Information Reply packet into a human-readable format.
+		 *
+		 * @return std::vector<std::string> A human-readable representation of the bytes of an MX5
+		 * Point Information Reply packet.
+		 */
+		std::vector<std::string> decode_point_information_reply(const std::vector<unsigned char>& data);
 	}
 }
 

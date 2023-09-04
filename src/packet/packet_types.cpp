@@ -268,7 +268,7 @@ namespace Packets::Types
     {
         BX_PROFILE_FUNCTION();
 
-        std::stringstream csv_stream;
+        std::stringstream log_stream;
 
         const std::vector<unsigned char> byte_array = get_byte_array();
 
@@ -276,28 +276,33 @@ namespace Packets::Types
 
         if (log_mode == Config::LogMode::Normal)
         {
-            // Store raw hexadecimal byte values in CSV file.
-            for (const auto& value : byte_array)
-            {
-                csv_stream << std::hex << static_cast<int>(value) << ",";
-            }
-        }
-        else if (log_mode == Config::LogMode::Verbose)
-        {
             // Store more comprehensible decoded packets in CSV file.
             const std::vector<std::string> decoded = Packets::Decoding::MX5::decode_point_information_reply(byte_array);
 
             for (const auto& value : decoded)
             {
-                csv_stream << value << ",";
-            }   
+                log_stream << value << ",";
+            }
+        }
+        else if (log_mode == Config::LogMode::Verbose)
+        {
+            // Store hexadecimal byte values in CSV file.
+            for (const auto& value : byte_array)
+            {
+                log_stream << std::hex << static_cast<int>(value) << ",";
+            }
+
         }
         else if (log_mode == Config::LogMode::Debug)
         {
-            // TODO: Handle debug logging here.
+            // Store raw hexadecimal byte values in CSV file.
+            for (const auto& value : byte_array)
+            {
+                log_stream << std::hex << static_cast<int>(value);
+            }
         }
 
-        std::string csv_string = csv_stream.str();
+        std::string csv_string = log_stream.str();
 
         // Remove last comma from end.
         csv_string = csv_string.substr(0, csv_string.size() - 1);
@@ -382,7 +387,7 @@ namespace Packets::Types
 	{
 		BX_PROFILE_FUNCTION();
 
-		std::stringstream csv_stream;
+		std::stringstream log_stream;
 
 		const std::vector<unsigned char> byte_array = get_byte_array();
 
@@ -390,28 +395,33 @@ namespace Packets::Types
 
         if (log_mode == Config::LogMode::Normal)
         {
-            // Store raw hexadecimal byte values in CSV file.
-            for (const auto& value : byte_array)
+            // Store more comprehensible decoded packets in CSV file.
+            const std::vector<std::string> decoded = Packets::Decoding::MX6::decode_point_information_reply(byte_array);
+
+            for (const auto& value : decoded)
             {
-                csv_stream << std::hex << static_cast<int>(value) << ",";
+                log_stream << value << ",";
             }
         }
         else if (log_mode == Config::LogMode::Verbose)
-		{
-			// Store more comprehensible decoded packets in CSV file.
-			const std::vector<std::string> decoded = Packets::Decoding::MX5::decode_point_information_reply(byte_array);
-
-			for (const auto& value : decoded)
-			{
-				csv_stream << value << ",";
-			}
-		}
-        else
         {
-            // TODO: Handle debug logging here.
+            // Store hexadecimal byte values in CSV file.
+            for (const auto& value : byte_array)
+            {
+                log_stream << std::hex << static_cast<int>(value) << ",";
+            }
+
+        }
+        else if (log_mode == Config::LogMode::Debug)
+        {
+            // Store raw hexadecimal byte values in CSV file.
+            for (const auto& value : byte_array)
+            {
+                log_stream << std::hex << static_cast<int>(value);
+            }
         }
 
-		std::string csv_string = csv_stream.str();
+		std::string csv_string = log_stream.str();
 
 		// Remove last comma from end.
 		csv_string = csv_string.substr(0, csv_string.size() - 1);
