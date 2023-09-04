@@ -272,7 +272,17 @@ namespace Packets::Types
 
         const std::vector<unsigned char> byte_array = get_byte_array();
 
-        if (Config::get_log_verbose_mode())
+        const Config::LogMode log_mode = Config::get_log_mode();
+
+        if (log_mode == Config::LogMode::Normal)
+        {
+            // Store raw hexadecimal byte values in CSV file.
+            for (const auto& value : byte_array)
+            {
+                csv_stream << std::hex << static_cast<int>(value) << ",";
+            }
+        }
+        else if (log_mode == Config::LogMode::Verbose)
         {
             // Store more comprehensible decoded packets in CSV file.
             const std::vector<std::string> decoded = Packets::Decoding::MX5::decode_point_information_reply(byte_array);
@@ -281,13 +291,10 @@ namespace Packets::Types
             {
                 csv_stream << value << ",";
             }   
-        } else
+        }
+        else if (log_mode == Config::LogMode::Debug)
         {
-            // Store raw hexadecimal byte values in CSV file.
-            for (const auto& value : byte_array)
-            {
-                csv_stream << std::hex << static_cast<int>(value) << ",";
-            }
+            // TODO: Handle debug logging here.
         }
 
         std::string csv_string = csv_stream.str();
@@ -379,7 +386,17 @@ namespace Packets::Types
 
 		const std::vector<unsigned char> byte_array = get_byte_array();
 
-		if (Config::get_log_verbose_mode())
+        const Config::LogMode log_mode = Config::get_log_mode();
+
+        if (log_mode == Config::LogMode::Normal)
+        {
+            // Store raw hexadecimal byte values in CSV file.
+            for (const auto& value : byte_array)
+            {
+                csv_stream << std::hex << static_cast<int>(value) << ",";
+            }
+        }
+        else if (log_mode == Config::LogMode::Verbose)
 		{
 			// Store more comprehensible decoded packets in CSV file.
 			const std::vector<std::string> decoded = Packets::Decoding::MX5::decode_point_information_reply(byte_array);
@@ -389,14 +406,10 @@ namespace Packets::Types
 				csv_stream << value << ",";
 			}
 		}
-		else
-		{
-			// Store raw hexadecimal byte values in CSV file.
-			for (const auto& value : byte_array)
-			{
-				csv_stream << std::hex << static_cast<int>(value) << ",";
-			}
-		}
+        else
+        {
+            // TODO: Handle debug logging here.
+        }
 
 		std::string csv_string = csv_stream.str();
 

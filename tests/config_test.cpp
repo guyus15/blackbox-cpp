@@ -116,15 +116,14 @@ CLOVE_TEST(test_get_log_file)
 }
 
 // Test 9
-CLOVE_TEST(test_get_log_verbose_mode)
+CLOVE_TEST(test_get_log_mode)
 {
-    // This test ensures that the get_log_verbose_mode() function will return the correct log verbose mode
+    // This test ensures that the get_log_mode() function will return the correct log mode
     // value from the configuration file.
 
-    const bool expected_value = local_config.at("logging").at("verbose-logging").as<bool>();
-    const bool actual_value = Config::get_log_verbose_mode();
+    const Config::LogMode actual_value = Config::get_log_mode();
 
-    CLOVE_INT_EQ(expected_value, actual_value)
+    CLOVE_INT_EQ(static_cast<int>(Config::LogMode), static_cast<int>(actual_value));
 }
 
 CLOVE_TEST(test_get_protocol_version)

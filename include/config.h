@@ -19,6 +19,13 @@ namespace Config
         MX6
     };
 
+    enum class LogMode
+    {
+        Normal,
+        Verbose,
+        Debug
+    };
+
     /**
      * @brief Gets the logging enabled value from the configuration file.
      *
@@ -42,12 +49,11 @@ namespace Config
     std::string get_log_file();
 
     /**
-     * @brief Gets the log verbose mode.
+     * @brief Gets the logging mode.
      *
-     * @return true If verbose mode has been enabled in the configuration file.
-     * @return false If verbose mode has been disabled in the configuration file.
+     * @return LogMode The mode of logging set in the configuration file.
      */
-    bool get_log_verbose_mode();
+    LogMode get_log_mode();
 
     /**
      * @brief Gets the COM port value from the configuration file.

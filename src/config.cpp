@@ -44,13 +44,24 @@ namespace Config
         return logfile;
     }
 
-    bool get_log_verbose_mode()
+    LogMode get_log_mode()
     {
         BX_PROFILE_FUNCTION();
 
-        const bool verbose_mode = config.at("logging").at("verbose-logging").as<bool>();
+        const std::string config_log_mode = config.at("logging").at("log-mode").as<std::string>();
 
-        return verbose_mode;
+        if (config_log_mode == "normal")
+        {
+            return LogMode::Normal;
+        }
+        else if (config_log_mode == "verbose")
+        {
+            return LogMode::Verbose;
+        }
+        else if (config_log_mode == "debug")
+        {
+            return LogMode::Debug;
+        }
     }
 
     std::string get_com_port()

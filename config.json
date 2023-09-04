@@ -3,7 +3,7 @@
     "enabled": true,
     "directory": "logs",
     "logfile": "logfile.txt",
-    "verbose-logging": true
+    "log-mode": "normal"
   },
   "serial": {
     "com": {
