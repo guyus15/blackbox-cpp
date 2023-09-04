@@ -10,6 +10,14 @@
 #include "packet/writable.h"
 #include "packet/packet.h"
 #include "packet/content.h"
+#include "packet/packet_decoding.h"
+
+#include "config.h"
+
+#include "profiling/instrumentation.h"
+
+#include <sstream>
+
 
 namespace Packets::Types
 {
@@ -109,13 +117,6 @@ namespace Packets::Types
          * @return false The reply has not been successful.
          */
         bool reply_successful();
-
-        /**
-         * @brief Gets the point information reply in a CSV format.
-         *
-         * @return std::string The CSV format point information reply.
-         */
-        std::string get_as_csv();
     };
 
     /**
@@ -140,13 +141,6 @@ namespace Packets::Types
          * @return false The reply has not been successful.
          */
         bool reply_successful();
-
-        /**
-         * @brief Gets the point information reply in a CSV format.
-         *
-         * @return std::string The CSV format point information reply.
-         */
-        std::string get_as_csv();
     };
 }
 
@@ -158,6 +152,65 @@ namespace Packets
     * @return std::vector<std::string> The headers.
     */
     std::vector<std::string> get_headers();
+
+    /**
+     * @brief Gets the point information reply in a CSV format.
+     * @tparam T The type of reply.
+     * @param reply The reply.
+     * @return std::string The CSV format point information reply.
+     */
+    template <typename T>
+    std::string get_as_csv(T reply)
+    {
+        BX_PROFILE_FUNCTION();
+
+        std::stringstream log_stream;
+        bool remove_comma = false;
+        const std::vector<unsigned char> byte_array = static_cast<Content>(reply).get_byte_array();
+        const Config::LogMode log_mode = Config::get_log_mode();
+
+        if (log_mode == Config::LogMode::Normal)
+        {
+            // Store hexadecimal byte values in CSV file.
+            for (const auto& value : byte_array)
+            {
+                log_stream << std::hex << static_cast<int>(value) << ",";
+            }
+
+            remove_comma = true;
+        }
+        else if (log_mode == Config::LogMode::Verbose)
+        {
+            // Store more comprehensible decoded packets in CSV file.
+            const std::vector<std::string> decoded = Decoding::MX5::decode_point_information_reply(byte_array);
+
+            for (const auto& value : decoded)
+            {
+                log_stream << value << ",";
+            }
+
+            remove_comma = true;
+
+        }
+        else if (log_mode == Config::LogMode::Debug)
+        {
+            // Store raw hexadecimal byte values in CSV file.
+            for (const auto& value : byte_array)
+            {
+                log_stream << std::hex << static_cast<int>(value);
+            }
+        }
+
+        std::string csv_string = log_stream.str();
+
+        if (remove_comma)
+        {
+            // Remove last comma from end.
+            csv_string = csv_string.substr(0, csv_string.size() - 1);
+        }
+
+        return csv_string;
+    }
 }
 
 #endif

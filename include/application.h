@@ -25,8 +25,8 @@
 template<typename T1, typename T2>
 class Application
 {
-    static_assert(std::is_base_of_v<Packets::IWritable, T1>&&
-				  std::is_base_of_v<Packets::Content, T2>);
+    static_assert(std::is_base_of_v<Packets::IWritable, T1> &&
+                  std::is_base_of_v<Packets::Content, T2>);
 
     using PointInformationRequest = T1;
     using PointInformationReply = T2;
@@ -55,10 +55,10 @@ public:
 
         while (should_run)
         {
-	        if (!clock.time_elapsed(ping_time_period))
-	        {
+            if (!clock.time_elapsed(ping_time_period))
+            {
                 continue;
-	        }
+            }
 
             for (const auto& [fst, snd] : _point_records)
             {
@@ -72,7 +72,7 @@ public:
 
                 const auto reply = std::make_unique<PointInformationReply>(packet.read());
 
-                const std::string entry = reply->get_as_csv();
+                const std::string entry = Packets::get_as_csv<PointInformationReply>(*reply);
 
                 BX_LOG_INFO("{0}", entry);
 
@@ -136,7 +136,7 @@ private:
         int current_loop_number = 1;
 
         const bool is_mx5 = typeid(PointInformationRequest) == typeid(Packets::Types::PointInformationRequestMX5);
-        const unsigned NUMBER_LOOPS = is_mx5 ? Constants::MX5_MAX_LOOPS : Constants::MX6_MAX_LOOPS;
+        const unsigned number_loops = is_mx5 ? Constants::MX5_MAX_LOOPS : Constants::MX6_MAX_LOOPS;
 
         BX_LOG_INFO("Protocol selected: {0}", is_mx5 ? "MX Speak Version 5" : "MX Speak Version 6");
 
@@ -144,10 +144,9 @@ private:
 
         while (should_poll_points)
         {
-	        if (clock.time_elapsed(poll_time_period))
-	        {
+            if (clock.time_elapsed(poll_time_period))
+            {
                 BX_LOG_INFO("Polling points {0} on loop {1}...", current_point_number, current_loop_number);
-
 
                 PointInformationRequest packet{ current_point_number, current_loop_number };
                 packet.write();
@@ -167,11 +166,11 @@ private:
                     current_loop_number++;
                 }
 
-                if (current_loop_number > NUMBER_LOOPS)
+                if (current_loop_number > number_loops)
                 {
                     should_poll_points = false;
                 }
-	        }
+            }
         }
 
         return valid_points;
